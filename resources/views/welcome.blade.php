@@ -1,49 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layout.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
-    @vite('resources/sass/app.scss')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="{{ Vite::asset('resources/css/welcome.css') }}">
-</head>
+@section('title', 'Home')
 
-<body>
-
-    <nav id="navbar-home" class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="{{ Vite::asset('resources/images/tel-u_putih.png') }}" alt="Bootstrap" width="140"
-                    height="56">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link" aria-current="page" href="#">Home</a>
-                    <a class="nav-link" href="#">Educational Contents</a>
-                    <a class="nav-link" href="#">Form Report</a>
-                    <a class="nav-link" href="#">About Us</a>
-                </div>
-            </div>
-        </div>
-    </nav>
-
+@section('content')
     <div id="carousel-home" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="{{ Vite::asset('resources/images/tel-u.png') }}" class="d-block w-100" alt="Database image">
+                <img src="{{ Vite::asset('resources/images/carousel-1.jpg') }}" class="d-block w-100" alt="Database image">
             </div>
             <div class="carousel-item">
-                <img src="{{ Vite::asset('resources/images/ls.png') }}" class="d-block w-100" alt="LS image">
+                <img src="{{ Vite::asset('resources/images/carousel-2.jpg') }}" class="d-block w-100" alt="LS image">
             </div>
             <div class="carousel-item">
-                <img src="{{ Vite::asset('resources/images/maya.png') }}" class="d-block w-100" alt="Maya image">
+                <img src="{{ Vite::asset('resources/images/carousel-3.jpg') }}" class="d-block w-100" alt="Maya image">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carousel-home" data-bs-slide="prev"
@@ -58,114 +27,101 @@
         </button>
     </div>
 
+    {{-- Welcome greetings section by head of the sexual prevention task force --}}
+    <div class="container-lg my-5">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <img src="{{ Vite::asset('resources/images/avatar.jpg') }}" alt="Section Image" class="img-fluid" />
+            </div>
+            <div class="col-md-6">
+                <h2>Welcome from the Head of the Sexual Prevention Task Force</h2>
+                <p>We are committed to creating a safe and supportive environment for everyone. Our task force works tirelessly to raise awareness, provide education, and support victims of sexual harassment.</p>
+                <p>Together, we can make a difference and foster a culture of respect and dignity.</p>
+            </div>
+        </div>
+    </div>
+
+    {{-- A reminder about sexual harassment report, with logo, paragraph, and button to form report --}}
+    <div class="container-lg my-5">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2>Report Sexual Harassment Confidentially</h2>
+                <p>If you or someone you know has experienced sexual harassment, please do not hesitate to report it. Your safety and privacy are our top priorities.</p>
+                <p>Use the form below to submit your report confidentially and securely.</p>
+                <a href="#" class="btn btn-danger">Go to Report Form</a>
+            </div>
+            <div class="col-md-6">
+                <img src="{{ Vite::asset('resources/images/hand.jpg') }}" alt="Section Image" class="img-fluid" />
+            </div>
+        </div>
+    </div>
+
     <div id="main-container" class="container-lg">
 
         <h3 id="educational-header">Most Popular</h3>
-        <p id="educational-subheader">Our Educational Contents</p>
+        <p id="educational-subheader">Explore our collection of educational articles and resources</p>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col">
-                <div class="card h-100">
+                <div class="card h-100 shadow-sm">
                     <img src="{{ Vite::asset('resources/images/tel-u.png') }}" class="card-img-top" alt="Tel-U logo">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet
-                            dolor libero. Etiam sem sem, porta nec vulputate id, mollis pharetra leo.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Understanding Sexual Harassment</h5>
+                        <p class="card-text flex-grow-1">Learn about what constitutes sexual harassment and how to recognize it in various environments.</p>
+                        <a href="#" class="btn btn-primary mt-auto align-self-start">Read More</a>
                     </div>
                 </div>
             </div>
             <div class="col">
-                <div class="card h-100">
-                    <img src="{{ Vite::asset('resources/images/tel-u.png') }}" class="card-img-top" alt="Kuching image">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet
-                            dolor libero. Etiam sem sem, porta nec vulputate id, mollis pharetra leo.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ Vite::asset('resources/images/hand.jpg') }}" class="card-img-top" alt="Helping hand">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Support Resources</h5>
+                        <p class="card-text flex-grow-1">Find out about the support services available for victims and how to access them confidentially.</p>
+                        <a href="#" class="btn btn-primary mt-auto align-self-start">Learn More</a>
                     </div>
                 </div>
             </div>
             <div class="col">
-                <div class="card h-100">
-                    <img src="{{ Vite::asset('resources/images/tel-u.png') }}" class="card-img-top" alt="Tel-U logo">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet
-                            dolor libero. Etiam sem sem, porta nec vulputate id, mollis pharetra leo.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ Vite::asset('resources/images/avatar.jpg') }}" class="card-img-top" alt="Avatar">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Prevention Strategies</h5>
+                        <p class="card-text flex-grow-1">Explore effective strategies and best practices to prevent sexual harassment in your community.</p>
+                        <a href="#" class="btn btn-primary mt-auto align-self-start">Discover</a>
                     </div>
                 </div>
             </div>
         </div>
 
         <h3 id="testi-header">Testimonials</h3>
-        <p id="testi-subheader">What They Says About Our Services</p>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div class="col">
-                <div class="card h-100">
-                    <img src="{{ Vite::asset('resources/images/tel-u.png') }}" class="card-img-top" alt="Tel-U logo">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet
-                            dolor libero. Etiam sem sem, porta nec vulputate id, mollis pharetra leo.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <p id="testi-subheader">What they say about our services</p>
+
+        <div id="testimonialSlider" class="slider-container">
+            <div class="slider-wrapper">
+                <div class="slide active">
+                    <div class="card h-100 mx-auto" style="max-width: 600px;">
+                        <div class="card-body">
+                            <p class="card-text fst-italic">"I felt safe and heard thanks to the dedicated team. Highly recommend their services."</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <img src="{{ Vite::asset('resources/images/tel-u.png') }}" class="card-img-top" alt="Tel-U logo">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet
-                            dolor libero. Etiam sem sem, porta nec vulputate id, mollis pharetra leo.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="slide">
+                    <div class="card h-100 mx-auto" style="max-width: 600px;">
+                        <div class="card-body">
+                            <p class="card-text fst-italic">"Professional, compassionate, and effective. A truly valuable resource for anyone in need."</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <img src="{{ Vite::asset('resources/images/tel-u.png') }}" class="card-img-top"
-                        alt="Tel-U logo">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sit amet
-                            dolor libero. Etiam sem sem, porta nec vulputate id, mollis pharetra leo.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="slide">
+                    <div class="card h-100 mx-auto" style="max-width: 600px;">
+                        <div class="card-body">
+                            <p class="card-text fst-italic">"This service has been a lifesaver. The support and resources provided are exceptional."</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 
-    <footer class="bg-dark text-white mt-5">
-        <div class="container py-4">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>About Us</h5>
-                    <p>Providing quality educational content and services to help you learn and grow.</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white text-decoration-none">Home</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Educational Contents</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Form Report</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">About Us</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Follow Us</h5>
-                    <a href="https://www.instagram.com/satgasppks.tus/#" class="text-white me-3"><i
-                            class="bi bi-instagram"></i> satgasppks.tus</a>
-                </div>
-            </div>
-            <div class="text-center mt-3">
-                <small>&copy; 2024 Your Company. All rights reserved.</small>
-            </div>
-        </div>
-    </footer>
-    @vite('resources/js/app.js')
-</body>
-
-</html>
+@endsection
