@@ -26,10 +26,15 @@
     padding: 2rem;
     margin-bottom: 3rem;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.featured-article-link {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
     align-items: center;
+    text-decoration: none;
+    color: inherit;
 }
 
 .featured-article img {

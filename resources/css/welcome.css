@@ -30,7 +30,7 @@
 
 /* Carousel */
 #carousel-home .carousel-item img {
-    max-height: 400px;
+    max-height: 500px;
     object-fit: cover;
 }
 
