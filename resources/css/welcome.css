@@ -34,8 +34,34 @@
     object-fit: cover;
 }
 
+/* Add fade animation to carousel */
+.fade-carousel .carousel-item {
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.fade-carousel .carousel-item.active {
+    opacity: 1;
+    position: relative;
+}
+
+/* Main container */
 #main-container {
     margin-bottom: 10%;
+}
+
+.welcome-greetings {
+    background: linear-gradient(135deg, #f9f9f9 0%, #fff 100%);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
 /* Section Headers */
@@ -103,14 +129,26 @@
     border-color: #560000;
 }
 
-#main-container .card-body {
-    display: flex;
-    flex-direction: column;
+.btn-animated {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-#main-container .btn {
-    align-self: flex-start;
-    margin-top: auto;
+.btn-animated:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(158, 0, 0, 0.6);
+}
+
+/* Fade-in animation for sections */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
+}
+
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: none;
 }
 
 /* Footer */
@@ -192,29 +230,37 @@ footer .text-center small {
     transform: scale(1);
 }
 
-.slider-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+/* Back to Top Button Styles */
+#backToTopBtn {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 1000;
     background-color: #9e0000;
-    border: none;
     color: white;
-    font-size: 2rem;
-    padding: 0.2rem 0.6rem;
-    cursor: pointer;
+    border: none;
     border-radius: 50%;
-    user-select: none;
-    z-index: 10;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(158, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.prev-btn {
-    left: 10px;
+#backToTopBtn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
-.next-btn {
-    right: 10px;
-}
-
-.slider-btn:hover {
+#backToTopBtn:hover {
     background-color: #560000;
+    box-shadow: 0 6px 12px rgba(86, 0, 0, 0.6);
+    transform: scale(1.1);
 }

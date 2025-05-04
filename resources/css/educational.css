@@ -62,6 +62,8 @@
 }
 
 .featured-article-content small {
+    font-size: 0.8.5rem;
+    font-style: italic;
     color: #888;
 }
 
@@ -108,12 +110,24 @@
 
 .magazine-article-content p {
     flex-grow: 1;
-    font-size: 1rem;
-    color: #555;
+    font-size: 0.9rem;
+    color: #313131;
     margin-bottom: 1rem;
 }
 
 .magazine-article-content small {
-    color: #999;
+    font-size: 0.8rem;
+    color: #a6a6a6;
     font-style: italic;
+}
+
+.featured-article-link,
+.magazine-article-card {
+    text-decoration: none !important;
+    color: #222 !important;
+}
+
+.featured-article-link *,
+.magazine-article-card * {
+    text-decoration: none !important;
 }

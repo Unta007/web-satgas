@@ -2,10 +2,11 @@
 
 @section('title', 'Home')
 
+
 @section('content')
 
     <div class="container-fluid">
-        <div id="carousel-home" class="carousel slide" data-bs-ride="carousel">
+        <div id="carousel-home" class="carousel slide fade-carousel" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carousel-home" data-bs-slide-to="0" class="active" aria-current="true"
                     aria-label="Slide 1"></button>
@@ -38,7 +39,7 @@
     </div>
 
     {{-- Welcome greetings section by head of the sexual prevention task force --}}
-    <div class="container-lg my-5">
+    <div class="container-lg my-5 fade-in-section welcome-greetings">
         <div class="row align-items-center">
             <div class="col-md-6">
                 <img src="{{ Vite::asset('resources/images/avatar.jpg') }}" alt="Section Image" class="img-fluid" />
@@ -53,7 +54,7 @@
     </div>
 
     {{-- A reminder about sexual harassment report, with logo, paragraph, and button to form report --}}
-    <div class="container-lg my-5">
+    <div class="container-lg my-5 fade-in-section">
         <div class="row align-items-center">
             <div class="col-md-6">
                 <img src="{{ Vite::asset('resources/images/hand.jpg') }}" alt="Section Image" class="img-fluid" />
@@ -63,12 +64,12 @@
                 <p>If you or someone you know has experienced sexual harassment, please do not hesitate to report it. Your
                     safety and privacy are our top priorities.</p>
                 <p>Use the form below to submit your report confidentially and securely.</p>
-                <a href="#" class="btn btn-danger">Go to Report Form</a>
+                <a href="#" class="btn btn-danger btn-animated">Go to Report Form</a>
             </div>
         </div>
     </div>
 
-    <div id="main-container" class="container-lg">
+    <div id="main-container" class="container-lg fade-in-section">
 
         <h3 id="educational-header">Most Popular</h3>
         <p id="educational-subheader">Explore our collection of educational articles and resources</p>
@@ -141,5 +142,7 @@
         </div>
 
     </div>
+
+    <button id="backToTopBtn" title="Back to Top" aria-label="Back to Top">&#8679;</button>
 
 @endsection
