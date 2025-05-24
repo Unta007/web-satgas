@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+
 return [
 
     /*
@@ -122,5 +124,17 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
+    // config/app.php
+    'providers' => ServiceProvider::defaultProviders()->merge([
+        // ... provider lain ...
+        App\Providers\AppServiceProvider::class,
+        // Jika AuthServiceProvider juga tidak ada, Anda mungkin perlu membuatnya juga
+        // App\Providers\AuthServiceProvider::class,
+        App\Providers\EventServiceProvider::class, // << PASTIKAN BARIS INI ADA
+        // Jika RouteServiceProvider juga tidak ada, Anda mungkin perlu membuatnya juga
+        // App\Providers\RouteServiceProvider::class,
+        // ... provider lain ...
+    ])->toArray(),
 
 ];

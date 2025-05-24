@@ -2,10 +2,6 @@
 
 @section('title', $article['title'])
 
-@section('styles')
-    <link rel="stylesheet" href="{{ Vite::asset('resources/css/article.css') }}">
-@endsection
-
 @section('content')
     <div class="article-container">
         <nav class="breadcrumb">
@@ -31,10 +27,6 @@
             @else
                 <p>{{ $article['content'] }}</p>
             @endif
-        </div>
-
-        <div class="article-back">
-            <a href="{{ url('/educational-contents') }}">&#8592; Back to Educational Contents</a>
         </div>
     </div>
 @endsection

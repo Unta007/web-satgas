@@ -11,9 +11,40 @@
             <div class="navbar-nav">
                 <a class="nav-link" aria-current="page" href="/">Home</a>
                 <a class="nav-link" href="/educational-contents">Educational Contents</a>
-                <a class="nav-link" href="#">Form Report</a>
+                <a class="nav-link" href="/report.index">Form Report</a>
                 <a class="nav-link" href="#">About Us</a>
             </div>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                @auth
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false"><i class="bi bi-person-circle"></i>
+                            {{ auth()->user()->username }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            {{-- <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li> --}}
+                            <li>
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right"></i>
+                                        Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">Register</a>
+                    </li>
+                @endauth
+            </ul>
         </div>
     </div>
 </nav>

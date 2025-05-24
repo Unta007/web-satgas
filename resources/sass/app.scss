@@ -1,9 +1,22 @@
 // // Fonts
 // @import url('https://fonts.bunny.net/css?family=Nunito');
-
 // // Variables
 // @import 'variables';
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 @import "bootstrap-icons/font/bootstrap-icons.css";
+
+.btn-maroon {
+    background-color: maroon;
+    color: white;
+    border-color: maroon;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: darken(maroon, 8%);
+        color: white;
+        border-color: darken(maroon, 10%);
+    }
+}
