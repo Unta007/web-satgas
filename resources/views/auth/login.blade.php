@@ -27,7 +27,7 @@
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
-            <div class="mb-3 form-check">
+            <div class="mb-3">
                 <a href="{{ route('password.request') }}">Lupa Password?</a>
             </div>
             <button type="submit" class="btn btn-primary">Login</button>

@@ -137,6 +137,6 @@ class ArticleController extends Controller
 
         $article = $this->articles[$slug];
 
-        return view('article', ['article' => $article]);
+        return view('user.article', ['article' => $article]);
     }
 }

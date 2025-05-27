@@ -4,53 +4,41 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory; // Jika Anda menggunakan factory
 
 class Report extends Model
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'report'; // Secara eksplisit set nama tabel, meskipun defaultnya sudah 'report'
+    // use HasFactory; // Aktifkan jika Anda membuat factory
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $table = 'report';
+
     protected $fillable = [
         'user_id',
         'what_happened',
+        'where_happened',       // Baru
         'when_happened',
-        'report_role',
+        'reporter_role',
+        'has_witness',          // Baru
+        'witness_name',         // Baru
+        'witness_relation',     // Baru
+        'knows_perpetrator',    // Baru
+        'perpetrator_name',     // Baru
+        'perpetrator_role',     // Menggantikan predator_role
         'evidence_path',
-        'file_path', // Ini mungkin perlu dicek ulang penamaannya
-        'predator_role', //dan bagaimana kaitannya dengan perpetrator
+        'agreement',            // Baru
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'when_happened' => 'datetime',
+        'has_witness' => 'string', // Atau boolean jika tipe kolom di DB adalah boolean
+        'knows_perpetrator' => 'string', // Atau boolean jika tipe kolom di DB adalah boolean
+        'agreement' => 'boolean',
     ];
 
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = true; // Secara default true, tapi baik untuk eksplisit
+    public $timestamps = true;
 
-    /**
-     * Get the user that made the report.
-     * Relasi one-to-many terbalik (belongsTo)
-     */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id'); //->withDefault(); // Tidak perlu withDefault disini, user_id harus selalu ada.
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('report', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->text('what_happened')->nullable();
-            $table->timestamp('when_happened')->nullable();
-            $table->enum('report_role', ['mahasiswa', 'staff', 'dosen'])->nullable(false);
-            $table->string('evidence_path')->nullable();
-            $table->string('file_path')->nullable();
-            $table->enum('predator_role', ['mahasiswa', 'staff', 'dosen'])->nullable(false);
+            $table->text('what_happened'); // Dijadikan non-nullable jika wajib
+            $table->timestamp('when_happened'); // Dijadikan non-nullable jika wajib
+            $table->enum('reporter_role', ['mahasiswa', 'staff', 'dosen', 'lainnya']); // Tidak nullable, pelapor harus memilih
+
+            $table->enum('perpetrator_role', ['mahasiswa', 'staff', 'dosen', 'lainnya', 'tidak_diketahui'])->nullable(); // Nullable karena mungkin tidak tahu
+
+            $table->string('evidence_path')->nullable(); // Bukti bisa jadi opsional atau wajib, sesuaikan
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@
             <div class="navbar-nav">
                 <a class="nav-link" aria-current="page" href="/">Home</a>
                 <a class="nav-link" href="/educational-contents">Educational Contents</a>
-                <a class="nav-link" href="/report.index">Form Report</a>
+                <a class="nav-link" href="/report">Form Report</a>
                 <a class="nav-link" href="#">About Us</a>
             </div>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
