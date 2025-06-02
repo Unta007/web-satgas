@@ -16,9 +16,13 @@ class AuthUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->role != 'admin') {
-            return redirect('/dashboard');
+        // Periksa apakah pengguna yang sudah login memiliki akses admin
+        if ($request->user() && $request->user()->hasAdminAccess()) {
+            return $next($request);
         }
-        return $next($request);
+
+        // Jika tidak punya akses, bisa pilih salah satu:
+        return redirect()->route('home')
+                         ->with('error', 'Anda tidak memiliki izin untuk mengakses halaman admin.');
     }
 }

@@ -4,56 +4,40 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Contracts\Auth\CanResetPassword;
+// Kontrak CanResetPassword sudah diimplementasikan oleh Authenticatable
+// use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Notifications\MyCustomResetPasswordNotification; // Buat notifikasi kustom ini
-use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification; // Default notification
+// Komentar ini bisa dihapus jika Anda tidak menggunakan notifikasi reset password kustom ini
+// use App\Notifications\MyCustomResetPasswordNotification;
+// use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    // Tambahkan HasApiTokens di sini
     use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
-
-    public function sendPasswordResetNotification($token)
-    {
-        // Jika ingin menggunakan notifikasi default dengan URL kustom:
-        // $url = url(route('password.reset', [
-        //     'token' => $token,
-        //     'email' => $this->getEmailForPasswordReset(),
-        // ], false));
-        // $this->notify(new ResetPasswordNotification($url)); // Ini contoh jika ingin custom URL
-
-        // Atau, jika Anda membuat kelas Notifikasi sendiri:
-        // $this->notify(new MyCustomResetPasswordNotification($token, $this->email));
-
-        // Default Laravel (jika Anda tidak override, ini yang digunakan):
-        parent::sendPasswordResetNotification($token);
-    }
-
-
     protected $fillable = [
         'username',
         'email',
         'phone_number',
-        'role',
+        'role', // Pastikan kolom 'role' ada di migrasi dan bisa menyimpan 'user', 'admin', 'global_admin'
         'password',
     ];
 
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
+        'remember_token', // Ditambahkan untuk praktik standar
     ];
 
     /**
@@ -64,5 +48,43 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        // Jika kolom 'role' Anda adalah ENUM di database, tidak perlu cast khusus di sini
+        // kecuali jika Anda menggunakan PHP 8.1+ Enums dan ingin meng-cast ke objek Enum.
+        // Untuk string biasa ('admin', 'global_admin', 'user'), tidak perlu cast tambahan.
     ];
+
+    /**
+     * Send the password reset notification.
+     * Metode ini sudah baik jika Anda menggunakan alur default atau kustomisasi di dalamnya.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        // Logika kustom Anda atau panggilan ke parent:: sudah cukup.
+        // Contoh: $this->notify(new \App\Notifications\CustomResetPasswordNotification($token));
+        parent::sendPasswordResetNotification($token);
+    }
+
+    /**
+     * Memeriksa apakah pengguna memiliki akses admin (peran 'admin' atau 'global_admin').
+     *
+     * @return bool
+     */
+    public function hasAdminAccess(): bool
+    {
+        return in_array($this->role, ['admin', 'global_admin']);
+    }
+
+    /**
+     * Memeriksa apakah pengguna adalah Global Admin secara spesifik.
+     * (Opsional, berguna jika ada logika yang hanya untuk global_admin)
+     *
+     * @return bool
+     */
+    public function isGlobalAdmin(): bool
+    {
+        return $this->role === 'global_admin';
+    }
 }

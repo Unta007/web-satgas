@@ -1,0 +1,77 @@
+.main-content-wrapper {
+    margin-left: 215px;
+    flex-grow: 1;
+    transition: margin-left 0.3s ease;
+    width: calc(100% - 215px);
+}
+
+.navbar {
+    transition: margin-left 0.3s ease;
+}
+
+.sidebar {
+    width: 215px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: linear-gradient(180deg, #8B0000 0%, #6a040f 100%);
+}
+
+/* Style untuk link, header, dan submenu di dalam sidebar (tidak perlu diubah) */
+.sidebar-header {
+    padding: 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.65);
+    padding: 0.75rem 1.25rem;
+    font-weight: 500;
+    font-size: 1.05rem;
+}
+.sidebar .nav-link .bi {
+    font-size: 1.1rem;
+    vertical-align: middle;
+}
+.sidebar .nav-link:hover {
+    background-color: rgba(97, 0, 0, 0.5);
+    color: white;
+    border-radius: 1.0rem;
+}
+.sidebar .nav-link.active {
+    background-color: #640002;
+    color: white;
+    border-radius: 1.0rem;
+}
+.nav-link-header {
+    color: rgb(201, 201, 201);
+    padding: 0.5rem 1.25rem;
+    font-size: .80rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.submenu {
+    padding-left: 2rem;
+}
+.submenu .nav-link {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* Area Konten */
+.content-area {
+    padding: 1.5rem;
+    margin-top: -1%;
+    transition: margin-left 0.3s ease;
+}
+
+/* Pengaturan Responsif untuk layar kecil (Mobile) */
+@media (max-width: 991.98px) {
+    /* Navbar di mobile tidak perlu diubah, biarkan default */
+
+    /* Konten utama akan memakan lebar penuh */
+    .main-content-wrapper {
+        margin-left: 0;
+    }
+}
