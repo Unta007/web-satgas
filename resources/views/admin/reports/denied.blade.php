@@ -40,8 +40,8 @@
                                     <td>
                                         @if ($report->status == 'denied')
                                             <span
-                                                class="badge text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-pill">
-                                                <i class="bi bi-ban fs-6" style="vertical-align: -2px;"></i> DENIED
+                                                class="badge text-danger-emphasis bg-danger-subtle border border-danger-subtle rounded-pill py-1 px-2 ms-1">
+                                                <i class="bi-x-circle-fill me-1"></i> DENIED
                                             </span>
                                         @else
                                             <span
@@ -69,11 +69,6 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr>
-                                    <td colspan="7" class="text-center py-4">
-                                        <p class="mb-0 text-muted">Tidak ada laporan dengan status "denied".</p>
-                                    </td>
-                                </tr>
                             @endforelse
                         </tbody>
                     </table>

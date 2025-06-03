@@ -67,7 +67,7 @@
                         <h5 class="card-title fw-semibold mb-4">Overall Report Status</h5>
                         <div class="d-flex flex-column gap-3">
                             @php
-                                $statuses = ['unread', 'review', 'ongoing', 'solved', 'denied', 'archived'];
+                                $statuses = ['unread', 'review', 'ongoing', 'solved', 'denied'];
                                 $totalStatusReports = $reportStatusCounts->sum();
                             @endphp
 

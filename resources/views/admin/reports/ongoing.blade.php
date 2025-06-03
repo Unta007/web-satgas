@@ -40,9 +40,9 @@
                                     <td>
                                         @if ($report->status == 'ongoing')
                                             <span
-                                                class="badge text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-pill">
+                                                class="badge text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-pill py-1 px-2 ms-1">
                                                 {{-- Anda bisa mengganti ikon atau warna sesuai preferensi --}}
-                                                <i class="bi bi-hourglass-split fs-6" style="vertical-align: -2px;"></i> ONGOING
+                                                <i class="bi bi-hourglass-split me-1"></i> ONGOING
                                             </span>
                                         @else
                                             <span
@@ -70,11 +70,6 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr>
-                                    <td colspan="7" class="text-center py-4">
-                                        <p class="mb-0 text-muted">Tidak ada laporan dengan status "ongoing".</p>
-                                    </td>
-                                </tr>
                             @endforelse
                         </tbody>
                     </table>

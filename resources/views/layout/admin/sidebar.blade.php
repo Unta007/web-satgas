@@ -42,7 +42,7 @@
                     <a href="{{ route('admin.reports.ongoing') }}" class="nav-link {{ Request::is('admin/reports/ongoing*') ? 'active' : '' }}">Ongoing</a>
                     <a href="{{ route('admin.reports.solved') }}" class="nav-link {{ Request::is('admin/reports/solved*') ? 'active' : '' }}}">Solved</a>
                     <a href="{{ route('admin.reports.denied') }}" class="nav-link {{ Request::is('admin/reports/denied*') ? 'active' : '' }}">Denied</a>
-                    <a href="#" class="nav-link">Archived</a>
+                    <a href="{{ route('admin.reports.archived') }}" class="nav-link {{ Request::is('admin/reports/archived*') ? 'active' : '' }}">Archived</a>
                 </div>
             </div>
         </li>

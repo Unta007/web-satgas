@@ -77,6 +77,18 @@ class ReportListController extends Controller
         ]);
     }
 
+    public function archived(Request $request)
+    {
+        $reports = Report::where('is_archived', true) // Ambil laporan yang diarsipkan
+            ->with('user')
+            ->latest('updated_at') // Urutkan berdasarkan kapan terakhir diupdate (bisa jadi waktu arsip)
+            ->get();
+
+        return view('admin.reports.archived', [
+            'reports' => $reports,
+        ]);
+    }
+
     /**
      * Menampilkan form untuk mengedit status laporan.
      *
@@ -85,15 +97,38 @@ class ReportListController extends Controller
      */
     public function edit(Report $report)
     {
-        // Ambil juga data user pelapor
         $report->load('user');
-
-        // Status yang bisa dipilih oleh admin
         $availableStatuses = ['unread', 'review', 'ongoing', 'solved', 'denied', 'archived'];
+
+        // Tentukan route untuk tombol "Kembali"
+        $backRoute = 'admin.reports.unread'; // Default fallback
+
+        if ($report->is_archived) {
+            $backRoute = 'admin.reports.archived';
+        } else {
+            switch ($report->status) {
+                case 'unread':
+                    $backRoute = 'admin.reports.unread';
+                    break;
+                case 'review':
+                    $backRoute = 'admin.reports.review';
+                    break;
+                case 'ongoing':
+                    $backRoute = 'admin.reports.ongoing';
+                    break;
+                case 'solved':
+                    $backRoute = 'admin.reports.solved';
+                    break;
+                case 'denied':
+                    $backRoute = 'admin.reports.denied';
+                    break;
+            }
+        }
 
         return view('admin.reports.edit', [
             'report' => $report,
-            'availableStatuses' => $availableStatuses
+            'availableStatuses' => $availableStatuses,
+            'backRouteName' => $backRoute // Kirim nama route ke view
         ]);
     }
 
@@ -134,27 +169,84 @@ class ReportListController extends Controller
      */
     public function updateStatus(Request $request, Report $report)
     {
-        $availableStatuses = ['unread', 'review', 'ongoing', 'solved', 'denied', 'archived'];
+        $availableStatusesForLogic = ['unread', 'review', 'ongoing', 'solved', 'denied', 'archived'];
 
         $request->validate([
-            'status' => ['required', Rule::in($availableStatuses)],
+            'status' => ['required', Rule::in($availableStatusesForLogic)],
         ]);
 
-        $report->status = $request->status;
+        $selectedAction = $request->status;
+        $oldStatus = $report->status; // Simpan status lama untuk perbandingan jika perlu
+        $wasArchived = $report->is_archived; // Simpan status arsip lama
+
+        $successMessage = '';
+        $redirectRoute = '';
+
+        if ($selectedAction == 'archived') {
+            $report->is_archived = true;
+            // Status asli ($report->status) tidak diubah saat mengarsipkan
+            $successMessage = 'Laporan #' . $report->id . ' berhasil diarsipkan.';
+            $redirectRoute = 'admin.reports.archived'; // Arahkan ke halaman arsip
+        } else {
+            // Jika status diubah ke selain 'archived', maka laporan dianggap tidak diarsipkan lagi
+            // dan statusnya diperbarui.
+            $report->status = $selectedAction;
+            $report->is_archived = false; // Pastikan tidak diarsipkan jika status aktif diubah
+            $successMessage = 'Status laporan #' . $report->id . ' berhasil diperbarui menjadi "' . ucfirst($selectedAction) . '".';
+
+            // Tentukan route redirect berdasarkan status baru
+            switch ($selectedAction) {
+                case 'unread':
+                    $redirectRoute = 'admin.reports.unread';
+                    break;
+                case 'review':
+                    $redirectRoute = 'admin.reports.review';
+                    break;
+                case 'ongoing':
+                    $redirectRoute = 'admin.reports.ongoing';
+                    break;
+                case 'solved':
+                    $redirectRoute = 'admin.reports.solved';
+                    break;
+                case 'denied':
+                    $redirectRoute = 'admin.reports.denied';
+                    break;
+                default:
+                    // Fallback jika ada status baru yang belum terdefinisi di sini
+                    $redirectRoute = 'admin.reports.unread';
+            }
+        }
+
         $report->save();
 
-        // Arahkan kembali ke halaman daftar laporan 'unread' atau halaman detail laporan
-        return redirect()->route('admin.reports.unread')
-            ->with('success', 'Status laporan #' . $report->id . ' berhasil diperbarui menjadi "' . ucfirst($request->status) . '".');
+        // Jika laporan sebelumnya diarsipkan dan sekarang statusnya diubah (menjadi tidak diarsipkan),
+        // maka redirect ke halaman status baru.
+        // Jika hanya diarsipkan, redirect ke halaman arsip.
+        // Jika status diubah dari satu status aktif ke status aktif lainnya, redirect ke halaman status baru.
+        if ($redirectRoute) {
+            return redirect()->route($redirectRoute)->with('success', $successMessage);
+        }
+
+        // Fallback jika $redirectRoute tidak terisi (seharusnya tidak terjadi dengan logika di atas)
+        // atau jika Anda ingin kembali ke halaman edit setelah beberapa aksi tertentu.
+        // Untuk sekarang, kita selalu redirect ke halaman daftar yang sesuai.
+        return redirect()->back()->with('success', $successMessage); // Baris ini bisa dihapus jika redirectRoute selalu terisi
     }
 
+    /**
+     * Menghapus laporan secara permanen.
+     */
     public function destroy(Report $report)
     {
-        $reportId = $report->id; // Simpan ID sebelum dihapus
+        $reportId = $report->id;
+        // Hapus file bukti jika ada sebelum menghapus record laporan
+        if ($report->evidence_path && Storage::disk('local')->exists($report->evidence_path)) {
+            Storage::disk('local')->delete($report->evidence_path);
+        }
         $report->delete();
 
         // Pesan sukses untuk delete
-        return redirect()->route('admin.reports.unread')
-            ->with('success', 'Laporan #' . $reportId . ' berhasil dihapus.');
+        // Redirect kembali ke halaman sebelumnya dari mana aksi delete dilakukan
+        return redirect()->back()->with('success', 'Laporan #' . $reportId . ' berhasil dihapus secara permanen.');
     }
 }

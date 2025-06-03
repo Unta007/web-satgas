@@ -40,9 +40,9 @@
                                     <td>
                                         @if ($report->status == 'review')
                                             <span
-                                                class="badge text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill">
+                                                class="badge text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-pill py-1 px-2 ms-1">
                                                 {{-- Anda bisa mengganti ikon atau warna sesuai preferensi --}}
-                                                <i class="bi bi-search fs-6" style="vertical-align: -2px;"></i> REVIEW
+                                                <i class="bi bi-search me-1"></i> REVIEW
                                             </span>
                                         @else
                                             <span
@@ -70,11 +70,6 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr>
-                                    <td colspan="7" class="text-center py-4">
-                                        <p class="mb-0 text-muted">Tidak ada laporan dengan status "review".</p>
-                                    </td>
-                                </tr>
                             @endforelse
                         </tbody>
                     </table>

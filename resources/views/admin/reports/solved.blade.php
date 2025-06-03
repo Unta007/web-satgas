@@ -40,8 +40,8 @@
                                     <td>
                                         @if ($report->status == 'solved')
                                             <span
-                                                class="badge text-success-emphasis bg-success-subtle border border-success-subtle rounded-pill">
-                                                <i class="bi bi-check-circle fs-6" style="vertical-align: -2px;"></i> SOLVED
+                                                class="badge text-success-emphasis bg-success-subtle border border-success-subtle rounded-pill py-1 px-2 ms-1">
+                                                <i class="bi bi-check-circle-fill me-1"></i> SOLVED
                                             </span>
                                         @else
                                             <span
@@ -69,11 +69,6 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr>
-                                    <td colspan="7" class="text-center py-4">
-                                        <p class="mb-0 text-muted">Tidak ada laporan dengan status "solved".</p>
-                                    </td>
-                                </tr>
                             @endforelse
                         </tbody>
                     </table>

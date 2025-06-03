@@ -154,8 +154,6 @@
                             </div>
                         </div>
                     @endif
-
-                    {{-- Persetujuan --}}
                     <div class="col-12 mt-3 mb-3">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="agreement_display"
@@ -166,9 +164,8 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="mt-4 text-end">
-                    <a href="{{ route('admin.reports.unread') }}" class="btn btn-secondary">Kembali ke Daftar Laporan</a>
+                    <a href="{{ route($backRouteName) }}" class="btn btn-secondary">Kembali ke Daftar Laporan</a>
                 </div>
             </div>
         </div>

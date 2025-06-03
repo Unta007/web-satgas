@@ -38,8 +38,8 @@
                                     <td>
                                         @if ($report->status == 'unread')
                                             <span
-                                                class="badge text-info-emphasis bg-info-subtle border border-info-subtle rounded-pill">
-                                                <i class="bi bi-exclamation fs-6" style="vertical-align: -2px;"></i> UNREAD
+                                                class="badge text-info-emphasis bg-info-subtle border border-info-subtle rounded-pill py-1 px-2 ms-1">
+                                                <i class="bi bi-exclamation-lg"></i> UNREAD
                                             </span>
                                         @else
                                             <span
@@ -66,11 +66,6 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr>
-                                    <td colspan="7" class="text-center py-4">
-                                        <p class="mb-0 text-muted">Tidak ada laporan yang belum dibaca.</p>
-                                    </td>
-                                </tr>
                             @endforelse
                         </tbody>
                     </table>

@@ -42,6 +42,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/reports/ongoing', [ReportListController::class, 'ongoing'])->name('reports.ongoing');
     Route::get('/reports/solved', [ReportListController::class, 'solved'])->name('reports.solved');
     Route::get('/reports/denied', [ReportListController::class, 'denied'])->name('reports.denied');
+    Route::get('/reports/archived', [App\Http\Controllers\Admin\ReportListController::class, 'archived'])->name('reports.archived');
     Route::get('/reports/{report}/edit', [ReportListController::class, 'edit'])->name('reports.edit');
     Route::get('/reports/{report}/evidence/download', [ReportListController::class, 'downloadEvidence'])->name('reports.downloadEvidence');
     Route::put('/reports/{report}/update-status', [ReportListController::class, 'updateStatus'])->name('reports.updateStatus');
