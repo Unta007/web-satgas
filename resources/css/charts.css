@@ -1,0 +1,12 @@
+#customChartLegend ul {
+    font-size: 1rem;
+}
+
+#customChartLegend li div span:last-child {
+    color: #000000;
+}
+
+#customChartLegend li span.fw-semibold {
+    color: #000000;
+    margin-right: 5rem;
+}

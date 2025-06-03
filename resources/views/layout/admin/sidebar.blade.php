@@ -37,8 +37,11 @@
             </a>
             <div class="collapse" id="reportsCollapse">
                 <div class="submenu">
-                    <a href="#" class="nav-link">All Reports</a>
-                    <a href="#" class="nav-link">New Reports</a>
+                    <a href="{{ route('admin.reports.unread') }}" class="nav-link {{ Request::is('admin/reports/unread*') ? 'active' : '' }}">Unread</a>
+                    <a href="{{ route('admin.reports.review') }}" class="nav-link {{ Request::is('admin/reports/review*') ? 'active' : '' }}">Review</a>
+                    <a href="{{ route('admin.reports.ongoing') }}" class="nav-link {{ Request::is('admin/reports/ongoing*') ? 'active' : '' }}">Ongoing</a>
+                    <a href="{{ route('admin.reports.solved') }}" class="nav-link {{ Request::is('admin/reports/solved*') ? 'active' : '' }}}">Solved</a>
+                    <a href="{{ route('admin.reports.denied') }}" class="nav-link {{ Request::is('admin/reports/denied*') ? 'active' : '' }}">Denied</a>
                     <a href="#" class="nav-link">Archived</a>
                 </div>
             </div>

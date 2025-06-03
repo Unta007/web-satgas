@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory; // Jika Anda menggunakan factory
+use Illuminate\Database\Eloquent\Factories\HasFactory; 
 
 class Report extends Model
 {
-    // use HasFactory; // Aktifkan jika Anda membuat factory
+    use HasFactory;
 
     protected $table = 'report';
 
@@ -25,7 +25,8 @@ class Report extends Model
         'perpetrator_name',     // Baru
         'perpetrator_role',     // Menggantikan predator_role
         'evidence_path',
-        'agreement',            // Baru
+        'agreement',
+        'status',                // Baru
     ];
 
     protected $casts = [

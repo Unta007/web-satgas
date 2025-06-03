@@ -1,0 +1,62 @@
+.dataTables_wrapper .row:last-child {
+    align-items: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0px;
+}
+
+.dataTables_length_custom {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    label {
+        margin-right: 0.5rem;
+        font-weight: normal;
+        white-space: nowrap;
+    }
+
+    select.form-select {
+        width: auto !important;
+        min-width: 75px;
+        display: inline-block !important;
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+        height: calc(1.5em + 0.5rem + 2px);
+    }
+}
+
+.dataTables_info {
+    margin-bottom: 0.9rem;
+    font-size: 1rem;
+}
+
+.dataTables_pagination_custom {
+    display: flex;
+    justify-content: flex-end;
+
+    .pagination {
+        padding-bottom: 0%;
+    }
+
+    .page-item .page-link {
+        padding: 0.3rem 0.8rem;
+        font-size: 1rem;
+    }
+}
+
+.dataTables_filter {
+    label {
+        font-weight: normal;
+    }
+    input.form-control {
+        display: inline-block;
+        width: auto;
+        margin-left: 0.5rem;
+    }
+}
+
+.dataTables_wrapper {
+    .row {
+        margin-bottom: 0.5rem;
+    }
+}

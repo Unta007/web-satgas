@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ChartController;
+use App\Http\Controllers\Admin\ReportListController;
 
 // ... Rute Auth dan lainnya ...
 Auth::routes(['verify' => true]);
@@ -36,4 +37,13 @@ Route::get('/about-us', function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/charts', [ChartController::class, 'index'])->name('charts.index');
+    Route::get('/reports/unread', [ReportListController::class, 'unread'])->name('reports.unread');
+    Route::get('/reports/review', [ReportListController::class, 'review'])->name('reports.review');
+    Route::get('/reports/ongoing', [ReportListController::class, 'ongoing'])->name('reports.ongoing');
+    Route::get('/reports/solved', [ReportListController::class, 'solved'])->name('reports.solved');
+    Route::get('/reports/denied', [ReportListController::class, 'denied'])->name('reports.denied');
+    Route::get('/reports/{report}/edit', [ReportListController::class, 'edit'])->name('reports.edit');
+    Route::get('/reports/{report}/evidence/download', [ReportListController::class, 'downloadEvidence'])->name('reports.downloadEvidence');
+    Route::put('/reports/{report}/update-status', [ReportListController::class, 'updateStatus'])->name('reports.updateStatus');
+    Route::delete('/reports/{report}', [ReportListController::class, 'destroy'])->name('reports.destroy');
 });

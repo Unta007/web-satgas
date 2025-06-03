@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('report', function (Blueprint $table) {
             // Menambahkan kolom status setelah kolom 'evidence_path'
-            $table->enum('status', ['review', 'ongoing', 'solved', 'denied', 'archived'])
+            $table->enum('status', ['unread', 'review', 'ongoing', 'solved', 'denied', 'archived'])
                   ->default('review') // Set nilai default saat laporan dibuat
                   ->after('evidence_path');
         });

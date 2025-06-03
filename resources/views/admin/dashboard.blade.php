@@ -67,13 +67,13 @@
                         <h5 class="card-title fw-semibold mb-4">Overall Report Status</h5>
                         <div class="d-flex flex-column gap-3">
                             @php
-                                $statuses = ['review', 'ongoing', 'solved', 'denied', 'archived'];
+                                $statuses = ['unread', 'review', 'ongoing', 'solved', 'denied', 'archived'];
                                 $totalStatusReports = $reportStatusCounts->sum();
                             @endphp
 
                             @foreach ($statuses as $status)
                                 @php
-                                    $count = $reportStatusReports[$status] ?? 0;
+                                    $count = $reportStatusCounts[$status] ?? 0;
                                     $percentage = $totalStatusReports > 0 ? ($count / $totalStatusReports) * 100 : 0;
                                 @endphp
                                 <div>
@@ -82,7 +82,7 @@
                                         <span>{{ $count }}</span>
                                     </div>
                                     <div class="progress" style="height: 10px;">
-                                        <div class="progress-bar bg-secondary" role="progressbar"
+                                        <div class="progress-bar bg-info" role="progressbar"
                                             style="width: {{ $percentage }}%" aria-valuenow="{{ $percentage }}"
                                             aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>

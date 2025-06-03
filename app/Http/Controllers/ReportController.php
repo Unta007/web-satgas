@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule; // Penting untuk validasi 'in' dan 'required_if'
+use Illuminate\Validation\Rule;
 
 class ReportController extends Controller
 {
@@ -78,15 +77,23 @@ class ReportController extends Controller
         }
 
         $data = $request->only([
-            'what_happened', 'where_happened', 'when_happened', 'reporter_role',
-            'has_witness', 'witness_name', 'witness_relation',
-            'knows_perpetrator', 'perpetrator_name', 'perpetrator_role'
+            'what_happened',
+            'where_happened',
+            'when_happened',
+            'reporter_role',
+            'has_witness',
+            'witness_name',
+            'witness_relation',
+            'knows_perpetrator',
+            'perpetrator_name',
+            'perpetrator_role'
         ]);
 
         $data['user_id'] = Auth::id();
         // Untuk checkbox, $request->has() mengembalikan true jika dicentang (value '1' atau 'on')
         // Jika kolom 'agreement' di database adalah boolean, ini akan disimpan sebagai 1 (true) atau 0 (false).
         $data['agreement'] = $request->has('agreement');
+        $data['status'] = 'unread';
 
         // Menangani field kondisional agar null jika tidak relevan
         if ($request->input('has_witness') === 'no') {
@@ -100,7 +107,7 @@ class ReportController extends Controller
             // atau bisa diisi 'tidak_diketahui' dari form jika logikanya begitu.
             // Validasi 'required_if' sudah menangani ini, tapi pastikan $data konsisten.
             if (!$request->filled('perpetrator_role') && $request->input('knows_perpetrator') === 'no') {
-                 $data['perpetrator_role'] = 'tidak_diketahui'; // Atau null jika lebih sesuai dengan DB Anda
+                $data['perpetrator_role'] = 'tidak_diketahui'; // Atau null jika lebih sesuai dengan DB Anda
             }
         }
 
@@ -121,46 +128,6 @@ class ReportController extends Controller
         // Arahkan ke rute yang menampilkan form lagi dengan pesan sukses,
         // atau ke halaman 'home', atau halaman 'terima kasih' khusus.
         return redirect()->route('reports.index') // Menggunakan nama rute untuk menampilkan form
-                         ->with('success', 'Laporan berhasil dikirim. Kami akan segera menindaklanjutinya.');
-    }
-
-
-    // --- Metode untuk API atau Admin Dashboard (sesuaikan jika perlu) ---
-
-    /**
-     * Menampilkan daftar laporan (mungkin untuk Admin).
-     * @return \Illuminate\Http\JsonResponse | \Illuminate\View\View
-     */
-    public function index()
-    {
-        // Contoh jika untuk Admin Web (perlu rute dan view admin terpisah)
-        // $reports = Report::with('user')->latest()->paginate(15);
-        // return view('admin.reports.index', compact('reports'));
-
-        // Versi API yang ada:
-        $reports = Report::with('user')->latest()->get();
-        return response()->json([
-            'success' => true,
-            'data' => $reports,
-        ], 200);
-    }
-
-    /**
-     * Menampilkan detail laporan spesifik (mungkin untuk Admin).
-     * @param  \App\Models\Report  $report
-     * @return \Illuminate\Http\JsonResponse | \Illuminate\View\View
-     */
-    public function show(Report $report)
-    {
-        // Contoh jika untuk Admin Web:
-        // $report->load('user');
-        // return view('admin.reports.show', compact('report'));
-
-        // Versi API yang ada:
-        $report->load('user');
-        return response()->json([
-            'success' => true,
-            'data' => $report,
-        ], 200);
+            ->with('success', 'Laporan berhasil dikirim. Kami akan segera menindaklanjutinya.');
     }
 }

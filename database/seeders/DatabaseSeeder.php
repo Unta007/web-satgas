@@ -2,22 +2,27 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User; // Import User
+use App\Models\Report; // Import Report
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // User::factory(200)->create([
+        //     'role' => 'user'
+        // ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Report::factory(10)->unread()->create();
+        // Report::factory(50)->review()->create();
+        Report::factory(50)->ongoing()->create();
+        Report::factory(45)->solved()->create();
+        Report::factory(45)->denied()->create();
+
+        // Contoh menggunakan state untuk membuat laporan dengan status spesifik:
+        // Report::factory(10)->unread()->create();
+        // Report::factory(5)->review()->create();
+
     }
 }

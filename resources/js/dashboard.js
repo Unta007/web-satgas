@@ -66,7 +66,19 @@ document.addEventListener('DOMContentLoaded', () => {
             legend: { display: false }
         },
         scales: {
-            y: { beginAtZero: true }
+            y: {
+                beginAtZero: true,
+                // TAMBAHKAN BLOK INI
+                ticks: {
+                    precision: 0, // Memastikan tidak ada angka desimal
+                    callback: function (value) {
+                        // Hanya tampilkan label jika nilainya adalah bilangan bulat
+                        if (Number.isInteger(value)) {
+                            return value;
+                        }
+                    }
+                }
+            }
         }
     });
 
