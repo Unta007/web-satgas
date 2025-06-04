@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class ReportController extends Controller
 {
@@ -36,7 +37,7 @@ class ReportController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'what_happened' => 'required|string|max:60000', // Max length bisa disesuaikan
+            'what_happened' => 'required|string|max:60000',
             'where_happened' => 'required|string|max:255',
             'when_happened' => 'required|date',
             'reporter_role' => ['required', Rule::in(['mahasiswa', 'staff', 'dosen', 'lainnya'])],
@@ -45,12 +46,12 @@ class ReportController extends Controller
             'witness_relation' => ['nullable', 'string', Rule::in(['teman', 'rekan_kerja', 'keluarga', 'tidak_kenal', 'lainnya']), 'required_if:has_witness,yes'],
             'knows_perpetrator' => ['required', Rule::in(['yes', 'no'])],
             'perpetrator_name' => 'nullable|string|max:255|required_if:knows_perpetrator,yes',
-            'perpetrator_role' => [ // Mengganti predator_role
-                'required_if:knows_perpetrator,yes', // Wajib jika identitas terlapor diketahui
+            'perpetrator_role' => [
+                'required_if:knows_perpetrator,yes',
                 Rule::in(['mahasiswa', 'staff', 'dosen', 'lainnya', 'tidak_diketahui'])
             ],
-            'evidence' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:2048', // Max 2MB
-            'agreement' => 'accepted', // Untuk checkbox 'required'
+            'evidence' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:2048',
+            'agreement' => 'accepted',
         ];
 
         $messages = [
@@ -90,12 +91,9 @@ class ReportController extends Controller
         ]);
 
         $data['user_id'] = Auth::id();
-        // Untuk checkbox, $request->has() mengembalikan true jika dicentang (value '1' atau 'on')
-        // Jika kolom 'agreement' di database adalah boolean, ini akan disimpan sebagai 1 (true) atau 0 (false).
         $data['agreement'] = $request->has('agreement');
         $data['status'] = 'unread';
 
-        // Menangani field kondisional agar null jika tidak relevan
         if ($request->input('has_witness') === 'no') {
             $data['witness_name'] = null;
             $data['witness_relation'] = null;
@@ -103,31 +101,59 @@ class ReportController extends Controller
 
         if ($request->input('knows_perpetrator') === 'no') {
             $data['perpetrator_name'] = null;
-            // Jika 'knows_perpetrator' adalah 'no', 'perpetrator_role' mungkin tidak dikirim
-            // atau bisa diisi 'tidak_diketahui' dari form jika logikanya begitu.
-            // Validasi 'required_if' sudah menangani ini, tapi pastikan $data konsisten.
-            if (!$request->filled('perpetrator_role') && $request->input('knows_perpetrator') === 'no') {
-                $data['perpetrator_role'] = 'tidak_diketahui'; // Atau null jika lebih sesuai dengan DB Anda
+            if (!$request->filled('perpetrator_role')) {
+                $data['perpetrator_role'] = 'tidak_diketahui';
             }
         }
-
 
         if ($request->hasFile('evidence')) {
             $file = $request->file('evidence');
             $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('evidence_uploads', $filename, 'local'); // Penyimpanan privat
+            $path = $file->storeAs('evidence_uploads', $filename, 'public'); // Simpan ke disk 'public'
             $data['evidence_path'] = $path;
         } else {
-            // Jika validasi 'evidence' adalah 'required', blok ini tidak akan tercapai.
-            // Jika 'evidence' diubah menjadi 'nullable' di masa depan:
             $data['evidence_path'] = null;
         }
 
         Report::create($data);
 
-        // Arahkan ke rute yang menampilkan form lagi dengan pesan sukses,
-        // atau ke halaman 'home', atau halaman 'terima kasih' khusus.
-        return redirect()->route('reports.index') // Menggunakan nama rute untuk menampilkan form
+        return redirect()->route('reports.index') // Ganti dengan route yang sesuai, misal halaman "Laporan Saya"
             ->with('success', 'Laporan berhasil dikirim. Kami akan segera menindaklanjutinya.');
+    }
+
+    /**
+     * Menampilkan detail laporan spesifik untuk pengguna yang membuatnya.
+     *
+     * @param  \App\Models\Report  $report
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
+    public function show(Report $report)
+    {
+        if ($report->user_id !== Auth::id()) {
+            return redirect()->route('home')->with('error', 'Anda tidak memiliki izin untuk melihat laporan ini.');
+        }
+
+        return view('user.show-report', compact('report'));
+    }
+
+    /**
+     * Mengunduh file bukti untuk laporan spesifik, hanya untuk pemilik laporan.
+     *
+     * @param  \App\Models\Report  $report
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function downloadUserEvidence(Report $report)
+    {
+        if ($report->user_id !== Auth::id()) {
+            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk mengunduh bukti ini.');
+        }
+
+        if (!$report->evidence_path || !Storage::disk('public')->exists($report->evidence_path)) {
+            return redirect()->back()->with('error', 'File bukti tidak ditemukan atau tidak dapat diakses.');
+        }
+
+        $fileName = basename($report->evidence_path);
+
+        return Storage::disk('public')->download($report->evidence_path, $fileName);
     }
 }

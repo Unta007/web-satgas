@@ -8,6 +8,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ChartController;
 use App\Http\Controllers\Admin\ReportListController;
+use App\Http\Controllers\UserNotificationController;
 
 // ... Rute Auth dan lainnya ...
 Auth::routes(['verify' => true]);
@@ -26,10 +27,18 @@ Route::get('/educational-contents/{slug}', [ArticleController::class, 'show'])->
 Route::middleware(['auth'])->group(function () { // Semua rute laporan memerlukan login
     Route::get('/report', [ReportController::class, 'showForm'])->name('reports.index');
     Route::post('/reports/create', [ReportController::class, 'store'])->name('reports.store');
+    Route::get('/report/{report}', [App\Http\Controllers\ReportController::class, 'show'])->name('reports.show');
+    Route::get('/report/{report}/download', [App\Http\Controllers\ReportController::class, 'downloadUserEvidence'])->name('reports.downloadEvidence');
 });
 
 Route::get('/about-us', function () {
     return view('user.about');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/notifications', [UserNotificationController::class, 'index'])->name('notifications.index');
+    Route::get('/notifications/{notification}', [UserNotificationController::class, 'show'])->name('notifications.show'); // Untuk menandai terbaca dan redirect
+    Route::post('/notifications/mark-all-as-read', [UserNotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
 });
 
 

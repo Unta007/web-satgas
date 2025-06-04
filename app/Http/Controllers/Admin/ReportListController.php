@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\Report;
 use Illuminate\Support\Facades\Storage;
+use App\Notifications\ReportStatusUpdated;
 
 
 class ReportListController extends Controller
@@ -176,61 +177,80 @@ class ReportListController extends Controller
         ]);
 
         $selectedAction = $request->status;
-        $oldStatus = $report->status; // Simpan status lama untuk perbandingan jika perlu
-        $wasArchived = $report->is_archived; // Simpan status arsip lama
+        $oldStatus = $report->status; // Simpan status lama
+        $wasArchived = $report->is_archived;
 
         $successMessage = '';
-        $redirectRoute = '';
+        $redirectRouteName = '';
+
+        $statusChangedForUserNotification = false;
 
         if ($selectedAction == 'archived') {
-            $report->is_archived = true;
-            // Status asli ($report->status) tidak diubah saat mengarsipkan
-            $successMessage = 'Laporan #' . $report->id . ' berhasil diarsipkan.';
-            $redirectRoute = 'admin.reports.archived'; // Arahkan ke halaman arsip
+            if (!$wasArchived) { // Hanya set jika sebelumnya tidak diarsipkan
+                $report->is_archived = true;
+                $successMessage = 'Laporan #' . $report->id . ' berhasil diarsipkan.';
+                // Tidak mengirim notifikasi status jika hanya diarsipkan, kecuali Anda mau
+            } else {
+                $successMessage = 'Laporan #' . $report->id . ' sudah diarsipkan.';
+            }
+            $redirectRouteName = 'admin.reports.archived';
         } else {
-            // Jika status diubah ke selain 'archived', maka laporan dianggap tidak diarsipkan lagi
-            // dan statusnya diperbarui.
-            $report->status = $selectedAction;
-            $report->is_archived = false; // Pastikan tidak diarsipkan jika status aktif diubah
-            $successMessage = 'Status laporan #' . $report->id . ' berhasil diperbarui menjadi "' . ucfirst($selectedAction) . '".';
+            // Jika status baru berbeda dengan status lama ATAU jika laporan di-unarchive
+            if ($report->status !== $selectedAction || $report->is_archived) {
+                $report->status = $selectedAction;
+                $statusChangedForUserNotification = true; // Tandai bahwa status berubah untuk notifikasi user
+            }
+            $report->is_archived = false; // Jika status aktif diubah, pastikan tidak diarsipkan
 
-            // Tentukan route redirect berdasarkan status baru
+            if ($statusChangedForUserNotification) {
+                $successMessage = 'Status laporan #' . $report->id . ' berhasil diperbarui menjadi "' . ucfirst($selectedAction) . '".';
+            } else {
+                $successMessage = 'Status laporan #' . $report->id . ' tidak berubah.';
+            }
+
             switch ($selectedAction) {
                 case 'unread':
-                    $redirectRoute = 'admin.reports.unread';
+                    $redirectRouteName = 'admin.reports.unread';
                     break;
                 case 'review':
-                    $redirectRoute = 'admin.reports.review';
+                    $redirectRouteName = 'admin.reports.review';
                     break;
                 case 'ongoing':
-                    $redirectRoute = 'admin.reports.ongoing';
+                    $redirectRouteName = 'admin.reports.ongoing';
                     break;
                 case 'solved':
-                    $redirectRoute = 'admin.reports.solved';
+                    $redirectRouteName = 'admin.reports.solved';
                     break;
                 case 'denied':
-                    $redirectRoute = 'admin.reports.denied';
+                    $redirectRouteName = 'admin.reports.denied';
                     break;
                 default:
-                    // Fallback jika ada status baru yang belum terdefinisi di sini
-                    $redirectRoute = 'admin.reports.unread';
+                    $redirectRouteName = 'admin.reports.unread';
             }
         }
 
         $report->save();
 
-        // Jika laporan sebelumnya diarsipkan dan sekarang statusnya diubah (menjadi tidak diarsipkan),
-        // maka redirect ke halaman status baru.
-        // Jika hanya diarsipkan, redirect ke halaman arsip.
-        // Jika status diubah dari satu status aktif ke status aktif lainnya, redirect ke halaman status baru.
-        if ($redirectRoute) {
-            return redirect()->route($redirectRoute)->with('success', $successMessage);
+        // Kirim notifikasi ke pengguna jika statusnya berubah (dan bukan hanya pengarsipan)
+        // Pastikan $report->user adalah instance User yang membuat laporan
+        if ($statusChangedForUserNotification && $report->user && $selectedAction !== 'archived') {
+            // Pastikan user yang membuat laporan ada dan bisa menerima notifikasi
+            // Anda mungkin perlu memuat relasi user jika belum: $report->load('user');
+            $reportOwner = $report->user; // Asumsi relasi 'user' ada di model Report
+            if ($reportOwner) {
+                try {
+                    $reportOwner->notify(new ReportStatusUpdated($report, $selectedAction, $oldStatus));
+                } catch (\Exception $e) {
+                    // Tangani error pengiriman notifikasi jika perlu, misal log error
+                    \Log::error("Gagal mengirim notifikasi untuk laporan #{$report->id}: " . $e->getMessage());
+                }
+            }
         }
 
-        // Fallback jika $redirectRoute tidak terisi (seharusnya tidak terjadi dengan logika di atas)
-        // atau jika Anda ingin kembali ke halaman edit setelah beberapa aksi tertentu.
-        // Untuk sekarang, kita selalu redirect ke halaman daftar yang sesuai.
-        return redirect()->back()->with('success', $successMessage); // Baris ini bisa dihapus jika redirectRoute selalu terisi
+        if ($redirectRouteName) {
+            return redirect()->route($redirectRouteName)->with('success', $successMessage);
+        }
+        return redirect()->back()->with('success', $successMessage);
     }
 
     /**

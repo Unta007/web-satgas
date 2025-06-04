@@ -22,47 +22,95 @@
 
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
                 @auth
-                    {{-- ==== NOTIFICATION DROPDOWN START ==== --}}
                     <li class="nav-item dropdown">
                         <a class="nav-link" href="#" id="navbarNotificationDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false" title="Notifikasi">
                             <i class="bi bi-bell-fill fs-5 position-relative">
-                                {{-- Opsional: Badge untuk jumlah notifikasi belum dibaca --}}
-                                {{-- Ganti angka '3' dengan jumlah notifikasi belum dibaca dari backend --}}
-                                @php $unreadNotificationsCount = 0; /* Contoh, ambil dari backend */ @endphp
-                                @if (isset($unreadNotificationsCount) && $unreadNotificationsCount > 0)
+                                @if (isset($unreadUserNotificationsCount) && $unreadUserNotificationsCount > 0)
                                     <span
                                         class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                                         style="font-size:0.6rem; padding: .25rem .4rem !important;">
-                                        {{ $unreadNotificationsCount }}
+                                        {{ $unreadUserNotificationsCount }}
                                         <span class="visually-hidden">notifikasi baru</span>
                                     </span>
                                 @endif
                             </i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end notification-dropdown-menu shadow border-0 mt-2"
-                            aria-labelledby="navbarNotificationDropdown">
+                            aria-labelledby="navbarNotificationDropdown"
+                            style="min-width: 320px; max-height: 400px; overflow-y: auto;">
                             <li>
-                                <div class="dropdown-header notification-header">
-                                    <h6 class="mb-0 fw-bold">Notification</h6>
-                                    {{-- <a href="#" class="small text-decoration-none ms-auto">Tandai semua terbaca</a> --}}
+                                <div
+                                    class="dropdown-header notification-header d-flex justify-content-between align-items-center px-3 py-2">
+                                    <h6 class="mb-0 fw-bold">Notifikasi</h6>
+                                    @if ($unreadUserNotificationsCount > 0)
+                                        <form action="{{ route('notifications.markAllAsRead') }}" method="POST"
+                                            class="d-inline mark-all-read-form">
+                                            @csrf
+                                            <button type="submit"
+                                                class="btn btn-link small text-decoration-none p-0 m-0 align-baseline">Tandai
+                                                semua terbaca</button>
+                                        </form>
+                                    @endif
                                 </div>
                             </li>
                             <li>
                                 <hr class="dropdown-divider my-0">
                             </li>
 
-                            {{-- Contoh Item Notifikasi 1 (Belum Dibaca) --}}
-                            {{-- Ganti dengan loop dan data dari backend --}}
-                            
-                            {{-- Contoh Item Notifikasi 2 (Sudah Dibaca) --}}
+                            @if (isset($userNotifications) && $userNotifications->count() > 0)
+                                @foreach ($userNotifications as $notification)
+                                    <li>
+                                        <a class="dropdown-item notification-item {{ $notification->read_at ? 'read' : 'unread' }} px-3 py-2"
+                                            href="{{ route('notifications.show', $notification->id) }}"
+                                            {{-- Akan mengarah ke laporan & tandai terbaca --}} data-notification-id="{{ $notification->id }}">
+                                            <div class="d-flex align-items-start">
+                                                <div class="me-2 mt-1">
+                                                    {{-- Ikon berdasarkan status atau tipe notifikasi --}}
+                                                    @php
+                                                        $iconClass = 'bi-info-circle-fill text-primary'; // Default
+                                                        if (isset($notification->data['new_status'])) {
+                                                            switch (strtolower($notification->data['new_status'])) {
+                                                                case 'review':
+                                                                    $iconClass = 'bi-search text-info';
+                                                                    break;
+                                                                case 'ongoing':
+                                                                    $iconClass = 'bi-hourglass-split text-warning';
+                                                                    break;
+                                                                case 'solved':
+                                                                    $iconClass = 'bi-check-circle-fill text-success';
+                                                                    break;
+                                                                case 'denied':
+                                                                    $iconClass = 'bi-x-circle-fill text-danger';
+                                                                    break;
+                                                            }
+                                                        }
+                                                    @endphp
+                                                    <i class="bi {{ $iconClass }}"></i>
+                                                </div>
+                                                <div class="notification-content">
+                                                    <p class="mb-0 small lh-sm">
+                                                        {!! $notification->data['message_html'] ?? ($notification->data['message_raw'] ?? 'Notifikasi baru.') !!}
+                                                    </p>
+                                                    <small
+                                                        class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            @else
+                                <li>
+                                    <p class="text-center text-muted small py-3 mb-0">Tidak ada notifikasi baru.</p>
+                                </li>
+                            @endif
 
                             <li>
                                 <hr class="dropdown-divider my-0">
                             </li>
                             <li>
                                 <a class="dropdown-item text-center small text-muted py-2 view-all-notifications"
-                                    href="#">
+                                    href="{{ route('notifications.index') }}"> {{-- Ganti dengan route halaman semua notifikasi --}}
                                     Lihat semua notifikasi
                                 </a>
                             </li>
@@ -82,7 +130,7 @@
                                         class="bi bi-person-fill me-2"></i>Profil Saya</a></li> --}}
 
                             {{-- ==== LINK DASHBOARD ADMIN (KONDISIONAL) ==== --}}
-                            @if(auth()->user()->hasAdminAccess())
+                            @if (auth()->user()->hasAdminAccess())
                                 <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}"><i
                                             class="bi bi-speedometer2 me-2"></i>Dashboard Admin</a></li>
                             @endif
