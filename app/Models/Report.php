@@ -32,8 +32,8 @@ class Report extends Model
 
     protected $casts = [
         'when_happened' => 'datetime',
-        'has_witness' => 'string', 
-        'knows_perpetrator' => 'string', 
+        'has_witness' => 'string',
+        'knows_perpetrator' => 'string',
         'agreement' => 'boolean',
     ];
 

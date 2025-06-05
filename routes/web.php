@@ -1,14 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ArticleController;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UserNotificationController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ChartController;
 use App\Http\Controllers\Admin\ReportListController;
-use App\Http\Controllers\UserNotificationController;
+use App\Http\Controllers\Admin\AdminArticleController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\ActivityLogController;
+use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\StaffController;
 
 // ... Rute Auth dan lainnya ...
 Auth::routes(['verify' => true]);
@@ -17,10 +22,8 @@ Auth::routes(['verify' => true]);
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Rute-rute yang sudah ada
-Route::get('/educational-contents', function () {
-    return view('user.educational_contents');
-});
-Route::get('/educational-contents/{slug}', [ArticleController::class, 'show'])->name('article.show');
+Route::get('/educational-contents', [ArticleController::class, 'index'])->name('articles.index');
+Route::get('/educational-contents/{article:slug}', [ArticleController::class, 'show'])->name('articles.show');
 
 
 // --- Rute untuk Fitur Laporan ---
@@ -43,7 +46,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 // Rute untuk Admin melihat laporan (Contoh, bisa memerlukan middleware 'admin' tambahan)
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function() {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/charts', [ChartController::class, 'index'])->name('charts.index');
     Route::get('/reports/unread', [ReportListController::class, 'unread'])->name('reports.unread');
@@ -56,4 +59,19 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/reports/{report}/evidence/download', [ReportListController::class, 'downloadEvidence'])->name('reports.downloadEvidence');
     Route::put('/reports/{report}/update-status', [ReportListController::class, 'updateStatus'])->name('reports.updateStatus');
     Route::delete('/reports/{report}', [ReportListController::class, 'destroy'])->name('reports.destroy');
+    Route::resource('articles', AdminArticleController::class);
+    Route::post('articles/upload-image', [AdminArticleController::class, 'uploadImage'])->name('articles.upload_image');
+    Route::resource('users', AdminUserController::class)->names([
+        'index' => 'users.index',
+        'create' => 'users.create',
+        'store' => 'users.store',
+        'show' => 'users.show',
+        'edit' => 'users.edit',
+        'update' => 'users.update',
+        'destroy' => 'users.destroy',
+    ])->middleware('role:global_admin');
+    Route::get('logs', [ActivityLogController::class, 'index'])
+        ->name('logs.index');
+    Route::get('profile', [AdminProfileController::class, 'edit'])->name('profile');
+    Route::put('profile/update-password', [AdminProfileController::class, 'updatePassword'])->name('profile.update_password');
 });

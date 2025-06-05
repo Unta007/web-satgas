@@ -2,141 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
-    private $articles = [
-        'understanding-sexual-harassment' => [
-            'title' => 'Understanding Sexual Harassment',
-            'content' => [
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra orci ut pretium aliquam. Mauris ac pellentesque justo. Integer congue sodales nisi, ut fringilla nisi ultricies sit amet. Nulla porta vitae metus sed pharetra. Aliquam ultricies, tellus id ullamcorper imperdiet, massa libero consequat ante, ut dapibus lectus risus non lorem. Suspendisse potenti. Sed pretium faucibus venenatis.',
-                'Proin pharetra vestibulum elit, ac semper nunc. Nam at purus consectetur, faucibus tortor eget, molestie quam. Nulla facilisi. Proin consectetur lacus justo, vel tincidunt metus pretium ac. Proin ultricies dui non tellus gravida porttitor. Sed at lacus non massa efficitur pretium. Mauris ut facilisis tortor, quis auctor tellus. Maecenas quis luctus ipsum, sit amet tincidunt nulla. Nullam blandit massa ipsum, at molestie enim convallis nec. Curabitur ornare efficitur magna sit amet placerat. Suspendisse eleifend leo quis nibh pulvinar auctor. Phasellus vestibulum faucibus aliquet. Proin nec imperdiet lorem, et euismod augue.',
-                'Praesent egestas convallis dui porttitor vulputate. Nunc finibus leo nec sem scelerisque, sed pellentesque velit vulputate. Praesent bibendum urna ac sem iaculis, at pellentesque ex dapibus. Sed a venenatis purus. Curabitur ex nunc, commodo ac risus nec, sollicitudin eleifend libero. Nulla congue, purus id convallis venenatis, ex est auctor felis, vitae venenatis arcu massa a sapien. In condimentum purus eros, at fringilla turpis pellentesque nec. Integer at elementum augue, sed bibendum eros.',
-                'Proin non ex ante. Vestibulum tincidunt dui augue, sed convallis felis facilisis nec. In elementum ante ut elit porta, eget volutpat nisi convallis. Sed ac orci posuere, molestie justo eget, porta metus. Aliquam turpis nunc, mattis nec dolor non, pharetra pretium quam. Vivamus finibus, dui eget rutrum laoreet, leo enim faucibus risus, vel faucibus sem turpis eget dolor. Vivamus ultrices erat at consectetur feugiat. Aenean in metus sit amet augue dapibus rutrum. Curabitur fermentum mauris ac gravida elementum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                'Sed posuere, eros id semper iaculis, mi ipsum imperdiet dui, ac malesuada sem justo et metus. Pellentesque tempus leo at libero mollis pretium. Cras non sodales tortor. Integer at nulla fermentum, suscipit orci et, faucibus risus. Suspendisse ultricies mauris et tincidunt finibus. Aliquam erat volutpat. Fusce at nisl ligula. Nunc cursus ligula urna, at sollicitudin eros hendrerit sed.',
-            ],
-            'image' => 'carousel-1.jpg',
-            'published_date' => 'April 27, 2024',
-        ],
-        'recognizing-signs' => [
-            'title' => 'Recognizing Signs of Sexual Harassment',
-            'content' => [
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra orci ut pretium aliquam. Mauris ac pellentesque justo. Integer congue sodales nisi, ut fringilla nisi ultricies sit amet. Nulla porta vitae metus sed pharetra. Aliquam ultricies, tellus id ullamcorper imperdiet, massa libero consequat ante, ut dapibus lectus risus non lorem. Suspendisse potenti. Sed pretium faucibus venenatis.',
-                'Proin pharetra vestibulum elit, ac semper nunc. Nam at purus consectetur, faucibus tortor eget, molestie quam. Nulla facilisi. Proin consectetur lacus justo, vel tincidunt metus pretium ac. Proin ultricies dui non tellus gravida porttitor. Sed at lacus non massa efficitur pretium. Mauris ut facilisis tortor, quis auctor tellus. Maecenas quis luctus ipsum, sit amet tincidunt nulla. Nullam blandit massa ipsum, at molestie enim convallis nec. Curabitur ornare efficitur magna sit amet placerat. Suspendisse eleifend leo quis nibh pulvinar auctor. Phasellus vestibulum faucibus aliquet. Proin nec imperdiet lorem, et euismod augue.',
-                'Praesent egestas convallis dui porttitor vulputate. Nunc finibus leo nec sem scelerisque, sed pellentesque velit vulputate. Praesent bibendum urna ac sem iaculis, at pellentesque ex dapibus. Sed a venenatis purus. Curabitur ex nunc, commodo ac risus nec, sollicitudin eleifend libero. Nulla congue, purus id convallis venenatis, ex est auctor felis, vitae venenatis arcu massa a sapien. In condimentum purus eros, at fringilla turpis pellentesque nec. Integer at elementum augue, sed bibendum eros.',
-                'Proin non ex ante. Vestibulum tincidunt dui augue, sed convallis felis facilisis nec. In elementum ante ut elit porta, eget volutpat nisi convallis. Sed ac orci posuere, molestie justo eget, porta metus. Aliquam turpis nunc, mattis nec dolor non, pharetra pretium quam. Vivamus finibus, dui eget rutrum laoreet, leo enim faucibus risus, vel faucibus sem turpis eget dolor. Vivamus ultrices erat at consectetur feugiat. Aenean in metus sit amet augue dapibus rutrum. Curabitur fermentum mauris ac gravida elementum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                'Sed posuere, eros id semper iaculis, mi ipsum imperdiet dui, ac malesuada sem justo et metus. Pellentesque tempus leo at libero mollis pretium. Cras non sodales tortor. Integer at nulla fermentum, suscipit orci et, faucibus risus. Suspendisse ultricies mauris et tincidunt finibus. Aliquam erat volutpat. Fusce at nisl ligula. Nunc cursus ligula urna, at sollicitudin eros hendrerit sed.',
-            ],
-            'image' => 'carousel-2.jpg',
-            'published_date' => 'April 20, 2024',
-        ],
-        'how-to-prevent' => [
-            'title' => 'How to Prevent Sexual Harassment',
-            'content' => [
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra orci ut pretium aliquam. Mauris ac pellentesque justo. Integer congue sodales nisi, ut fringilla nisi ultricies sit amet. Nulla porta vitae metus sed pharetra. Aliquam ultricies, tellus id ullamcorper imperdiet, massa libero consequat ante, ut dapibus lectus risus non lorem. Suspendisse potenti. Sed pretium faucibus venenatis.',
-                'Proin pharetra vestibulum elit, ac semper nunc. Nam at purus consectetur, faucibus tortor eget, molestie quam. Nulla facilisi. Proin consectetur lacus justo, vel tincidunt metus pretium ac. Proin ultricies dui non tellus gravida porttitor. Sed at lacus non massa efficitur pretium. Mauris ut facilisis tortor, quis auctor tellus. Maecenas quis luctus ipsum, sit amet tincidunt nulla. Nullam blandit massa ipsum, at molestie enim convallis nec. Curabitur ornare efficitur magna sit amet placerat. Suspendisse eleifend leo quis nibh pulvinar auctor. Phasellus vestibulum faucibus aliquet. Proin nec imperdiet lorem, et euismod augue.',
-                'Praesent egestas convallis dui porttitor vulputate. Nunc finibus leo nec sem scelerisque, sed pellentesque velit vulputate. Praesent bibendum urna ac sem iaculis, at pellentesque ex dapibus. Sed a venenatis purus. Curabitur ex nunc, commodo ac risus nec, sollicitudin eleifend libero. Nulla congue, purus id convallis venenatis, ex est auctor felis, vitae venenatis arcu massa a sapien. In condimentum purus eros, at fringilla turpis pellentesque nec. Integer at elementum augue, sed bibendum eros.',
-                'Proin non ex ante. Vestibulum tincidunt dui augue, sed convallis felis facilisis nec. In elementum ante ut elit porta, eget volutpat nisi convallis. Sed ac orci posuere, molestie justo eget, porta metus. Aliquam turpis nunc, mattis nec dolor non, pharetra pretium quam. Vivamus finibus, dui eget rutrum laoreet, leo enim faucibus risus, vel faucibus sem turpis eget dolor. Vivamus ultrices erat at consectetur feugiat. Aenean in metus sit amet augue dapibus rutrum. Curabitur fermentum mauris ac gravida elementum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                'Sed posuere, eros id semper iaculis, mi ipsum imperdiet dui, ac malesuada sem justo et metus. Pellentesque tempus leo at libero mollis pretium. Cras non sodales tortor. Integer at nulla fermentum, suscipit orci et, faucibus risus. Suspendisse ultricies mauris et tincidunt finibus. Aliquam erat volutpat. Fusce at nisl ligula. Nunc cursus ligula urna, at sollicitudin eros hendrerit sed.',
-            ],
-            'image' => 'carousel-3.jpg',
-            'published_date' => 'April 22, 2024',
-        ],
-        'support-resources' => [
-            'title' => 'Support Resources for Victims',
-            'content' => [
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra orci ut pretium aliquam. Mauris ac pellentesque justo. Integer congue sodales nisi, ut fringilla nisi ultricies sit amet. Nulla porta vitae metus sed pharetra. Aliquam ultricies, tellus id ullamcorper imperdiet, massa libero consequat ante, ut dapibus lectus risus non lorem. Suspendisse potenti. Sed pretium faucibus venenatis.',
-                'Proin pharetra vestibulum elit, ac semper nunc. Nam at purus consectetur, faucibus tortor eget, molestie quam. Nulla facilisi. Proin consectetur lacus justo, vel tincidunt metus pretium ac. Proin ultricies dui non tellus gravida porttitor. Sed at lacus non massa efficitur pretium. Mauris ut facilisis tortor, quis auctor tellus. Maecenas quis luctus ipsum, sit amet tincidunt nulla. Nullam blandit massa ipsum, at molestie enim convallis nec. Curabitur ornare efficitur magna sit amet placerat. Suspendisse eleifend leo quis nibh pulvinar auctor. Phasellus vestibulum faucibus aliquet. Proin nec imperdiet lorem, et euismod augue.',
-                'Praesent egestas convallis dui porttitor vulputate. Nunc finibus leo nec sem scelerisque, sed pellentesque velit vulputate. Praesent bibendum urna ac sem iaculis, at pellentesque ex dapibus. Sed a venenatis purus. Curabitur ex nunc, commodo ac risus nec, sollicitudin eleifend libero. Nulla congue, purus id convallis venenatis, ex est auctor felis, vitae venenatis arcu massa a sapien. In condimentum purus eros, at fringilla turpis pellentesque nec. Integer at elementum augue, sed bibendum eros.',
-                'Proin non ex ante. Vestibulum tincidunt dui augue, sed convallis felis facilisis nec. In elementum ante ut elit porta, eget volutpat nisi convallis. Sed ac orci posuere, molestie justo eget, porta metus. Aliquam turpis nunc, mattis nec dolor non, pharetra pretium quam. Vivamus finibus, dui eget rutrum laoreet, leo enim faucibus risus, vel faucibus sem turpis eget dolor. Vivamus ultrices erat at consectetur feugiat. Aenean in metus sit amet augue dapibus rutrum. Curabitur fermentum mauris ac gravida elementum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                'Sed posuere, eros id semper iaculis, mi ipsum imperdiet dui, ac malesuada sem justo et metus. Pellentesque tempus leo at libero mollis pretium. Cras non sodales tortor. Integer at nulla fermentum, suscipit orci et, faucibus risus. Suspendisse ultricies mauris et tincidunt finibus. Aliquam erat volutpat. Fusce at nisl ligula. Nunc cursus ligula urna, at sollicitudin eros hendrerit sed.',
-            ],
-            'image' => 'carousel-3.jpg',
-            'published_date' => 'April 24, 2024',
-        ],
-        'legal-rights' => [
-            'title' => 'Legal Rights and Reporting Procedures',
-            'content' => [
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra orci ut pretium aliquam. Mauris ac pellentesque justo. Integer congue sodales nisi, ut fringilla nisi ultricies sit amet. Nulla porta vitae metus sed pharetra. Aliquam ultricies, tellus id ullamcorper imperdiet, massa libero consequat ante, ut dapibus lectus risus non lorem. Suspendisse potenti. Sed pretium faucibus venenatis.',
-                'Proin pharetra vestibulum elit, ac semper nunc. Nam at purus consectetur, faucibus tortor eget, molestie quam. Nulla facilisi. Proin consectetur lacus justo, vel tincidunt metus pretium ac. Proin ultricies dui non tellus gravida porttitor. Sed at lacus non massa efficitur pretium. Mauris ut facilisis tortor, quis auctor tellus. Maecenas quis luctus ipsum, sit amet tincidunt nulla. Nullam blandit massa ipsum, at molestie enim convallis nec. Curabitur ornare efficitur magna sit amet placerat. Suspendisse eleifend leo quis nibh pulvinar auctor. Phasellus vestibulum faucibus aliquet. Proin nec imperdiet lorem, et euismod augue.',
-                'Praesent egestas convallis dui porttitor vulputate. Nunc finibus leo nec sem scelerisque, sed pellentesque velit vulputate. Praesent bibendum urna ac sem iaculis, at pellentesque ex dapibus. Sed a venenatis purus. Curabitur ex nunc, commodo ac risus nec, sollicitudin eleifend libero. Nulla congue, purus id convallis venenatis, ex est auctor felis, vitae venenatis arcu massa a sapien. In condimentum purus eros, at fringilla turpis pellentesque nec. Integer at elementum augue, sed bibendum eros.',
-                'Proin non ex ante. Vestibulum tincidunt dui augue, sed convallis felis facilisis nec. In elementum ante ut elit porta, eget volutpat nisi convallis. Sed ac orci posuere, molestie justo eget, porta metus. Aliquam turpis nunc, mattis nec dolor non, pharetra pretium quam. Vivamus finibus, dui eget rutrum laoreet, leo enim faucibus risus, vel faucibus sem turpis eget dolor. Vivamus ultrices erat at consectetur feugiat. Aenean in metus sit amet augue dapibus rutrum. Curabitur fermentum mauris ac gravida elementum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                'Sed posuere, eros id semper iaculis, mi ipsum imperdiet dui, ac malesuada sem justo et metus. Pellentesque tempus leo at libero mollis pretium. Cras non sodales tortor. Integer at nulla fermentum, suscipit orci et, faucibus risus. Suspendisse ultricies mauris et tincidunt finibus. Aliquam erat volutpat. Fusce at nisl ligula. Nunc cursus ligula urna, at sollicitudin eros hendrerit sed.',
-            ],
-            'image' => 'carousel-3.jpg',
-            'published_date' => 'April 25, 2024',
-        ],
-        'workplace-culture' => [
-            'title' => 'Building a Respectful Workplace Culture',
-            'content' => [
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra orci ut pretium aliquam. Mauris ac pellentesque justo. Integer congue sodales nisi, ut fringilla nisi ultricies sit amet. Nulla porta vitae metus sed pharetra. Aliquam ultricies, tellus id ullamcorper imperdiet, massa libero consequat ante, ut dapibus lectus risus non lorem. Suspendisse potenti. Sed pretium faucibus venenatis.',
-                'Proin pharetra vestibulum elit, ac semper nunc. Nam at purus consectetur, faucibus tortor eget, molestie quam. Nulla facilisi. Proin consectetur lacus justo, vel tincidunt metus pretium ac. Proin ultricies dui non tellus gravida porttitor. Sed at lacus non massa efficitur pretium. Mauris ut facilisis tortor, quis auctor tellus. Maecenas quis luctus ipsum, sit amet tincidunt nulla. Nullam blandit massa ipsum, at molestie enim convallis nec. Curabitur ornare efficitur magna sit amet placerat. Suspendisse eleifend leo quis nibh pulvinar auctor. Phasellus vestibulum faucibus aliquet. Proin nec imperdiet lorem, et euismod augue.',
-                'Praesent egestas convallis dui porttitor vulputate. Nunc finibus leo nec sem scelerisque, sed pellentesque velit vulputate. Praesent bibendum urna ac sem iaculis, at pellentesque ex dapibus. Sed a venenatis purus. Curabitur ex nunc, commodo ac risus nec, sollicitudin eleifend libero. Nulla congue, purus id convallis venenatis, ex est auctor felis, vitae venenatis arcu massa a sapien. In condimentum purus eros, at fringilla turpis pellentesque nec. Integer at elementum augue, sed bibendum eros.',
-                'Proin non ex ante. Vestibulum tincidunt dui augue, sed convallis felis facilisis nec. In elementum ante ut elit porta, eget volutpat nisi convallis. Sed ac orci posuere, molestie justo eget, porta metus. Aliquam turpis nunc, mattis nec dolor non, pharetra pretium quam. Vivamus finibus, dui eget rutrum laoreet, leo enim faucibus risus, vel faucibus sem turpis eget dolor. Vivamus ultrices erat at consectetur feugiat. Aenean in metus sit amet augue dapibus rutrum. Curabitur fermentum mauris ac gravida elementum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                'Sed posuere, eros id semper iaculis, mi ipsum imperdiet dui, ac malesuada sem justo et metus. Pellentesque tempus leo at libero mollis pretium. Cras non sodales tortor. Integer at nulla fermentum, suscipit orci et, faucibus risus. Suspendisse ultricies mauris et tincidunt finibus. Aliquam erat volutpat. Fusce at nisl ligula. Nunc cursus ligula urna, at sollicitudin eros hendrerit sed.',
-            ],
-            'image' => 'carousel-2.jpg',
-            'published_date' => 'April 26, 2024',
-        ],
-        'reporting-channels' => [
-            'title' => 'Effective Reporting Channels',
-            'content' => [
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra orci ut pretium aliquam. Mauris ac pellentesque justo. Integer congue sodales nisi, ut fringilla nisi ultricies sit amet. Nulla porta vitae metus sed pharetra. Aliquam ultricies, tellus id ullamcorper imperdiet, massa libero consequat ante, ut dapibus lectus risus non lorem. Suspendisse potenti. Sed pretium faucibus venenatis.',
-                'Proin pharetra vestibulum elit, ac semper nunc. Nam at purus consectetur, faucibus tortor eget, molestie quam. Nulla facilisi. Proin consectetur lacus justo, vel tincidunt metus pretium ac. Proin ultricies dui non tellus gravida porttitor. Sed at lacus non massa efficitur pretium. Mauris ut facilisis tortor, quis auctor tellus. Maecenas quis luctus ipsum, sit amet tincidunt nulla. Nullam blandit massa ipsum, at molestie enim convallis nec. Curabitur ornare efficitur magna sit amet placerat. Suspendisse eleifend leo quis nibh pulvinar auctor. Phasellus vestibulum faucibus aliquet. Proin nec imperdiet lorem, et euismod augue.',
-                'Praesent egestas convallis dui porttitor vulputate. Nunc finibus leo nec sem scelerisque, sed pellentesque velit vulputate. Praesent bibendum urna ac sem iaculis, at pellentesque ex dapibus. Sed a venenatis purus. Curabitur ex nunc, commodo ac risus nec, sollicitudin eleifend libero. Nulla congue, purus id convallis venenatis, ex est auctor felis, vitae venenatis arcu massa a sapien. In condimentum purus eros, at fringilla turpis pellentesque nec. Integer at elementum augue, sed bibendum eros.',
-                'Proin non ex ante. Vestibulum tincidunt dui augue, sed convallis felis facilisis nec. In elementum ante ut elit porta, eget volutpat nisi convallis. Sed ac orci posuere, molestie justo eget, porta metus. Aliquam turpis nunc, mattis nec dolor non, pharetra pretium quam. Vivamus finibus, dui eget rutrum laoreet, leo enim faucibus risus, vel faucibus sem turpis eget dolor. Vivamus ultrices erat at consectetur feugiat. Aenean in metus sit amet augue dapibus rutrum. Curabitur fermentum mauris ac gravida elementum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                'Sed posuere, eros id semper iaculis, mi ipsum imperdiet dui, ac malesuada sem justo et metus. Pellentesque tempus leo at libero mollis pretium. Cras non sodales tortor. Integer at nulla fermentum, suscipit orci et, faucibus risus. Suspendisse ultricies mauris et tincidunt finibus. Aliquam erat volutpat. Fusce at nisl ligula. Nunc cursus ligula urna, at sollicitudin eros hendrerit sed.',
-            ],
-            'image' => 'carousel-3.jpg',
-            'published_date' => 'April 27, 2024',
-        ],
-        'emotional-impact' => [
-            'title' => 'The Emotional Impact of Harassment',
-            'content' => [
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra orci ut pretium aliquam. Mauris ac pellentesque justo. Integer congue sodales nisi, ut fringilla nisi ultricies sit amet. Nulla porta vitae metus sed pharetra. Aliquam ultricies, tellus id ullamcorper imperdiet, massa libero consequat ante, ut dapibus lectus risus non lorem. Suspendisse potenti. Sed pretium faucibus venenatis.',
-                'Proin pharetra vestibulum elit, ac semper nunc. Nam at purus consectetur, faucibus tortor eget, molestie quam. Nulla facilisi. Proin consectetur lacus justo, vel tincidunt metus pretium ac. Proin ultricies dui non tellus gravida porttitor. Sed at lacus non massa efficitur pretium. Mauris ut facilisis tortor, quis auctor tellus. Maecenas quis luctus ipsum, sit amet tincidunt nulla. Nullam blandit massa ipsum, at molestie enim convallis nec. Curabitur ornare efficitur magna sit amet placerat. Suspendisse eleifend leo quis nibh pulvinar auctor. Phasellus vestibulum faucibus aliquet. Proin nec imperdiet lorem, et euismod augue.',
-                'Praesent egestas convallis dui porttitor vulputate. Nunc finibus leo nec sem scelerisque, sed pellentesque velit vulputate. Praesent bibendum urna ac sem iaculis, at pellentesque ex dapibus. Sed a venenatis purus. Curabitur ex nunc, commodo ac risus nec, sollicitudin eleifend libero. Nulla congue, purus id convallis venenatis, ex est auctor felis, vitae venenatis arcu massa a sapien. In condimentum purus eros, at fringilla turpis pellentesque nec. Integer at elementum augue, sed bibendum eros.',
-                'Proin non ex ante. Vestibulum tincidunt dui augue, sed convallis felis facilisis nec. In elementum ante ut elit porta, eget volutpat nisi convallis. Sed ac orci posuere, molestie justo eget, porta metus. Aliquam turpis nunc, mattis nec dolor non, pharetra pretium quam. Vivamus finibus, dui eget rutrum laoreet, leo enim faucibus risus, vel faucibus sem turpis eget dolor. Vivamus ultrices erat at consectetur feugiat. Aenean in metus sit amet augue dapibus rutrum. Curabitur fermentum mauris ac gravida elementum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                'Sed posuere, eros id semper iaculis, mi ipsum imperdiet dui, ac malesuada sem justo et metus. Pellentesque tempus leo at libero mollis pretium. Cras non sodales tortor. Integer at nulla fermentum, suscipit orci et, faucibus risus. Suspendisse ultricies mauris et tincidunt finibus. Aliquam erat volutpat. Fusce at nisl ligula. Nunc cursus ligula urna, at sollicitudin eros hendrerit sed.',
-            ],
-            'image' => 'carousel-1.jpg',
-            'published_date' => 'April 28, 2024',
-        ],
-        'bystander-intervention' => [
-            'title' => 'Bystander Intervention Techniques',
-            'content' => [
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra orci ut pretium aliquam. Mauris ac pellentesque justo. Integer congue sodales nisi, ut fringilla nisi ultricies sit amet. Nulla porta vitae metus sed pharetra. Aliquam ultricies, tellus id ullamcorper imperdiet, massa libero consequat ante, ut dapibus lectus risus non lorem. Suspendisse potenti. Sed pretium faucibus venenatis.',
-                'Proin pharetra vestibulum elit, ac semper nunc. Nam at purus consectetur, faucibus tortor eget, molestie quam. Nulla facilisi. Proin consectetur lacus justo, vel tincidunt metus pretium ac. Proin ultricies dui non tellus gravida porttitor. Sed at lacus non massa efficitur pretium. Mauris ut facilisis tortor, quis auctor tellus. Maecenas quis luctus ipsum, sit amet tincidunt nulla. Nullam blandit massa ipsum, at molestie enim convallis nec. Curabitur ornare efficitur magna sit amet placerat. Suspendisse eleifend leo quis nibh pulvinar auctor. Phasellus vestibulum faucibus aliquet. Proin nec imperdiet lorem, et euismod augue.',
-                'Praesent egestas convallis dui porttitor vulputate. Nunc finibus leo nec sem scelerisque, sed pellentesque velit vulputate. Praesent bibendum urna ac sem iaculis, at pellentesque ex dapibus. Sed a venenatis purus. Curabitur ex nunc, commodo ac risus nec, sollicitudin eleifend libero. Nulla congue, purus id convallis venenatis, ex est auctor felis, vitae venenatis arcu massa a sapien. In condimentum purus eros, at fringilla turpis pellentesque nec. Integer at elementum augue, sed bibendum eros.',
-                'Proin non ex ante. Vestibulum tincidunt dui augue, sed convallis felis facilisis nec. In elementum ante ut elit porta, eget volutpat nisi convallis. Sed ac orci posuere, molestie justo eget, porta metus. Aliquam turpis nunc, mattis nec dolor non, pharetra pretium quam. Vivamus finibus, dui eget rutrum laoreet, leo enim faucibus risus, vel faucibus sem turpis eget dolor. Vivamus ultrices erat at consectetur feugiat. Aenean in metus sit amet augue dapibus rutrum. Curabitur fermentum mauris ac gravida elementum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                'Sed posuere, eros id semper iaculis, mi ipsum imperdiet dui, ac malesuada sem justo et metus. Pellentesque tempus leo at libero mollis pretium. Cras non sodales tortor. Integer at nulla fermentum, suscipit orci et, faucibus risus. Suspendisse ultricies mauris et tincidunt finibus. Aliquam erat volutpat. Fusce at nisl ligula. Nunc cursus ligula urna, at sollicitudin eros hendrerit sed.',
-            ],
-            'image' => 'carousel-2.jpg',
-            'published_date' => 'April 29, 2024',
-        ],
-        'policy-development' => [
-            'title' => 'Developing Effective Anti-Harassment Policies',
-            'content' => [
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas viverra orci ut pretium aliquam. Mauris ac pellentesque justo. Integer congue sodales nisi, ut fringilla nisi ultricies sit amet. Nulla porta vitae metus sed pharetra. Aliquam ultricies, tellus id ullamcorper imperdiet, massa libero consequat ante, ut dapibus lectus risus non lorem. Suspendisse potenti. Sed pretium faucibus venenatis.',
-                'Proin pharetra vestibulum elit, ac semper nunc. Nam at purus consectetur, faucibus tortor eget, molestie quam. Nulla facilisi. Proin consectetur lacus justo, vel tincidunt metus pretium ac. Proin ultricies dui non tellus gravida porttitor. Sed at lacus non massa efficitur pretium. Mauris ut facilisis tortor, quis auctor tellus. Maecenas quis luctus ipsum, sit amet tincidunt nulla. Nullam blandit massa ipsum, at molestie enim convallis nec. Curabitur ornare efficitur magna sit amet placerat. Suspendisse eleifend leo quis nibh pulvinar auctor. Phasellus vestibulum faucibus aliquet. Proin nec imperdiet lorem, et euismod augue.',
-                'Praesent egestas convallis dui porttitor vulputate. Nunc finibus leo nec sem scelerisque, sed pellentesque velit vulputate. Praesent bibendum urna ac sem iaculis, at pellentesque ex dapibus. Sed a venenatis purus. Curabitur ex nunc, commodo ac risus nec, sollicitudin eleifend libero. Nulla congue, purus id convallis venenatis, ex est auctor felis, vitae venenatis arcu massa a sapien. In condimentum purus eros, at fringilla turpis pellentesque nec. Integer at elementum augue, sed bibendum eros.',
-                'Proin non ex ante. Vestibulum tincidunt dui augue, sed convallis felis facilisis nec. In elementum ante ut elit porta, eget volutpat nisi convallis. Sed ac orci posuere, molestie justo eget, porta metus. Aliquam turpis nunc, mattis nec dolor non, pharetra pretium quam. Vivamus finibus, dui eget rutrum laoreet, leo enim faucibus risus, vel faucibus sem turpis eget dolor. Vivamus ultrices erat at consectetur feugiat. Aenean in metus sit amet augue dapibus rutrum. Curabitur fermentum mauris ac gravida elementum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                'Sed posuere, eros id semper iaculis, mi ipsum imperdiet dui, ac malesuada sem justo et metus. Pellentesque tempus leo at libero mollis pretium. Cras non sodales tortor. Integer at nulla fermentum, suscipit orci et, faucibus risus. Suspendisse ultricies mauris et tincidunt finibus. Aliquam erat volutpat. Fusce at nisl ligula. Nunc cursus ligula urna, at sollicitudin eros hendrerit sed.',
-            ],
-            'image' => 'carousel-3.jpg',
-            'published_date' => 'April 30, 2024',
-        ],
-    ];
-
-    public function show($slug)
+    // Menampilkan semua artikel di halaman "educational contents"
+    public function index()
     {
-        if (!array_key_exists($slug, $this->articles)) {
-            abort(404);
-        }
+        // Ambil semua artikel yang sudah dipublish, urutkan dari yang terbaru
+        $articles = Article::whereNotNull('published_at')->latest('published_at')->get();
 
-        $article = $this->articles[$slug];
+        // Pisahkan artikel pertama sebagai "featured"
+        $featuredArticle = $articles->shift();
 
+        return view('user.educational_contents', [
+            'featuredArticle' => $featuredArticle,
+            'articles' => $articles
+        ]);
+    }
+
+    // Menampilkan satu artikel secara detail
+    public function show(Article $article) // Menggunakan Route Model Binding
+    {
+        // Laravel akan otomatis mencari artikel berdasarkan slug dan menampilkan 404 jika tidak ditemukan
         return view('user.article', ['article' => $article]);
     }
 }

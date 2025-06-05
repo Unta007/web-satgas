@@ -12,6 +12,7 @@ export default defineConfig({
                 'resources/js/report-list.js',
                 'resources/js/report-edit.js',
                 'resources/js/admin-alerts.js',
+                'resources/js/admin-articles.js',
             ],
             refresh: true,
         }),

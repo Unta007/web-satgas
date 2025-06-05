@@ -146,7 +146,6 @@
                     <a href="{{ route('reports.downloadEvidence', $report->id) }}" class="btn btn-outline-primary btn-sm">
                         <i class="bi bi-download me-1"></i> Unduh Bukti ({{ basename($report->evidence_path) }})
                     </a>
-                    {{-- Anda bisa menambahkan preview gambar jika tipe file adalah gambar --}}
                     @php
                         $extension = pathinfo($report->evidence_path, PATHINFO_EXTENSION);
                         $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];

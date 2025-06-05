@@ -18,10 +18,12 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
+        'name',
         'username',
         'email',
         'phone_number',
-        'role', // Pastikan kolom 'role' ada di migrasi dan bisa menyimpan 'user', 'admin', 'global_admin'
+        'role',
+        'staff_status',
         'password',
     ];
 

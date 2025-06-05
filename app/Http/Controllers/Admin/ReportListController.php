@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use App\Models\Report;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\ReportStatusUpdated;
+use Illuminate\Support\Facades\Auth;
 
 
 class ReportListController extends Controller
@@ -231,17 +232,25 @@ class ReportListController extends Controller
 
         $report->save();
 
-        // Kirim notifikasi ke pengguna jika statusnya berubah (dan bukan hanya pengarsipan)
-        // Pastikan $report->user adalah instance User yang membuat laporan
+        if ($statusChangedForUserNotification) {
+            activity()
+                ->causedBy(Auth::user())
+                ->performedOn($report)
+                ->withProperties(['old_status' => $oldStatus, 'new_status' => $selectedAction, 'was_archived' => $wasArchived]) // Data tambahan
+                ->log("<strong>mengubah</strong> status laporan <strong>#{$report->id}</strong> dari <strong>'{$oldStatus}'</strong> menjadi <strong>'{$selectedAction}'</strong>" . ($report->is_archived && !$wasArchived ? ' dan mengarsipkan.' : ($wasArchived && !$report->is_archived ? ' dan mengeluarkan dari arsip.' : '.')));
+        } elseif ($selectedAction == 'archived' && !$wasArchived) {
+            activity()
+                ->causedBy(Auth::user())
+                ->performedOn($report)
+                ->log("<strong>mengarsipkan</strong> laporan <strong>#{$report->id}</strong>.");
+        }
+
         if ($statusChangedForUserNotification && $report->user && $selectedAction !== 'archived') {
-            // Pastikan user yang membuat laporan ada dan bisa menerima notifikasi
-            // Anda mungkin perlu memuat relasi user jika belum: $report->load('user');
-            $reportOwner = $report->user; // Asumsi relasi 'user' ada di model Report
+            $reportOwner = $report->user;
             if ($reportOwner) {
                 try {
                     $reportOwner->notify(new ReportStatusUpdated($report, $selectedAction, $oldStatus));
                 } catch (\Exception $e) {
-                    // Tangani error pengiriman notifikasi jika perlu, misal log error
                     \Log::error("Gagal mengirim notifikasi untuk laporan #{$report->id}: " . $e->getMessage());
                 }
             }
@@ -259,14 +268,18 @@ class ReportListController extends Controller
     public function destroy(Report $report)
     {
         $reportId = $report->id;
-        // Hapus file bukti jika ada sebelum menghapus record laporan
+        $oldStatus = $report->status;
+
         if ($report->evidence_path && Storage::disk('local')->exists($report->evidence_path)) {
             Storage::disk('local')->delete($report->evidence_path);
         }
         $report->delete();
 
-        // Pesan sukses untuk delete
-        // Redirect kembali ke halaman sebelumnya dari mana aksi delete dilakukan
+        activity()
+            ->causedBy(Auth::user())
+            ->withProperties(['report_id' => $reportId, 'old_status' => $oldStatus,])
+            ->log("<strong>menghapus</strong> laporan <strong>#{$report->id}</strong> dari list <strong>'{$oldStatus}'</strong>.");
+
         return redirect()->back()->with('success', 'Laporan #' . $reportId . ' berhasil dihapus secara permanen.');
     }
 }
