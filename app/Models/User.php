@@ -27,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'staff_status',
         'password',
         'profile_photo_path',
+        'last_seen_at',
     ];
 
     /**
@@ -47,6 +48,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'last_seen_at' => 'datetime',
         // Jika kolom 'role' Anda adalah ENUM di database, tidak perlu cast khusus di sini
         // kecuali jika Anda menggunakan PHP 8.1+ Enums dan ingin meng-cast ke objek Enum.
         // Untuk string biasa ('admin', 'global_admin', 'user'), tidak perlu cast tambahan.

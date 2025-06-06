@@ -15,9 +15,9 @@ class DashboardController extends Controller
         // DATA UNTUK OVERVIEW CARDS
 
         $totalReports = Report::count();
+        $visits = User::whereDate('last_seen_at', today())->count();
         $newUsersThisMonth = User::where('created_at', '>=', Carbon::now()->startOfMonth())->count();
-        $visits = 3671; // Placeholder
-        $activeUsers = 2318; // Placeholder
+        $activeUsers = User::where('last_seen_at', '>=', now()->subMinutes(5))->count();
 
         // DATA UNTUK GRAFIK LAPORAN PER BULAN
 
