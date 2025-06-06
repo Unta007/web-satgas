@@ -34,18 +34,20 @@
     </div>
 
     {{-- Offcanvas Sidebar untuk Mobile --}}
-    <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="sidebarOffcanvas"
-        aria-labelledby="sidebarOffcanvasLabel" data-bs-theme="dark">
+    <div class="offcanvas offcanvas-start offcanvas-sidebar sidebar-custom-background" tabindex="-1"
+        id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel" data-bs-theme="dark">
+
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">Menu</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            {{-- Isi offcanvas sama dengan sidebar utama, bisa direfactor ke dalam satu partial view --}}
-            {{-- Untuk sekarang kita duplikat saja --}}
-            <ul class="nav nav-pills flex-column mt-4">
-                {{-- ... salin semua <li class="nav-item"> dari sidebar utama ke sini ... --}}
-            </ul>
+            <div class="sidebar-header">
+                <a href="{{ route('admin.dashboard') }}" class="offcanvas-brand">
+                    <img src="{{ Vite::asset('resources/images/tel-u_putih.png') }}" alt="Logo" width="150"
+                        height="62">
+                </a>
+            </div>
+            @include('layout.admin.sidebar-content')
         </div>
     </div>
 
@@ -56,7 +58,8 @@
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.tiny.cloud/1/53vzc8nx3b3n8u2mtgj9oibddcsnek3rgy4azkxw1bzkacwk/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/53vzc8nx3b3n8u2mtgj9oibddcsnek3rgy4azkxw1bzkacwk/tinymce/7/tinymce.min.js"
+        referrerpolicy="origin"></script>
     @stack('page-scripts')
 </body>
 

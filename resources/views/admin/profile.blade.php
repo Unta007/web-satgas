@@ -27,6 +27,30 @@
 
         <div class="card shadow-sm border-0">
             <div class="card-body">
+
+                <div class="text-center mb-4">
+                    <img src="{{ $user->profile_photo_url }}" alt="Foto Profil {{ $user->name }}" class="rounded-circle"
+                        style="width: 150px; height: 150px; object-fit: cover;">
+                </div>
+
+                <form action="{{ route('admin.profile.update_photo') }}" method="POST" enctype="multipart/form-data"
+                    class="mb-5 text-center">
+                    @csrf
+                    <div class="mb-3 d-inline-block">
+                        <label for="photo" class="form-label">Ubah Foto Profil</label>
+                        <input class="form-control form-control-sm @error('photo') is-invalid @enderror" type="file"
+                            id="photo" name="photo" required>
+                        @error('photo')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mt-2">
+                        <button type="submit" class="btn btn-danger btn-sm" style="background-color: #A40E0E; border-color: #A40E0E;">Simpan Foto</button>
+                    </div>
+                </form>
+
+                <hr class="my-4">
+
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="name" class="form-label">Nama</label>
@@ -86,4 +110,3 @@
 @push('page-scripts')
     @vite('resources/js/admin-profile.js')
 @endpush
-

@@ -74,4 +74,5 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         ->name('logs.index');
     Route::get('profile', [AdminProfileController::class, 'edit'])->name('profile');
     Route::put('profile/update-password', [AdminProfileController::class, 'updatePassword'])->name('profile.update_password');
+    Route::post('profile/update-photo', [AdminProfileController::class, 'updatePhoto'])->name('profile.update_photo');
 });

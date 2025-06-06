@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -25,6 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'role',
         'staff_status',
         'password',
+        'profile_photo_path',
     ];
 
     /**
@@ -83,5 +85,20 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isGlobalAdmin(): bool
     {
         return $this->role === 'global_admin';
+    }
+
+    /**
+     * Membuat atribut baru 'profile_photo_url'
+     * yang akan berisi URL lengkap ke foto profil.
+     */
+    public function getProfilePhotoUrlAttribute()
+    {
+        if ($this->profile_photo_path) {
+            // Jika ada path foto, kembalikan URL dari storage
+            return asset('storage/' . $this->profile_photo_path);
+        }
+
+        // Jika tidak, kembalikan URL default (misalnya dari ui-avatars.com)
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=A40E0E&color=fff';
     }
 }

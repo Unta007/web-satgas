@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password; // Untuk aturan validasi password default Laravel
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Storage;
 
 class AdminProfileController extends Controller
 {
@@ -43,5 +44,25 @@ class AdminProfileController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('login');
+    }
+
+    public function updatePhoto(Request $request)
+    {
+        $request->validate([
+            'photo' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:5048'],
+        ]);
+
+        $user = Auth::user();
+
+        if ($user->profile_photo_path) {
+            Storage::disk('public')->delete($user->profile_photo_path);
+        }
+
+        $path = $request->file('photo')->store('profile-photos', 'public');
+
+        $user->profile_photo_path = $path;
+        $user->save();
+
+        return redirect()->route('admin.profile')->with('success', 'Foto profil berhasil diperbarui!');
     }
 }

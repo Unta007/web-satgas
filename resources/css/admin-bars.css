@@ -5,8 +5,48 @@
     width: calc(100% - 215px);
 }
 
+.offcanvas-sidebar {
+    --bs-offcanvas-width: 215px;
+}
+
 .navbar {
+    padding: 0.9rem;
     transition: margin-left 0.3s ease;
+}
+
+.navbar .dropdown-item {
+    font-size: 1rem;
+}
+
+.navbar .dropdown-item:hover {
+    background-color: rgb(148, 0, 0);
+    color: white;
+}
+
+.nav-profile {
+    margin-right: 1rem;
+    color: rgb(44, 44, 44);
+}
+
+.icon-navbar {
+    margin-top: 0.15rem;
+}
+
+.dropdown-toggle.no-arrow::after {
+    display: none;
+}
+
+.sidebar-brand {
+    padding-top: 1rem;
+    margin-left: 1rem;
+}
+
+.nav-link-header {
+    color: rgb(201, 201, 201);
+    padding: 0.5rem 1.25rem;
+    font-size: .80rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .sidebar {
@@ -15,47 +55,55 @@
     position: fixed;
     top: 0;
     left: 0;
-    background: linear-gradient(180deg, #8B0000 0%, #6a040f 100%);
+}
+
+.sidebar-custom-background {
+    background: linear-gradient(180deg, #8B0000 0%, #58020b 100%);
 }
 
 /* Style untuk link, header, dan submenu di dalam sidebar (tidak perlu diubah) */
 .sidebar-header {
-    padding: 1.25rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    margin-top: 0.3rem;
 }
-.sidebar .nav-link {
+
+.sidebar .nav-link,
+.offcanvas-body .nav-link {
     color: rgba(255, 255, 255, 0.65);
     padding: 0.75rem 1.25rem;
     font-weight: 500;
     font-size: 1.05rem;
 }
-.sidebar .nav-link .bi {
+
+.sidebar .nav-link .bi,
+.offcanvas-body .nav-link .bi {
     font-size: 1.1rem;
     vertical-align: middle;
 }
-.sidebar .nav-link:hover {
+
+.sidebar .nav-link:hover,
+.offcanvas-body .nav-link:hover {
     background-color: rgba(97, 0, 0, 0.5);
     color: white;
     border-radius: 1.0rem;
+    margin-right: 0.8rem;
 }
-.sidebar .nav-link.active {
+
+.sidebar .nav-link.active,
+.offcanvas-body .nav-link.active {
     background-color: #640002;
     color: white;
     border-radius: 1.0rem;
+    margin-right: 0.8rem;
 }
-.nav-link-header {
-    color: rgb(201, 201, 201);
-    padding: 0.5rem 1.25rem;
-    font-size: .80rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
+
 .submenu {
     padding-left: 2rem;
 }
+
 .submenu .nav-link {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
     font-size: 0.9rem;
 }
 
