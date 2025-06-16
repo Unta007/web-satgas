@@ -1,67 +1,88 @@
-function toggleWitnessFields(show) {
-    const witnessFieldsDiv = document.getElementById('witness_fields');
-    const witnessNameInput = document.getElementById('witness_name');
-    const witnessRelationSelect = document.getElementById('witness_relation');
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
-    if (witnessFieldsDiv) { // Pastikan elemen utama ada
-        witnessFieldsDiv.style.display = show ? 'block' : 'none';
-        if (!show) {
-            // Kosongkan nilai jika field disembunyikan
-            if (witnessNameInput) witnessNameInput.value = '';
-            if (witnessRelationSelect) witnessRelationSelect.value = '';
-        }
-    }
+function toggleWitnessFields(show) {
+    const fields = document.getElementById('witness_fields');
+    if (fields) fields.style.display = show ? 'block' : 'none';
 }
 
 function togglePerpetratorFields(show) {
-    const perpetratorFieldsDiv = document.getElementById('perpetrator_fields');
-    const perpetratorNameInput = document.getElementById('perpetrator_name');
-    const perpetratorRoleSelect = document.getElementById('perpetrator_role');
-
-    if (perpetratorFieldsDiv) { // Pastikan elemen utama ada
-        perpetratorFieldsDiv.style.display = show ? 'block' : 'none';
-        if (!show) {
-            // Kosongkan nilai jika field disembunyikan
-            if (perpetratorNameInput) perpetratorNameInput.value = '';
-            if (perpetratorRoleSelect) perpetratorRoleSelect.value = '';
-        }
-    }
+    const fields = document.getElementById('perpetrator_fields');
+    if (fields) fields.style.display = show ? 'block' : 'none';
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const witnessYesRadio = document.getElementById('witness_yes');
-    const witnessNoRadio = document.getElementById('witness_no');
-    if (witnessYesRadio) {
-        // Inisialisasi awal berdasarkan old input atau default 'no'
-        if (witnessYesRadio.checked) {
-            toggleWitnessFields(true);
-        } else {
-            if (witnessNoRadio && !witnessYesRadio.checked) witnessNoRadio.checked = true;
-            toggleWitnessFields(false);
+document.addEventListener('DOMContentLoaded', () => {
+
+    const flashMessageEl = document.getElementById('flash-message');
+
+    if (flashMessageEl) {
+        const message = flashMessageEl.dataset.message;
+        const type = flashMessageEl.dataset.type;
+
+        let title = '';
+        if (type === 'success') {
+            title = 'Berhasil!';
+        } else if (type === 'error') {
+            title = 'Oops... Terjadi Kesalahan';
         }
-        // Listener untuk perubahan
-        document.querySelectorAll('input[name="has_witness"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                toggleWitnessFields(this.value === 'yes');
+
+        Swal.fire({
+            title: title,
+            text: message,
+            icon: type,
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#A40E0E',
+        });
+    }
+
+    const reportForm = document.getElementById('report-form');
+
+    if (reportForm) {
+        reportForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: 'Konfirmasi Pengiriman',
+                text: "Apakah Anda yakin semua data yang diisi sudah benar?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#A40E0E',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Kirim Laporan!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                }
             });
         });
     }
 
-    const knowsPerpetratorYesRadio = document.getElementById('perpetrator_yes');
-    const knowsPerpetratorNoRadio = document.getElementById('perpetrator_no');
-    if (knowsPerpetratorYesRadio) {
-        // Inisialisasi awal
-        if (knowsPerpetratorYesRadio.checked) {
-            togglePerpetratorFields(true);
-        } else {
-            if (knowsPerpetratorNoRadio && !knowsPerpetratorYesRadio.checked) knowsPerpetratorNoRadio.checked = true;
-            togglePerpetratorFields(false);
-        }
-        // Listener untuk perubahan
-        document.querySelectorAll('input[name="knows_perpetrator"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                togglePerpetratorFields(this.value === 'yes');
-            });
+    const witnessRadios = document.querySelectorAll('input[name="has_witness"]');
+    witnessRadios.forEach(radio => {
+        radio.addEventListener('change', (event) => toggleWitnessFields(event.target.value === 'yes'));
+    });
+    if (document.querySelector('input[name="has_witness"]:checked')) {
+        toggleWitnessFields(document.querySelector('input[name="has_witness"]:checked').value === 'yes');
+    }
+
+    const perpetratorRadios = document.querySelectorAll('input[name="knows_perpetrator"]');
+    perpetratorRadios.forEach(radio => {
+        radio.addEventListener('change', (event) => togglePerpetratorFields(event.target.value === 'yes'));
+    });
+    if (document.querySelector('input[name="knows_perpetrator"]:checked')) {
+        togglePerpetratorFields(document.querySelector('input[name="knows_perpetrator"]:checked').value === 'yes');
+    }
+
+    const fileInput = document.getElementById('evidence');
+    if (fileInput) {
+        const fileNameSpan = document.querySelector('.file-upload-wrapper .file-name');
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                fileNameSpan.textContent = `File terpilih: ${e.target.files[0].name}`;
+            } else {
+                fileNameSpan.textContent = '';
+            }
         });
     }
 });

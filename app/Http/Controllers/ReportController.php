@@ -50,7 +50,7 @@ class ReportController extends Controller
                 'required_if:knows_perpetrator,yes',
                 Rule::in(['mahasiswa', 'staff', 'dosen', 'lainnya', 'tidak_diketahui'])
             ],
-            'evidence' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:2048',
+            'evidence' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:9048',
             'agreement' => 'accepted',
         ];
 
@@ -67,7 +67,7 @@ class ReportController extends Controller
             'perpetrator_role.required_if' => 'Status terlapor wajib diisi jika Anda mengetahui identitasnya.',
             'evidence.required' => 'Mohon unggah bukti pendukung.',
             'evidence.mimes' => 'Format bukti harus berupa: pdf, doc, docx, jpg, jpeg, png.',
-            'evidence.max' => 'Ukuran maksimal bukti adalah 2MB.',
+            'evidence.max' => 'Ukuran maksimal bukti adalah 9MB.',
             'agreement.accepted' => 'Anda harus menyetujui Pernyataan dan Persetujuan untuk melanjutkan.',
         ];
 
