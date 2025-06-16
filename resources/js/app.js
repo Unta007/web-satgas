@@ -1,80 +1,51 @@
-import "./bootstrap";
+// resources/js/app.js
+
+import './bootstrap';
 import.meta.glob(["../images/**"]);
 
 document.addEventListener('DOMContentLoaded', function () {
-    const slider = document.getElementById('testimonialSlider');
-    if (!slider) return;
 
-    const slides = slider.querySelectorAll('.slide');
-    let currentIndex = 0;
-    const totalSlides = slides.length;
-
-    function updateSlider() {
-        slides.forEach((slide, index) => {
-            slide.classList.remove('active');
-            if (index === currentIndex) {
-                slide.classList.add('active');
-            }
-        });
-        const sliderWrapper = slider.querySelector('.slider-wrapper');
-        sliderWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
-    }
-
-    function showNext() {
-        if (currentIndex < totalSlides - 1) {
-            currentIndex++;
-        } else {
-            currentIndex = 0;
-        }
-        updateSlider();
-    }
-
-    // Auto slide every 5 seconds
-    const autoSlideInterval = setInterval(() => {
-        showNext();
-    }, 5000);
-
-    // Initialize slider
-    updateSlider();
-
-    // Fade-in on scroll for sections
+    // FUNGSI UNTUK FADE-IN SECTION SAAT DI-SCROLL
     const faders = document.querySelectorAll('.fade-in-section');
+    if (faders.length > 0) {
+        const appearOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
 
-    const appearOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px"
-    };
+        const appearOnScroll = new IntersectionObserver(function (entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('is-visible');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
 
-    const appearOnScroll = new IntersectionObserver(function (entries, appearOnScroll) {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) {
-                return;
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+    }
+
+    // FUNGSI UNTUK TOMBOL KEMBALI KE ATAS (BACK TO TOP)
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    if (backToTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
             } else {
-                entry.target.classList.add('is-visible');
-                appearOnScroll.unobserve(entry.target);
+                backToTopBtn.classList.remove('show');
             }
         });
-    }, appearOptions);
 
-    faders.forEach(fader => {
-        appearOnScroll.observe(fader);
-    });
-
-    // Back to top button
-    const backToTopBtn = document.getElementById('backToTopBtn');
-
-    window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 300) {
-            backToTopBtn.classList.add('show');
-        } else {
-            backToTopBtn.classList.remove('show');
-        }
-    });
-
-    backToTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
-    });
+    }
+
 });

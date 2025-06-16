@@ -1,47 +1,93 @@
 @extends('layout.app')
 
-@section('title', 'Educational Contents on Sexual Harassment')
+@section('title', 'Laman Edukasi')
 
 @section('content')
-    <div class="magazine-container">
-        <header class="magazine-header">
-            <h1>Educational Contents</h1>
-            <p>Explore our collection of educational articles and resources focused on sexual harassment awareness,
-                prevention, and support.</p>
-        </header>
+    <div class="educational-container">
+
+        <div class="upper-separator">
+            <span class="upper-separator-text">Konten Terbaru</span>
+        </div>
 
         @if ($featuredArticle)
-            <section class="featured-article">
-                <a href="{{ route('articles.show', $featuredArticle->slug) }}" class="featured-article-link">
-                    {{-- Gunakan gambar dari database, berikan default jika tidak ada --}}
-                    <img src="{{ $featuredArticle->image ? asset('storage/' . $featuredArticle->image) : Vite::asset('resources/images/scope.png') }}"
-                        alt="{{ $featuredArticle->title }}" />
-                    <div class="featured-article-content">
-                        <h2>Featured: {{ $featuredArticle->title }}</h2>
-                        {{-- Anda bisa menambahkan ringkasan/excerpt di model jika perlu --}}
-                        <p>{{ Str::limit(strip_tags($featuredArticle->description), 150) }}</p>
-                        <small>Published on {{ $featuredArticle->published_at->format('F d, Y') }}</small>
-                    </div>
-                </a>
+            <section class="top-section-grid">
+                <div class="featured-top-article">
+                    <a href="{{ route('articles.show', $featuredArticle->slug) }}">
+                        <img src="{{ $featuredArticle->image ? (Str::startsWith($featuredArticle->image, 'http') ? $featuredArticle->image : asset('storage/' . $featuredArticle->image)) : 'https://placehold.co/800x600/e0e0e0/555?text=Featured' }}"
+                            alt="{{ $featuredArticle->title }}">
+
+                        <div class="caption">
+                            <h2>{{ $featuredArticle->title }}</h2>
+
+                            <div class="featured-article-meta">
+                                <small>{{ $featuredArticle->published_at->diffForHumans() }}</small>
+                                <span class="meta-separator">|</span>
+                                <small>{{ $featuredArticle->author }}</small>
+                                <span class="meta-separator">|</span>
+                                <small><i class="bi bi-clock me-1"></i>{{ $featuredArticle->reading_time }}</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="grid-articles-group">
+                    @if ($gridArticles->isNotEmpty())
+                        @foreach ($gridArticles as $article)
+                            <div class="grid-article-item">
+                                <img src="{{ $article->image ? (Str::startsWith($article->image, 'http') ? $article->image : asset('storage/' . $article->image)) : 'https://placehold.co/120x90/e0e0e0/555?text=Image' }}"
+                                    alt="{{ $article->title }}" class="grid-article-image">
+
+                                <div class="grid-article-text-content">
+                                    <a href="{{ route('articles.show', $article->slug) }}">
+                                        <h3>{{ $article->title }}</h3>
+                                    </a>
+
+                                    <div class="grid-article-meta">
+                                        <small>{{ $article->published_at->diffForHumans() }}</small>
+                                        <span class="meta-separator">|</span>
+                                        <small>{{ $article->author }}</small>
+                                        <span class="meta-separator">|</span>
+                                        <small><i class="bi bi-clock me-1"></i>{{ $article->reading_time }}</small>
+                                    </div>
+
+                                    <p class="grid-article-description">
+                                        {{ \Illuminate\Support\Str::limit(strip_tags($article->description), 290) }}
+                                    </p>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
             </section>
         @endif
 
-        @if ($articles->isNotEmpty())
-            <section class="magazine-articles">
-                @foreach ($articles as $article)
-                    <a href="{{ route('articles.show', $article->slug) }}" class="magazine-article-card">
-                        <img src="{{ $article->image ? asset('storage/' . $article->image) : Vite::asset('resources/images/default.jpg') }}"
-                            alt="{{ $article->title }}" class="magazine-article-image" />
-                        <div class="magazine-article-content">
-                            <h3>{{ $article->title }}</h3>
-                            <p>{{ Str::limit(strip_tags($article->description), 100) }}</p>
-                            <small>Published on {{ $article->published_at->format('F d, Y') }}</small>
-                        </div>
-                    </a>
-                @endforeach
-            </section>
-        @else
-            <p class="text-center">No more articles found.</p>
-        @endif
+        <div class="section-separator">
+            <span class="section-separator-text">Jelajahi Konten Kami</span>
+        </div>
+
+        <div class="main-layout-grid">
+
+            <div class="latest-news-section" id="article-list-container">
+                {{-- Muat artikel awal menggunakan partial --}}
+                @include('user.partials._article_list', ['latestArticles' => $latestArticles])
+            </div>
+
+            @include('user.partials._sidebar')
+        </div>
+
+        <div id="load-more-container" class="text-center mt-5">
+            @if ($latestArticles->hasMorePages())
+                <button id="load-more-btn" class="btn btn-danger" data-next-page="{{ $latestArticles->nextPageUrl() }}">
+                    Muat Lebih Banyak
+                </button>
+            @endif
+        </div>
+
+        <button id="backToTopBtn" title="Kembali ke Atas" aria-label="Kembali ke Atas">&#8679;</button>
+
     </div>
 @endsection
+
+@push('page-scripts')
+    @vite('resources/js/load_more.js')
+@endpush

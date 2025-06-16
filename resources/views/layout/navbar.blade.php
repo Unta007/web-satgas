@@ -14,7 +14,7 @@
                 <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" aria-current="page"
                     href="{{ route('home') }}">Beranda</a>
                 <a class="nav-link {{ request()->is('educational-contents*') ? 'active' : '' }}"
-                    href="/educational-contents">Laman Edukasi</a>
+                    href="/educational-contents">Pusat Pengetahuan</a>
                 <a class="nav-link {{ request()->is('reports/create*') || request()->is('report/submit*') ? 'active' : '' }}"
                     href="{{ route('reports.index') }}">Pelaporan</a> {{-- Menggunakan nama rute dari contoh sebelumnya --}}
                 <a class="nav-link {{ request()->is('about-us*') ? 'active' : '' }}" href="/about-us">Tentang Kami</a>
@@ -118,24 +118,30 @@
                     </li>
                     {{-- ==== NOTIFICATION DROPDOWN END ==== --}}
 
-                    <li class="nav-item dropdown ms-lg-2"> {{-- ms-lg-2 untuk jarak di layar besar --}}
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarUserDropdown"
-                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-circle fs-5 me-1"></i>
+                    <li class="nav-item dropdown ms-lg-2">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center dropdown-toggle no-arrow"
+                            href="#" id="navbarUserDropdown" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <img src="{{ Auth::user()->profile_photo_url }}" alt="Foto Profil" class="rounded-circle me-2"
+                                width="28" height="28" style="object-fit: cover;">
                             {{ auth()->user()->username }}
+                            <i class="icon-navbar bi bi-chevron-down ms-2"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2"
                             aria-labelledby="navbarUserDropdown">
-                            {{-- <li><a class="dropdown-item" href="#"><i
-                                        class="bi bi-person-fill me-2"></i>Profil Saya</a></li> --}}
 
-                            {{-- ==== LINK DASHBOARD ADMIN (KONDISIONAL) ==== --}}
+                            <li>
+                                <a class="dropdown-item" href="{{ route('profile.show') }}">
+                                    <i class="bi bi-person-fill me-2"></i>Profil Saya
+                                </a>
+                            </li>
+
+
                             @if (auth()->user()->hasAdminAccess())
+                                <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}"><i
                                             class="bi bi-speedometer2 me-2"></i>Dashboard Admin</a></li>
                             @endif
-                            {{-- ==== AKHIR LINK DASHBOARD ADMIN ==== --}}
-
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

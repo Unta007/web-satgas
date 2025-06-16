@@ -28,7 +28,17 @@ class AdminProfileController extends Controller
         $user = Auth::user();
 
         $request->validate([
-            'new_password' => ['required', 'confirmed', Password::defaults()],
+            'new_password' => [
+                'required',
+                'confirmed',
+                Password::defaults(),
+
+                function ($attribute, $value, $fail) use ($user) {
+                    if (Hash::check($value, $user->password)) {
+                        $fail('Password baru tidak boleh sama dengan password Anda saat ini.');
+                    }
+                },
+            ],
         ], [
             'new_password.required' => 'Password baru tidak boleh kosong.',
             'new_password.confirmed' => 'Konfirmasi password baru tidak cocok.',
@@ -43,7 +53,7 @@ class AdminProfileController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect()->route('login')->with('status', 'Password berhasil diubah. Silakan login kembali.');
     }
 
     public function updatePhoto(Request $request)

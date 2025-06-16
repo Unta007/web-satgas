@@ -14,11 +14,11 @@ class DatabaseSeeder extends Seeder
         //     'role' => 'user'
         // ]);
 
-        Report::factory(50)->unread()->create();
-        Report::factory(50)->review()->create();
-        Report::factory(50)->ongoing()->create();
-        Report::factory(50)->solved()->create();
-        Report::factory(50)->denied()->create();
+        // Report::factory(50)->unread()->create();
+        // Report::factory(50)->review()->create();
+        // Report::factory(50)->ongoing()->create();
+        // Report::factory(50)->solved()->create();
+        // Report::factory(50)->denied()->create();
 
         // Contoh menggunakan state untuk membuat laporan dengan status spesifik:
         // Report::factory(10)->unread()->create();

@@ -13,7 +13,7 @@
                         $statusText = strtoupper($report->status);
                         switch (strtolower($report->status)) {
                             case 'unread':
-                                $statusClass = 'text-danger-emphasis bg-danger-subtle border-danger-subtle';
+                                $statusClass = 'badge text-info-emphasis bg-info-subtle border border-info-subtle';
                                 break;
                             case 'review':
                                 $statusClass = 'text-info-emphasis bg-info-subtle border-info-subtle';
@@ -27,19 +27,6 @@
                             case 'denied':
                                 $statusClass = 'text-danger-emphasis bg-danger-subtle border-danger-subtle'; // Bisa dibedakan dengan unread jika perlu
                                 break;
-                            case 'archived': // Jika Anda ingin menampilkan status 'archived' secara khusus
-                                $statusClass = 'text-dark-emphasis bg-dark-subtle border-dark-subtle';
-                                $statusText = 'ARCHIVED (ASLI: ' . strtoupper($report->status) . ')'; // Menampilkan status asli jika diarsipkan
-                                if ($report->is_archived) {
-                                    // Jika ada kolom is_archived
-                                    $statusText = 'ARCHIVED (ASLI: ' . strtoupper($report->status) . ')';
-                                }
-                                break;
-                        }
-                        if ($report->is_archived ?? false) {
-                            // Jika ada kolom is_archived dan true
-                            $statusClass = 'text-dark-emphasis bg-dark-subtle border-dark-subtle';
-                            $statusText = 'DIARSIPKAN (Status Asli: ' . strtoupper($report->status) . ')';
                         }
                     @endphp
                     <span class="badge rounded-pill px-3 py-2 fs-6 {{ $statusClass }}">
@@ -167,7 +154,7 @@
             <hr class="my-4">
 
             <div class="d-flex justify-content-end">
-                <a href="{{ route('home') }}" class="btn btn-secondary">Kembali ke Beranda</a>
+                <a href="{{ route('profile.show') }}" class="btn btn-secondary">Kembali ke Profil</a>
                 {{-- Jika Anda memiliki halaman daftar laporan pengguna:
             <a href="{{ route('user.reports.index') }}" class="btn btn-secondary">Kembali ke Daftar Laporan Saya</a>
             --}}

@@ -88,7 +88,6 @@
                             <label class="form-check-label" for="witness_yes">Ya</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            {{-- Logika checked untuk 'no' disederhanakan --}}
                             <input class="form-check-input @error('has_witness') is-invalid @enderror" type="radio" name="has_witness" id="witness_no" value="no" {{ old('has_witness', 'no') == 'no' ? 'checked' : '' }} onclick="toggleWitnessFields(false)">
                             <label class="form-check-label" for="witness_no">Tidak</label>
                         </div>
@@ -217,3 +216,7 @@
     </div>
 </div>
 @endsection
+
+@push('page-scripts')
+    @vite('resources/js/report.js')
+@endpush

@@ -1,265 +1,376 @@
- /* Hero Carousel Styling */
- #heroCarousel .carousel-item {
-     height: 75vh;
-     min-height: 400px;
-     background-size: cover;
-     background-position: center center;
-     background-repeat: no-repeat;
- }
+/* 2. CSS VARIABLES (GLOBAL) */
+:root {
+    --color-primary: #CD1A23;
+    /* Merah Telkom */
+    --color-primary-dark: #A9161D;
+    --color-text: #1C2A40;
+    /* Biru Gelap */
+    --color-text-muted: #5a6474;
+    --color-background: #FFFFFF;
+    --color-background-light: #F5F7FA;
+    --font-primary: 'Poppins', sans-serif;
+    --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 8px 25px rgba(0, 0, 0, 0.1);
 
- #heroCarousel .carousel-caption {
-     bottom: 0;
-     left: 0;
-     right: 0;
-     padding-bottom: 5rem;
-     /* Jarak teks dari bawah */
-     padding-top: 3rem;
-     background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0) 100%);
-     color: #fff;
- }
+    /* Variabel dari kode navbar Anda, kita satukan di sini */
+    --navbar-background: #980000;
+    /* rgb(152, 0, 0) */
+    --navbar-link-color: white;
+    --navbar-link-hover-color: #4a0000;
+}
 
- /* Menyesuaikan posisi caption jika container digunakan di dalamnya */
- #heroCarousel .carousel-caption .container {
-     position: relative;
-     /* Atau sesuaikan dengan kebutuhan layout Anda */
-     padding-left: 1rem;
-     /* Contoh padding jika menggunakan container */
-     padding-right: 1rem;
- }
+/* 3. GLOBAL & TYPOGRAPHY */
+body {
+    color: var(--color-text);
+    background-color: var(--color-background);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+p.lead {
+    color: var(--color-text-muted);
+    font-weight: 400;
+}
+
+.text-danger {
+    color: var(--color-primary) !important;
+}
+
+/* 4. BUTTONS */
+.btn {
+    border-radius: 50px;
+    /* padding: .75rem 1.5rem; */
+    font-weight: 600;
+    transition: all .3s ease;
+    border: 2px solid transparent;
+}
+
+.btn-danger {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn-danger:hover {
+    background-color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(205, 26, 35, .3);
+}
+
+.btn-outline-light {
+    border-color: #fff;
+    color: #fff;
+}
+
+.btn-outline-light:hover {
+    background-color: #fff;
+    color: var(--color-primary);
+}
+
+/* 5. HERO CAROUSEL */
+#heroCarousel .carousel-item {
+    height: 73vh;
+    min-height: 500px;
+    background-size: cover;
+    background-position: center center;
+}
+
+#heroCarousel .carousel-caption {
+    font-size: 1.5rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: 5rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 10%, rgba(0, 0, 0, 0.5) 75%, transparent 100%);
+    color: #fff;
+}
+
+#heroCarousel .caption-text {
+    margin-left: 9rem;
+    padding: 4rem;
+}
+
+#heroCarousel .btn-hero {
+    font-size: 1rem;
+    padding: 0.7rem 1.3rem;
+    letter-spacing: 0.5px;
+}
+
+#heroCarousel .carousel-caption h1 {
+    color: #FFFFFF !important;
+}
+
+#heroCarousel .carousel-caption p.lead {
+    color: #e0e0e0 !important;
+}
+
+/* 6. SECTIONS STYLING */
+section {
+    padding: 4rem 0;
+}
+
+.welcome-greetings,
+.testimonial-section {
+    background-color: var(--color-background-light);
+}
+
+.safe-space-section .action-card {
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+    transition: transform .3s ease, box-shadow .3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.safe-space-section .action-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary);
+}
+
+/* 7. EDUCATIONAL CARDS */
+.educational-content .card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.educational-content .card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-md);
+}
+
+.educational-content .card-img-top {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.educational-content .card-title {
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+.educational-content .card-text {
+    color: var(--color-text-muted);
+    font-size: .9rem;
+}
+
+/* 8. TESTIMONIALS */
+.testimonial-card {
+    background-color: #fff;
+    padding: 2.5rem;
+    border-radius: 12px;
+    max-width: 750px;
+    margin: 0 auto;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.testimonial-quote {
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--color-text);
+    line-height: 1.6;
+}
+
+.testimonial-author {
+    margin-top: 1.5rem;
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+#testimonialSlider .carousel-control-prev-icon,
+#testimonialSlider .carousel-control-next-icon {
+    background-color: var(--color-text);
+    border-radius: 50%;
+    padding: 1.2rem;
+    background-size: 50%;
+}
+
+/* 9. FADE-IN ANIMATION */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .8s ease-out, transform .8s ease-out;
+}
+
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+/*
+|--------------------------------------------------------------------------
+| === MULAI KODE PERBAIKAN UNTUK NAVBAR & FOOTER ===
+|--------------------------------------------------------------------------
+*/
+
+/* 10. NAVBAR STYLING (Disempurnakan dengan style notifikasi) */
+#navbar-home {
+    background-color: var(--navbar-background) !important;
+    padding-top: 0.4rem;
+    padding-bottom: 0.75rem;
+}
+
+#navbar-home .navbar-brand img {
+    max-height: 50px;
+    margin-bottom: 7px;
+    margin-left: 35px;
+    margin-right: 40px;
+}
+
+#navbar-home .nav-link {
+    color: var(--navbar-link-color);
+    font-weight: 600;
+    transition: color 0.3s ease;
+    margin: 0 0.75rem;
+}
+
+#navbar-home .nav-link:hover,
+#navbar-home .nav-link:focus,
+#navbar-home .nav-link.active {
+    color: var(--navbar-link-hover-color);
+}
+
+#navbar-home .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+#navbar-home .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Dropdown Umum di Navbar */
+#navbar-home .dropdown-menu {
+    margin-top: 0.85rem !important;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border: 1px solid #dee2e6;
+}
+
+#navbar-home .dropdown-item:hover {
+    background-color: var(--navbar-background);
+    color: white;
+}
+
+.dropdown-toggle.no-arrow::after {
+    display: none;
+}
+
+/* === [PENAMBAHAN] STYLE KHUSUS DROPDOWN NOTIFIKASI === */
+#navbar-home .notification-dropdown-menu {
+    width: 320px;
+    /* Lebar khusus untuk dropdown notif */
+    padding: 0;
+}
+
+#navbar-home .notification-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+#navbar-home .notification-item {
+    text-decoration: none;
+    color: var(--color-text);
+    border-bottom: 1px solid #f1f1f1;
+    white-space: normal;
+    /* Agar teks bisa wrap */
+}
+
+#navbar-home .notification-item:last-of-type {
+    border-bottom: none;
+}
+
+#navbar-home .notification-item:hover {
+    background-color: #e9ecef;
+    color: var(--color-text);
+    /* Pastikan warna teks tetap saat hover */
+}
+
+#navbar-home .notification-item.unread {
+    background-color: #f5f7fa;
+    /* Sedikit beda background untuk yg belum dibaca */
+    font-weight: 600;
+}
+
+#navbar-home .notification-item.unread p,
+#navbar-home .notification-item.unread small {
+    font-weight: normal;
+}
+
+#navbar-home .btn-link {
+    font-size: 0.8rem;
+    color: var(--bs-primary);
+}
+
+/* === AKHIR PENAMBAHAN === */
 
 
- #heroCarousel .carousel-caption h1 {
-     font-size: 2.5rem;
-     /* Ukuran font judul hero */
- }
+/* 11. FOOTER STYLING (Perbaikan) */
+footer.bg-dark {
+    background-color: #212121 !important;
+    color: #8b8b8b;
+}
 
- #heroCarousel .carousel-caption p.lead {
-     font-size: 1.25rem;
-     /* Ukuran font sub-teks */
-     margin-bottom: 1.5rem;
- }
+footer.bg-dark h5 {
+    color: #fff;
+}
 
- @media (min-width: 768px) {
-     #heroCarousel .carousel-caption h1 {
-         font-size: 3.5rem;
-     }
+footer.bg-dark a {
+    color: #8b8b8b;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
 
-     #heroCarousel .carousel-caption p.lead {
-         font-size: 1.5rem;
-     }
+footer.bg-dark a:hover {
+    color: var(--color-primary);
+}
 
-     #heroCarousel .carousel-caption .container {
-         padding-left: 0;
-         /* Reset padding jika perlu di desktop */
-         padding-right: 0;
-     }
- }
+footer.bg-dark small {
+    color: #999;
+}
 
- /* Main container */
- #main-container {
-     margin-bottom: 10%;
- }
 
- .welcome-greetings {
-     background: linear-gradient(135deg, #f9f9f9 0%, #fff 100%);
-     padding: 2rem;
-     border-radius: 12px;
-     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
- }
+/* 12. BACK TO TOP BUTTON */
+#backToTopBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(205, 26, 35, .4);
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
- /* Section Headers */
- #educational-header,
- #testi-header {
-     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-     font-size: 2rem;
-     font-weight: 700;
-     color: #000000;
-     margin-top: 6rem;
-     margin-bottom: 0.5rem;
-     text-align: center;
- }
+#backToTopBtn.show {
+    opacity: 1;
+    visibility: visible;
+}
 
- #educational-subheader,
- #testi-subheader {
-     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-     font-size: 1.2rem;
-     color: #000000;
-     margin-bottom: 2.5rem;
-     text-align: center;
- }
-
- /* Cards */
- .card {
-     border: 1px solid #ddd;
-     border-radius: 8px;
-     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-     transition: transform 0.3s ease, box-shadow 0.3s ease;
- }
-
- .card:hover {
-     transform: translateY(-5px);
-     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
- }
-
- .card-img-top {
-     border-top-left-radius: 8px;
-     border-top-right-radius: 8px;
-     max-height: 180px;
-     object-fit: cover;
- }
-
- .card-title {
-     color: #9e0000;
-     font-weight: 700;
- }
-
- .card-text {
-     color: #333333;
-     font-size: 0.95rem;
- }
-
- .btn-primary {
-     background-color: #9e0000;
-     border-color: #9e0000;
-     transition: background-color 0.3s ease, border-color 0.3s ease;
-     padding: 0.4rem 1rem;
-     font-weight: 600;
-     border-radius: 4px;
- }
-
- .btn-primary:hover {
-     background-color: #560000;
-     border-color: #560000;
- }
-
- .btn-animated {
-     transition: transform 0.3s ease, box-shadow 0.3s ease;
- }
-
- .btn-animated:hover {
-     transform: scale(1.05);
-     box-shadow: 0 4px 15px rgba(158, 0, 0, 0.6);
- }
-
- /* Fade-in animation for sections */
- .fade-in-section {
-     opacity: 0;
-     transform: translateY(20px);
-     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-     will-change: opacity, transform;
- }
-
- .fade-in-section.is-visible {
-     opacity: 1;
-     transform: none;
- }
-
- /* Footer */
- footer.bg-dark {
-     background-color: #212121 !important;
- }
-
- footer.bg-dark h5 {
-     color: #ffffff;
-     font-weight: 700;
-     margin-bottom: 1rem;
- }
-
- footer.bg-dark p,
- footer.bg-dark ul li a,
- footer.bg-dark a {
-     color: #999999;
-     font-size: 0.9rem;
-     text-decoration: none;
- }
-
- footer.bg-dark .col-md-4 ul.list-unstyled li a,
- footer.bg-dark .col-md-4 a.me-3 {
-     color: #999999 !important;
- }
-
- footer.bg-dark .col-md-4 ul.list-unstyled li a:hover,
- footer.bg-dark .col-md-4 a.me-3:hover {
-     color: #ae0000 !important;
-     text-decoration: underline;
- }
-
- footer .text-center small {
-     color: #999999;
- }
-
- /* Testimonials specific styles */
- #testi-header {
-     margin-top: 6rem;
-     margin-bottom: 0.5rem;
-     text-align: center;
-     font-weight: 700;
-     font-size: 2rem;
-     color: #9e0000;
- }
-
- #testi-subheader {
-     text-align: center;
-     font-size: 1.2rem;
-     color: #333333;
-     margin-bottom: 3rem;
- }
-
- /* Slider styles */
- .slider-container {
-     position: relative;
-     width: 100%;
-     max-width: 700px;
-     margin: 0 auto 6rem auto;
-     overflow: hidden;
- }
-
- .slider-wrapper {
-     display: flex;
-     transition: transform 0.5s ease-in-out;
- }
-
- .slide {
-     min-width: 100%;
-     transition: opacity 0.5s ease, transform 0.5s ease;
- }
-
- .slide.active {
-     opacity: 1;
-     transform: scale(1);
- }
-
- /* Back to Top Button Styles */
- #backToTopBtn {
-     position: fixed;
-     bottom: 40px;
-     right: 40px;
-     z-index: 1000;
-     background-color: #9e0000;
-     color: white;
-     border: none;
-     border-radius: 50%;
-     width: 50px;
-     height: 50px;
-     font-size: 24px;
-     cursor: pointer;
-     box-shadow: 0 4px 8px rgba(158, 0, 0, 0.4);
-     opacity: 0;
-     visibility: hidden;
-     transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-     display: flex;
-     align-items: center;
-     justify-content: center;
- }
-
- #backToTopBtn.show {
-     opacity: 1;
-     visibility: visible;
-     transform: translateY(0);
- }
-
- #backToTopBtn:hover {
-     background-color: #560000;
-     box-shadow: 0 6px 12px rgba(86, 0, 0, 0.6);
-     transform: scale(1.1);
- }
+#backToTopBtn:hover {
+    background-color: var(--color-primary-dark);
+    transform: scale(1.1);
+}

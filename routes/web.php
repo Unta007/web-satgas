@@ -13,7 +13,7 @@ use App\Http\Controllers\Admin\AdminArticleController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\AdminProfileController;
-use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\UserProfileController;
 
 // ... Rute Auth dan lainnya ...
 Auth::routes(['verify' => true]);
@@ -21,8 +21,8 @@ Auth::routes(['verify' => true]);
 // Rute untuk halaman utama, dll. (Asumsi ada HomeController untuk 'home')
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Rute-rute yang sudah ada
 Route::get('/educational-contents', [ArticleController::class, 'index'])->name('articles.index');
+Route::get('/edukasi/search', [ArticleController::class, 'search'])->name('articles.search');
 Route::get('/educational-contents/{article:slug}', [ArticleController::class, 'show'])->name('articles.show');
 
 
@@ -32,6 +32,10 @@ Route::middleware(['auth'])->group(function () { // Semua rute laporan memerluka
     Route::post('/reports/create', [ReportController::class, 'store'])->name('reports.store');
     Route::get('/report/{report}', [App\Http\Controllers\ReportController::class, 'show'])->name('reports.show');
     Route::get('/report/{report}/download', [App\Http\Controllers\ReportController::class, 'downloadUserEvidence'])->name('reports.downloadEvidence');
+    Route::get('/profile', [UserProfileController::class, 'show'])->name('profile.show');
+    Route::post('/profile/photo', [UserProfileController::class, 'updatePhoto'])->name('profile.update_photo');
+    Route::post('/profile/details', [UserProfileController::class, 'updateDetails'])->name('profile.update_details');
+    Route::post('/profile/password', [UserProfileController::class, 'updatePassword'])->name('profile.update_password');
 });
 
 Route::get('/about-us', function () {
@@ -45,7 +49,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-// Rute untuk Admin melihat laporan (Contoh, bisa memerlukan middleware 'admin' tambahan)
+// Rute untuk Admin (Contoh, bisa memerlukan middleware 'admin' tambahan)
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/charts', [ChartController::class, 'index'])->name('charts.index');

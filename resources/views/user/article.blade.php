@@ -3,18 +3,36 @@
 @section('title', $article->title)
 
 @section('content')
-<div class="article-detail-container" style="padding: 40px 15%;">
-    <h1>{{ $article->title }}</h1>
-    <p class="text-muted">By {{ $article->author }} | Published on {{ $article->published_at->format('F d, Y') }}</p>
+    <div class="educational-container">
+        <div class="article-layout-grid">
 
-    @if($article->image)
-        <img src="{{ asset('storage/' . $article->image) }}" alt="{{ $article->title }}" style="width: 100%; height: auto; margin-bottom: 20px;">
-    @endif
+            <main class="article-detail-content">
+                <header class="article-header">
+                    <h1>{{ $article->title }}</h1>
+                    <div class="article-meta-info">
+                        <span>{{ $article->author }}</span>
+                        <span class="meta-separator">|</span>
+                        <span>{{ $article->published_at->format('d F Y') }}</span>
+                        <span class="meta-separator">|</span>
+                        <span><i class="bi bi-clock me-1"></i>{{ $article->getReadingTimeAttribute() }}</span>
+                    </div>
+                </header>
 
-    <div class="article-content">
-        {{-- PENTING: Gunakan {!! !!} untuk merender HTML dari rich text editor --}}
-        {{-- Pastikan Anda membersihkan input HTML untuk mencegah serangan XSS --}}
-        {!! $article->description !!}
+                @if ($article->image)
+                    <figure class="article-image-container">
+                        <img src="{{ Str::startsWith($article->image, 'http') ? $article->image : asset('storage/' . $article->image) }}"
+                            alt="{{ $article->title }}" class="article-image">
+                    </figure>
+                @endif
+
+                <div class="article-body">
+                    {!! $article->description !!}
+                </div>
+            </main>
+
+
+            @include('user.partials._sidebar')
+
+        </div>
     </div>
-</div>
 @endsection

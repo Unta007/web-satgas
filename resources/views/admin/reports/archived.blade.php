@@ -46,7 +46,7 @@
                                             switch (strtolower($report->status)) {
                                                 case 'unread':
                                                     $statusClass =
-                                                        'text-danger-emphasis bg-danger-subtle border-danger-subtle';
+                                                        'badge text-info-emphasis bg-info-subtle border border-info-subtle';
                                                     $statusIcon = 'bi-eye-slash';
                                                     break;
                                                 case 'review':

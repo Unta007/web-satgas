@@ -22,6 +22,7 @@ class ReportListController extends Controller
     public function unread(Request $request)
     {
         $reports = Report::where('status', 'unread')
+            ->where('is_archived', false) 
             ->with('user')
             ->latest()
             ->get();
@@ -34,6 +35,7 @@ class ReportListController extends Controller
     public function review()
     {
         $reports = Report::where('status', 'review')
+            ->where('is_archived', false) 
             ->with('user')
             ->latest()
             ->get();
@@ -46,6 +48,7 @@ class ReportListController extends Controller
     public function ongoing()
     {
         $reports = Report::where('status', 'ongoing')
+            ->where('is_archived', false) 
             ->with('user')
             ->latest()
             ->get();
@@ -58,6 +61,7 @@ class ReportListController extends Controller
     public function solved()
     {
         $reports = Report::where('status', 'solved')
+            ->where('is_archived', false) 
             ->with('user')
             ->latest()
             ->get();
@@ -70,6 +74,7 @@ class ReportListController extends Controller
     public function denied()
     {
         $reports = Report::where('status', 'denied')
+            ->where('is_archived', false) 
             ->with('user')
             ->latest()
             ->get();
@@ -81,9 +86,9 @@ class ReportListController extends Controller
 
     public function archived(Request $request)
     {
-        $reports = Report::where('is_archived', true) // Ambil laporan yang diarsipkan
+        $reports = Report::where('is_archived', true)
             ->with('user')
-            ->latest('updated_at') // Urutkan berdasarkan kapan terakhir diupdate (bisa jadi waktu arsip)
+            ->latest('updated_at')
             ->get();
 
         return view('admin.reports.archived', [

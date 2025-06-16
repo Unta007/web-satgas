@@ -39,7 +39,7 @@
                                         @if ($report->status == 'unread')
                                             <span
                                                 class="badge text-info-emphasis bg-info-subtle border border-info-subtle rounded-pill py-1 px-2 ms-1">
-                                                <i class="bi bi-exclamation-lg"></i> UNREAD
+                                                <i class="bi bi-eye-slash me-1"></i> UNREAD
                                             </span>
                                         @else
                                             <span
