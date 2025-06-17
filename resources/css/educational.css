@@ -12,7 +12,7 @@
 .educational-container {
     max-width: 1400px;
     margin: auto;
-    margin-left: 4rem;
+    margin-left: 2rem;
     padding: 0rem;
     font-family: var(--font-primary);
 }
@@ -405,3 +405,6 @@
     background-color: rgba(255, 241, 241, 0.563)
 }
 
+.search-result-content {
+    padding-top: 4rem;
+}

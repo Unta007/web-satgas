@@ -10,7 +10,7 @@
                 <ul class="list-unstyled">
                     <li><a href="/">Beranda</a></li>
                     <li><a href="/educational-contents">Pusat Pengetahuan</a></li>
-                    <li><a href="/report">Pelaporan</a></li>
+                    <li><a href="/report">Buat Laporan</a></li>
                     <li><a href="/about-us">Tentang Kami</a></li>
                 </ul>
             </div>

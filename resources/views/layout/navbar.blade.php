@@ -15,8 +15,8 @@
                     href="{{ route('home') }}">Beranda</a>
                 <a class="nav-link {{ request()->is('educational-contents*') ? 'active' : '' }}"
                     href="/educational-contents">Pusat Pengetahuan</a>
-                <a class="nav-link {{ request()->is('reports/create*') || request()->is('report/submit*') ? 'active' : '' }}"
-                    href="{{ route('reports.index') }}">Pelaporan</a> {{-- Menggunakan nama rute dari contoh sebelumnya --}}
+                <a class="nav-link {{ request()->is('report*') || request()->is('report/submit*') ? 'active' : '' }}"
+                    href="{{ route('reports.index') }}">Buat Laporan</a>
                 <a class="nav-link {{ request()->is('about-us*') ? 'active' : '' }}" href="/about-us">Tentang Kami</a>
             </div>
 

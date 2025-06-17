@@ -3,8 +3,15 @@
 @section('title', 'Buat Laporan')
 
 @section('content')
+
+    @php
+        $breadcrumbs = [['name' => 'Beranda', 'url' => route('home')], ['name' => 'Buat Laporan']];
+    @endphp
+    <x-hero title="Formulir Laporan Insiden"
+        subtitle="Laporkan setiap insiden dengan aman dan terstruktur. Setiap informasi yang Anda berikan sangat berharga dan akan dijaga kerahasiaannya."
+        :breadcrumbs="$breadcrumbs" />
+
     <div class="report-page-wrapper">
-        {{-- KOLOM KIRI: PANDUAN (STICKY) --}}
         <aside class="report-guidance">
             <div class="guidance-content">
                 <h3>Panduan Pelaporan</h3>
@@ -47,7 +54,11 @@
                 <p>Silakan isi kolom di bawah ini dengan informasi yang akurat.</p>
             </header>
 
-            @if (session('success'))
+            @if (session('success') && session('redirect_url'))
+                <div id="flash-message" data-message="{{ session('success') }}" data-type="success"
+                    data-redirect-url="{{ session('redirect_url') }}" style="display: none;">
+                </div>
+            @elseif (session('success'))
                 <div id="flash-message" data-message="{{ session('success') }}" data-type="success" style="display: none;">
                 </div>
             @elseif (session('error'))

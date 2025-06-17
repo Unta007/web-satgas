@@ -118,7 +118,8 @@ class ReportController extends Controller
         Report::create($data);
 
         return redirect()->route('reports.index') // Ganti dengan route yang sesuai, misal halaman "Laporan Saya"
-            ->with('success', 'Laporan berhasil dikirim. Kami akan segera menindaklanjutinya.');
+            ->with('success', 'Laporan berhasil dikirim. Kami akan segera menindaklanjutinya.')
+            ->with('redirect_url', route('profile.show'));
     }
 
     /**

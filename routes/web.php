@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () { // Semua rute laporan memerluka
     Route::post('/reports/create', [ReportController::class, 'store'])->name('reports.store');
     Route::get('/report/{report}', [App\Http\Controllers\ReportController::class, 'show'])->name('reports.show');
     Route::get('/report/{report}/download', [App\Http\Controllers\ReportController::class, 'downloadUserEvidence'])->name('reports.downloadEvidence');
+
     Route::get('/profile', [UserProfileController::class, 'show'])->name('profile.show');
     Route::post('/profile/photo', [UserProfileController::class, 'updatePhoto'])->name('profile.update_photo');
     Route::post('/profile/details', [UserProfileController::class, 'updateDetails'])->name('profile.update_details');

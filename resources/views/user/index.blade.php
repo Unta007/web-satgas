@@ -25,7 +25,7 @@
 
             {{-- Slide 2 (Opsional) --}}
             <div class="carousel-item"
-                style="background-image: url('{{ Vite::asset('resources/images/environment.jpg') }}');">
+                style="background-image: url('{{ Vite::asset('resources/images/telkom-univ.jpg') }}');">
                 <div class="carousel-caption d-none d-md-block text-start">
                     <div class="caption-text container">
                         <h1 class="display-4 fw-bold">Kampus yang Aman untuk Semua</h1>

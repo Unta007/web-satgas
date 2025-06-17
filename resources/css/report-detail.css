@@ -1,0 +1,64 @@
+/*
+ * Styling Khusus untuk Halaman Detail Laporan
+ */
+
+/* Menggunakan variabel global dari CSS utama Anda */
+:root {
+    --guidance-bg: #eeeeeeb4;
+    --detail-data-bg: #f8f9fa; /* Latar belakang untuk data */
+}
+
+/* 1. Wrapper Utama (Sama seperti halaman form) */
+/* Kita akan menggunakan kembali class dari halaman report */
+/* Pastikan .report-page-wrapper, .report-guidance, .report-form-container, .form-section, legend
+   sudah terdefinisi di CSS global Anda. Jika belum, Anda bisa menyalinnya dari CSS sebelumnya. */
+
+/* 2. Style untuk Detail Item */
+.detail-group {
+    margin-bottom: 1.25rem; /* Jarak antar grup label-data */
+}
+
+.detail-label {
+    display: block;
+    font-weight: 500;
+    color: var(--text-muted-color);
+    font-size: 0.9rem;
+    margin-bottom: 0.35rem;
+}
+
+.detail-data {
+    background-color: var(--detail-data-bg);
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    font-size: 1rem;
+    color: var(--text-color);
+    word-wrap: break-word; /* Memastikan teks panjang tidak merusak layout */
+}
+
+/* 3. Style Khusus untuk Aside (Kolom Kiri) di Halaman Detail */
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.summary-item .detail-label {
+    font-size: 0.85rem;
+}
+
+.summary-item .detail-data {
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+}
+
+/* 4. Aksi Tombol (Sama seperti halaman form) */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 2rem;
+}

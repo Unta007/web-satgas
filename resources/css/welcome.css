@@ -1,20 +1,14 @@
-/* 2. CSS VARIABLES (GLOBAL) */
 :root {
     --color-primary: #CD1A23;
-    /* Merah Telkom */
     --color-primary-dark: #A9161D;
     --color-text: #1C2A40;
-    /* Biru Gelap */
     --color-text-muted: #5a6474;
     --color-background: #FFFFFF;
     --color-background-light: #F5F7FA;
     --font-primary: 'Poppins', sans-serif;
     --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 8px 25px rgba(0, 0, 0, 0.1);
-
-    /* Variabel dari kode navbar Anda, kita satukan di sini */
     --navbar-background: #980000;
-    /* rgb(152, 0, 0) */
     --navbar-link-color: white;
     --navbar-link-hover-color: #4a0000;
 }
@@ -77,8 +71,8 @@ p.lead {
 
 /* 5. HERO CAROUSEL */
 #heroCarousel .carousel-item {
-    height: 73vh;
-    min-height: 500px;
+    height: 63vh;
+    min-height: 300px;
     background-size: cover;
     background-position: center center;
 }

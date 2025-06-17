@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (flashMessageEl) {
         const message = flashMessageEl.dataset.message;
         const type = flashMessageEl.dataset.type;
+        const redirectUrl = flashMessageEl.dataset.redirectUrl;
 
         let title = '';
         if (type === 'success') {
@@ -26,17 +27,32 @@ document.addEventListener('DOMContentLoaded', () => {
             title = 'Oops... Terjadi Kesalahan';
         }
 
-        Swal.fire({
+        const swalOptions = {
             title: title,
             text: message,
             icon: type,
-            confirmButtonText: 'OK',
             confirmButtonColor: '#A40E0E',
-        });
+        };
+
+        if (type === 'success' && redirectUrl) {
+            swalOptions.showCancelButton = true;
+            swalOptions.confirmButtonText = 'Lihat Laporan Saya';
+            swalOptions.cancelButtonText = 'OK';
+            swalOptions.cancelButtonColor = '#6c757d';
+
+            Swal.fire(swalOptions).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = redirectUrl;
+                }
+            });
+
+        } else {
+            swalOptions.confirmButtonText = 'OK';
+            Swal.fire(swalOptions);
+        }
     }
 
     const reportForm = document.getElementById('report-form');
-
     if (reportForm) {
         reportForm.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -85,4 +101,5 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
 });
