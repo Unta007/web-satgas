@@ -117,47 +117,58 @@
         <div class="container my-4">
             <div class="text-center mb-5">
                 <h2 class="display-5 fw-bold">Pusat Pengetahuan</h2>
-                <p class="lead text-muted">Jelajahi koleksi artikel dan sumber daya edukasi kami.</p>
+                <p class="lead text-muted">Jelajahi koleksi artikel dan sumber daya edukasi terbaru kami.</p>
             </div>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                {{-- TODO: Ganti gambar dengan ilustrasi/grafik yang relevan dan konsisten --}}
-                <div class="col">
-                    <div class="card h-100 shadow-sm">
-                        <img src="{{ Vite::asset('resources/images/report.jpg') }}" class="card-img-top"
-                            alt="Ilustrasi Pelaporan Efektif">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Pelaporan yang Efektif</h5>
-                            <p class="card-text flex-grow-1">Pahami apa saja yang termasuk kekerasan seksual dan bagaimana
-                                cara mengenalinya di berbagai lingkungan.</p>
-                            <a href="#" class="btn btn-danger mt-auto align-self-start">Baca Selengkapnya</a>
+
+            {{-- Cek apakah ada artikel untuk ditampilkan --}}
+            @if ($latestArticles->isNotEmpty())
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+                    {{-- Lakukan perulangan untuk setiap artikel --}}
+                    @foreach ($latestArticles as $article)
+                        <div class="col">
+                            <div class="card h-100 shadow-sm educational-card">
+                                {{-- Gambar Artikel (dengan fallback) --}}
+                                <a href="{{ route('articles.show', $article->slug) }}" class="card-img-container">
+                                    <img src="{{ $article->image ? asset('storage/' . $article->image) : 'https://via.placeholder.com/400x250/A40E0E/FFFFFF?text=Edukasi' }}"
+                                        class="card-img-top" alt="{{ $article->title }}">
+                                </a>
+
+                                <div class="card-body d-flex flex-column">
+                                    {{-- Judul Artikel --}}
+                                    <h5 class="card-title">
+                                        <a href="{{ route('articles.show', $article->slug) }}"
+                                            class="text-decoration-none text-dark stretched-link">
+                                            {{ $article->title }}
+                                        </a>
+                                    </h5>
+
+                                    {{-- Deskripsi Singkat --}}
+                                    <p class="card-text flex-grow-1">
+                                        {{-- Batasi deskripsi agar panjangnya konsisten --}}
+                                        {{ Str::limit(strip_tags($article->description), 120) }}
+                                    </p>
+
+                                    {{-- Tombol Baca Selengkapnya tidak diperlukan karena seluruh kartu bisa diklik --}}
+                                    {{-- Stretched-link pada judul membuat seluruh kartu bisa di-klik --}}
+                                </div>
+                                <div class="card-footer bg-transparent border-0 pb-3">
+                                    <small class="text-muted">{{ $article->created_at->diffForHumans() }}</small>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
+
                 </div>
-                <div class="col">
-                    <div class="card h-100 shadow-sm">
-                        <img src="{{ Vite::asset('resources/images/mental.jpg') }}" class="card-img-top"
-                            alt="Ilustrasi Dampak Psikologis">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Memahami Dampak Psikologis</h5>
-                            <p class="card-text flex-grow-1">Ketahui dampak psikologis yang dapat dialami korban dan
-                                pentingnya dukungan kesehatan mental.</p>
-                            <a href="#" class="btn btn-danger mt-auto align-self-start">Pelajari Lebih Lanjut</a>
-                        </div>
-                    </div>
+                <div class="text-center mt-5">
+                    <a href="{{ route('articles.index') }}" class="btn btn-danger">Lihat Semua Artikel</a>
                 </div>
-                <div class="col">
-                    <div class="card h-100 shadow-sm">
-                        <img src="{{ Vite::asset('resources/images/prevention.jpg') }}" class="card-img-top"
-                            alt="Ilustrasi Strategi Pencegahan">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Strategi Pencegahan</h5>
-                            <p class="card-text flex-grow-1">Jelajahi strategi dan praktik terbaik untuk mencegah
-                                kekerasan seksual di komunitas Anda.</p>
-                            <a href="#" class="btn btn-danger mt-auto align-self-start">Lihat Strategi</a>
-                        </div>
-                    </div>
+            @else
+                {{-- Tampilkan pesan ini jika tidak ada artikel sama sekali di database --}}
+                <div class="text-center text-muted">
+                    <p>Saat ini belum ada konten edukasi yang tersedia.</p>
                 </div>
-            </div>
+            @endif
         </div>
     </section>
 
@@ -168,41 +179,39 @@
                 <h2 class="display-5 fw-bold">Kisah Mereka yang Telah Kami Dampingi</h2>
                 <p class="lead text-muted">Pengalaman nyata yang menunjukkan pentingnya dukungan bersama.</p>
             </div>
-            <div id="testimonialSlider" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="testimonial-card">
-                            <p class="testimonial-quote">"Saya merasa didengarkan dan didukung penuh selama proses
-                                pelaporan. Saya tidak merasa dihakimi sama sekali. Terima kasih Satgas PPKS."</p>
-                            <p class="testimonial-author">— Mahasiswi, Fakultas Informatika</p>
-                        </div>
+
+            {{-- Cek apakah ada testimoni untuk ditampilkan --}}
+            @if ($testimonials->isNotEmpty())
+                <div id="testimonialSlider" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+
+                        {{-- Lakukan perulangan untuk setiap testimoni --}}
+                        @foreach ($testimonials as $testimonial)
+                            <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                                <div class="testimonial-card">
+                                    <p class="testimonial-quote">"{{ $testimonial->quote }}"</p>
+                                </div>
+                            </div>
+                        @endforeach
+
                     </div>
-                    <div class="carousel-item">
-                        <div class="testimonial-card">
-                            <p class="testimonial-quote">"Timnya sangat profesional, berempati, dan efektif. Sumber daya
-                                yang sangat berharga bagi siapa pun yang membutuhkan bantuan."</p>
-                            <p class="testimonial-author">— Mahasiswa, Fakultas Teknik Elektro</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="testimonial-card">
-                            <p class="testimonial-quote">"Layanan ini menyelamatkan saya. Dukungan dan sumber daya yang
-                                diberikan sungguh luar biasa. Saya jadi berani untuk melanjutkan studi."</p>
-                            <p class="testimonial-author">— Anonim</p>
-                        </div>
-                    </div>
+
+                    {{-- Tombol navigasi carousel hanya ditampilkan jika ada lebih dari 1 testimoni --}}
+                    @if ($testimonials->count() > 1)
+                        <button class="carousel-control-prev" type="button" data-bs-target="#testimonialSlider"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#testimonialSlider"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    @endif
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialSlider"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#testimonialSlider"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
+            @endif
+
         </div>
     </section>
 

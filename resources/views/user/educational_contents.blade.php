@@ -101,4 +101,5 @@
 
 @push('page-scripts')
     @vite('resources/js/load_more.js')
+    @vite('resources/js/scroll-animate.js')
 @endpush

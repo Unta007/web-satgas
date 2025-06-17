@@ -66,6 +66,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::delete('/reports/{report}', [ReportListController::class, 'destroy'])->name('reports.destroy');
     Route::resource('articles', AdminArticleController::class);
     Route::post('articles/upload-image', [AdminArticleController::class, 'uploadImage'])->name('articles.upload_image');
+    Route::patch('testimonials/{testimonial}/toggle', [\App\Http\Controllers\Admin\TestimonialController::class, 'toggle'])->name('testimonials.toggle');
+    Route::resource('testimonials', \App\Http\Controllers\Admin\TestimonialController::class);
     Route::resource('users', AdminUserController::class)->names([
         'index' => 'users.index',
         'create' => 'users.create',

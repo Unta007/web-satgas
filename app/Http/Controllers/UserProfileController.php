@@ -57,24 +57,32 @@ class UserProfileController extends Controller
     {
         $user = Auth::user();
 
-        $request->validate([
-            // PERBAIKAN DAN PENAMBAHAN VALIDASI PADA EMAIL
-            'email' => [
-                'required',
-                'string',
-                'email:dns',
-                'max:255',
-                'unique:users,email,' . $user->id, //
+        $request->validate(
+            [
+                // PERBAIKAN DAN PENAMBAHAN VALIDASI PADA EMAIL
+                'email' => [
+                    'required',
+                    'string',
+                    'email:dns',
+                    'max:255',
+                    'unique:users,email,' . $user->id, //
 
-                // ATURAN BARU: pastikan email baru tidak sama dengan email saat ini
-                function ($attribute, $value, $fail) use ($user) {
-                    if ($value === $user->email) {
-                        $fail('Alamat email baru tidak boleh sama dengan email Anda saat ini.');
-                    }
-                },
+                    // ATURAN BARU: pastikan email baru tidak sama dengan email saat ini
+                    function ($attribute, $value, $fail) use ($user) {
+                        if ($value === $user->email) {
+                            $fail('Alamat email baru tidak boleh sama dengan email Anda saat ini.');
+                        }
+                    },
+                ],
+                'current_password_for_details' => ['required', 'string'],
             ],
-            'current_password_for_details' => ['required', 'string'],
-        ]);
+            [
+                'email.required' => 'Alamat email tidak boleh kosong.',
+                'email.email' => 'Format alamat email tidak valid.',
+                'email.unique' => 'Alamat email ini sudah digunakan oleh pengguna lain.',
+                'current_password_for_details.required' => 'Anda harus memasukkan password saat ini untuk konfirmasi.'
+            ]
+        );
 
         // Verifikasi password saat ini (logika ini tetap sama)
         if (!Hash::check($request->current_password_for_details, $user->password)) {
@@ -100,22 +108,28 @@ class UserProfileController extends Controller
     {
         $user = Auth::user();
 
-        $request->validate([
-            'current_password' => ['required', 'string'],
-            'new_password' => [
-                'required',
-                'min:8', // Aturan ini bagus, tapi Password::defaults() sudah mencakupnya
-                'confirmed',
-                Password::defaults(),
+        $request->validate(
+            [
+                'current_password' => ['required', 'string'],
+                'new_password' => [
+                    'required',
+                    'min:8', // Aturan ini bagus, tapi Password::defaults() sudah mencakupnya
+                    'confirmed',
+                    Password::defaults(),
 
-                // ATURAN BARU: pastikan password baru tidak sama dengan password saat ini
-                function ($attribute, $value, $fail) use ($user) {
-                    if (Hash::check($value, $user->password)) {
-                        $fail('Password baru tidak boleh sama dengan password Anda saat ini.');
-                    }
-                },
+                    // ATURAN BARU: pastikan password baru tidak sama dengan password saat ini
+                    function ($attribute, $value, $fail) use ($user) {
+                        if (Hash::check($value, $user->password)) {
+                            $fail('Password baru tidak boleh sama dengan password Anda saat ini.');
+                        }
+                    },
+                ],
             ],
-        ]);
+            [
+                'new_password.min' => 'Password harus memiliki minimal 8 karakter.',
+                'new_password.confirmed' => 'Password baru tidak cocok.',
+            ]
+        );
 
         // Verifikasi password saat ini (logika ini tetap sama)
         if (!Hash::check($request->current_password, $user->password)) {

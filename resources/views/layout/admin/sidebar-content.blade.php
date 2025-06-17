@@ -57,6 +57,24 @@
             </div>
         </div>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#testimonialsCollapse" role="button" aria-expanded="false"
+            aria-controls="testimonialsCollapse">
+            <i class="bi bi-chat-quote-fill me-2"></i> Testimoni <i class="bi bi-chevron-down float-end"></i>
+        </a>
+        <div class="collapse {{ Request::is('admin/testimonials*') ? 'show' : '' }}" id="testimonialsCollapse">
+            <div class="submenu">
+                <a href="{{ route('admin.testimonials.index') }}"
+                    class="nav-link {{ Request::is('admin/testimonials') && !Request::is('admin/testimonials/create') ? 'active' : '' }}">
+                    List Testimoni
+                </a>
+                <a href="{{ route('admin.testimonials.create') }}"
+                    class="nav-link {{ Request::is('admin/testimonials/create') ? 'active' : '' }}">
+                    Tambah Testimoni
+                </a>
+            </div>
+        </div>
+    </li>
     @if (Auth::check() && Auth::user()->isGlobalAdmin())
         <li class="nav-item">
             <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#usersCollapse"

@@ -82,5 +82,5 @@
 @endsection
 
 @push('page-scripts')
-    @vite('resources/js/about-us.js')
+    @vite('resources/js/scroll-animate.js')
 @endpush
