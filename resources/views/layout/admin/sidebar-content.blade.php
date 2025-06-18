@@ -99,6 +99,12 @@
         </li>
     @endif
     <li class="nav-item">
+        <a href="{{ route('admin.emergency-contacts.index') }}"
+            class="nav-link {{ Request::is('admin/emergency-contacts*') ? 'active' : '' }}">
+            <i class="bi bi-shield-lock-fill me-2"></i> Kontak Darurat
+        </a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link {{ Request::is('admin/logs*') ? 'active' : '' }}" href="{{ route('admin.logs.index') }}">
             <i class="bi bi-terminal-fill me-2"></i> View Log
         </a>

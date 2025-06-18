@@ -75,27 +75,26 @@
         <div class="container my-4 fade-in-section">
             <h2 class="display-5 fw-bold">Ruang Aman Anda untuk Bersuara</h2>
             <p class="lead text-muted mx-auto" style="max-width: 700px;">Kami menyediakan beberapa jalur untuk memastikan
-                Anda mendapatkan bantuan yang paling sesuai dengan kebutuhan Anda. Privasi Anda adalah prioritas kami.
+                Anda mendapatkan bantuan yang paling sesuai dengan kebutuhan Anda.
             </p>
             <div class="row g-4 mt-4 pt-3">
                 {{-- Pilihan 1: Lapor Anonim --}}
                 <div class="col-md-4">
                     <div class="action-card h-100 p-4">
                         <i class="bi bi-shield-shaded fs-1 text-danger mb-3"></i>
-                        <h4 class="fw-bold">Lapor Secara Anonim</h4>
-                        <p class="small">Kirimkan laporan Anda tanpa perlu menyertakan identitas. Kami akan menindaklanjuti
+                        <h4 class="fw-bold">Laporkan Insiden</h4>
+                        <p class="small">Segera lapor kepada kami apabila Anda apabila mengetahui adanya sebuah insiden.
+                            Kami akan menindaklanjuti
                             setiap informasi yang masuk.</p>
-                        <a href="/lapor-anonim" class="stretched-link"></a>
+                        <a href="/report" class="stretched-link"></a>
                     </div>
                 </div>
-                {{-- Pilihan 2: Jadwalkan Konsultasi --}}
                 <div class="col-md-4">
-                    <div class="action-card h-100 p-4">
-                        <i class="bi bi-calendar-event fs-1 text-danger mb-3"></i>
-                        <h4 class="fw-bold">Jadwalkan Konsultasi</h4>
-                        <p class="small">Bicarakan pengalaman Anda secara pribadi dan rahasia dengan tim kami yang
-                            terlatih untuk memberikan pendampingan.</p>
-                        <a href="/konsultasi" class="stretched-link"></a>
+                    <div class="action-card h-100 p-4" style="cursor: pointer;" onclick="Tawk_API.maximize()">
+                        <i class="bi bi-chat-dots-fill fs-1 text-danger mb-3"></i>
+                        <h4 class="fw-bold">Forum Diskusi Aman</h4>
+                        <p class="small">Butuh teman bicara sekarang? Terhubung langsung dengan tim kami secara pribadi dan
+                            rahasia melalui live chat untuk mendapatkan dukungan segera.</p>
                     </div>
                 </div>
                 {{-- Pilihan 3: Kontak Darurat --}}
@@ -105,7 +104,7 @@
                         <h4 class="fw-bold">Hubungi Kontak Darurat</h4>
                         <p class="small">Jika Anda berada dalam situasi mendesak dan membutuhkan bantuan segera, hubungi
                             jalur cepat kami.</p>
-                        <a href="/kontak-darurat" class="stretched-link"></a>
+                        <a href="/emergency-contacts" class="stretched-link"></a>
                     </div>
                 </div>
             </div>
@@ -215,6 +214,8 @@
         </div>
     </section>
 
-    <button id="backToTopBtn" title="Kembali ke Atas" aria-label="Kembali ke Atas">&#8679;</button>
+    <button id="backToTopBtn" title="Kembali ke Atas" aria-label="Kembali ke Atas">
+        <i class="bi bi-arrow-up"></i>
+    </button>
 
 @endsection

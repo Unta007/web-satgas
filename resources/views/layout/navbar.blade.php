@@ -108,12 +108,12 @@
                             <li>
                                 <hr class="dropdown-divider my-0">
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a class="dropdown-item text-center small text-muted py-2 view-all-notifications"
-                                    href="{{ route('notifications.index') }}"> {{-- Ganti dengan route halaman semua notifikasi --}}
+                                    href="{{ route('notifications.index') }}">
                                     Lihat semua notifikasi
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </li>
                     {{-- ==== NOTIFICATION DROPDOWN END ==== --}}

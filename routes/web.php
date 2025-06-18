@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserNotificationController;
@@ -20,6 +21,8 @@ Auth::routes(['verify' => true]);
 
 // Rute untuk halaman utama, dll. (Asumsi ada HomeController untuk 'home')
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/emergency-contacts', [PageController::class, 'emergencyContacts'])->name('contacts.emergency');
 
 Route::get('/educational-contents', [ArticleController::class, 'index'])->name('articles.index');
 Route::get('/edukasi/search', [ArticleController::class, 'search'])->name('articles.search');
@@ -66,8 +69,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::delete('/reports/{report}', [ReportListController::class, 'destroy'])->name('reports.destroy');
     Route::resource('articles', AdminArticleController::class);
     Route::post('articles/upload-image', [AdminArticleController::class, 'uploadImage'])->name('articles.upload_image');
-    Route::patch('testimonials/{testimonial}/toggle', [\App\Http\Controllers\Admin\TestimonialController::class, 'toggle'])->name('testimonials.toggle');
     Route::resource('testimonials', \App\Http\Controllers\Admin\TestimonialController::class);
+    Route::patch('testimonials/{testimonial}/toggle', [\App\Http\Controllers\Admin\TestimonialController::class, 'toggle'])->name('testimonials.toggle');
+    Route::resource('emergency-contacts', \App\Http\Controllers\Admin\EmergencyContactController::class);
+    Route::patch('emergency-contacts/{emergencyContact}/toggle', [\App\Http\Controllers\Admin\EmergencyContactController::class, 'toggle'])->name('emergency-contacts.toggle');
     Route::resource('users', AdminUserController::class)->names([
         'index' => 'users.index',
         'create' => 'users.create',

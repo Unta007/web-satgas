@@ -74,7 +74,7 @@
             <p class="lead text-muted">Tim kami siap membantu. Jangan ragu untuk menghubungi kami atau membuat laporan.</p>
             <div class="mt-4">
                 <a href="{{ route('reports.index') }}" class="btn btn-danger btn-lg px-4 me-2">Laporkan Insiden</a>
-                <a href="#" class="btn btn-outline-secondary btn-lg px-4">Hubungi Kami</a>
+                <a href="https://linktr.ee/satgasppks" class="btn btn-outline-secondary btn-lg px-4">Hubungi Kami</a>
             </div>
         </section>
 

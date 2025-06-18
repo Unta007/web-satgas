@@ -1,0 +1,44 @@
+.contact-type-header {
+    font-weight: 600;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-color, #A40E0E);
+    display: inline-block;
+}
+
+.contact-card {
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    text-align: center;
+    height: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color, #A40E0E);
+    margin-bottom: 1rem;
+}
+
+.contact-name {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.contact-description {
+    font-size: 0.9rem;
+    color: #6c757d;
+    flex-grow: 1;
+    /* Membuat deskripsi mengisi ruang */
+    margin-bottom: 1rem;
+}
+
+.contact-info {
+    font-weight: 500;
+    font-size: 1.1rem;
+}

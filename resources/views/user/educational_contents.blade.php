@@ -93,7 +93,9 @@
                 @endif
             </div>
 
-            <button id="backToTopBtn" title="Kembali ke Atas" aria-label="Kembali ke Atas">&#8679;</button>
+            <button id="backToTopBtn" title="Kembali ke Atas" aria-label="Kembali ke Atas">
+                <i class="bi bi-arrow-up"></i>
+            </button>
 
         </div>
     </div>
