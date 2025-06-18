@@ -1,3 +1,203 @@
-.card {
-    margin-top: 25%;
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    /* Menggunakan font yang lebih modern */
+}
+
+.login-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ----- Panel Kiri (Gambar) ----- */
+.login-image-panel {
+    flex: 1;
+    position: relative;
+    background-image: url('https://i.imgur.com/89WD0L8.jpeg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    padding: 4rem;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.login-image-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.image-panel-content {
+    position: relative;
+    z-index: 2;
+    max-width: 550px;
+}
+
+.image-panel-content h1 {
+    font-size: 2.rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.image-panel-content p {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* ----- Panel Kanan (Form) ----- */
+.login-form-panel {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: #fff;
+    animation: slideIn 1s ease-in-out;
+}
+
+.login-form-wrapper {
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-logo {
+    padding: 1rem;
+    max-width: 200px;
+    margin-bottom: 1rem;
+}
+
+.login-form-wrapper h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.login-form-wrapper .subtitle {
+    color: #777;
+    margin-bottom: 2.5rem;
+}
+
+.form-control-custom {
+    background-color: #f6f6f6;
+    border: 1px solid #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+}
+
+.form-control-custom:focus {
+    background-color: #fff;
+    border-color: #A31926;
+    /* Warna merah Telkom */
+    box-shadow: 0 0 0 0.25rem rgba(163, 25, 38, 0.25);
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-toggle-icon {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+}
+
+.btn-login {
+    background-color: #A31926;
+    /* Warna merah Telkom */
+    border-color: #A31926;
+    color: white;
+    padding: 0.6rem;
+    width: 100%;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.btn-login:hover {
+    color: #fff;
+    background-color: #81141f;
+    border-color: #81141f;
+}
+
+.forgot-password-link {
+    text-align: right;
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.register-link {
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 2rem;
+    color: #555;
+}
+
+.register-link a {
+    color: #A31926;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    color: #921521;
+    text-decoration: underline;
+}
+
+
+/* ----- Animasi ----- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* ----- Responsive ----- */
+@media (max-width: 992px) {
+    .login-image-panel {
+        display: none;
+        /* Sembunyikan panel gambar di layar kecil */
+    }
+
+    .login-form-panel {
+        flex-grow: 1;
+    }
 }

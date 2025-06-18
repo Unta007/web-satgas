@@ -1,41 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layout.auth')
 
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@yield('title', 'Page Title')</title>
-    @vite('resources/css/auth.css')
-    @vite('resources/sass/app.scss')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
-</head>
+@section('title', 'Verifikasi Email Anda')
 
-<body div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
+@section('content')
+    <div class="login-container">
+        {{-- PANEL KIRI DENGAN GAMBAR DAN TEKS (SAMA DENGAN SEBELUMNYA) --}}
+        <div class="login-image-panel">
+            <div class="image-panel-content">
+                <h1>Satu Langkah Lagi...</h1>
+                <p>
+                    Kami telah mengirimkan tautan verifikasi ke alamat email Anda untuk memastikan keamanan akun Anda.
+                </p>
+            </div>
+        </div>
 
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
-                        </div>
-                    @endif
+        {{-- PANEL KANAN DENGAN INFORMASI VERIFIKASI --}}
+        <div class="login-form-panel">
+            <div class="login-form-wrapper text-center"> {{-- Menggunakan text-center untuk merapikan konten --}}
 
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
+                <h2 class="mb-3">Verifikasi Alamat Email Anda</h2>
+
+                {{-- Pesan Sukses jika email baru saja dikirim ulang --}}
+                @if (session('resent'))
+                    <div class="alert alert-success" role="alert">
+                        Tautan verifikasi baru telah berhasil dikirimkan ke alamat email Anda.
+                    </div>
+                @endif
+
+                <p class="subtitle">
+                    Sebelum melanjutkan, silakan periksa kotak masuk email Anda untuk link verifikasi.
+                    Tautan telah dikirim ke: <br><strong>{{ auth()->user()->email }}</strong>
+                </p>
+
+                <p class="mt-4">
+                    Tidak menerima email?
+                </p>
+
+                {{-- Tombol untuk Kirim Ulang Email --}}
+                <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-login w-100">
+                       Kirim Ulang Email Verifikasi
+                    </button>
+                </form>
+
+                {{-- Tombol untuk Logout (Penting untuk UX jika user salah email) --}}
+                <div class="mt-4">
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
-                        <button type="submit"
-                            class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
                     </form>
+                    <p class="register-link mb-0">
+                        Salah akun? <a href="{{ route('logout') }}"
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                           Keluar (Logout)
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-</body>
+@endsection
 
-</html>
+@push('page-scripts')
+    @vite('resources/js/auth.js')
+@endpush

@@ -118,7 +118,7 @@
                         <div class="text-center text-muted py-5">
                             <i class="bi bi-file-earmark-x fs-1"></i>
                             <p class="mt-3">Anda belum pernah membuat laporan.</p>
-                            <a href="{{ route('reports.create') }}" class="btn btn-primary mt-2">Buat Laporan Pertama Anda</a>
+                            <a href="{{ route('reports.index') }}" class="btn btn-primary mt-2">Buat Laporan Pertama Anda</a>
                         </div>
                     @else
                         <div class="table-responsive">

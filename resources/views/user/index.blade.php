@@ -17,7 +17,6 @@
                             bebas dari kekerasan seksual. Kami siap membantu Anda.</p>
                         <div class="d-flex gap-2 mt-4">
                             <a class="btn btn-hero btn-danger" href="{{ route('reports.index') }}">Lapor Sekarang</a>
-                            <a class="btn btn-hero btn-outline-light" href="/pusat-informasi">Cari Bantuan & Informasi</a>
                         </div>
                     </div>
                 </div>

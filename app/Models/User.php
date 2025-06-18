@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\CustomVerifyEmailNotification;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Storage;
 
@@ -66,6 +67,16 @@ class User extends Authenticatable implements MustVerifyEmail
         // Logika kustom Anda atau panggilan ke parent:: sudah cukup.
         // Contoh: $this->notify(new \App\Notifications\CustomResetPasswordNotification($token));
         parent::sendPasswordResetNotification($token);
+    }
+
+    /**
+     * Kirim notifikasi verifikasi email kustom.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new CustomVerifyEmailNotification);
     }
 
     /**
