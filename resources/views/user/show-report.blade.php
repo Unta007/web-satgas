@@ -18,25 +18,43 @@
                     <span class="detail-data">{{ $report->created_at->format('d F Y, H:i') }}</span>
                 </div>
 
-                <div class="summary-item">
+                <div class="summary-item mb-3">
                     <span class="detail-label">Status Saat Ini</span>
                     @php
                         // Logika status yang sama untuk konsistensi
                         $statusClass = 'text-secondary-emphasis bg-secondary-subtle border-secondary-subtle';
                         $statusText = strtoupper($report->status);
                         switch (strtolower($report->status)) {
-                            case 'unread': $statusClass = 'text-info-emphasis bg-info-subtle border-info-subtle'; break;
-                            case 'review': $statusClass = 'text-primary-emphasis bg-primary-subtle border-primary-subtle'; break;
-                            case 'ongoing': $statusClass = 'text-warning-emphasis bg-warning-subtle border-warning-subtle'; break;
-                            case 'solved': $statusClass = 'text-success-emphasis bg-success-subtle border-success-subtle'; break;
-                            case 'denied': $statusClass = 'text-danger-emphasis bg-danger-subtle border-danger-subtle'; break;
+                            case 'unread':
+                                $statusClass = 'text-info-emphasis bg-info-subtle border-info-subtle';
+                                break;
+                            case 'review':
+                                $statusClass = 'text-primary-emphasis bg-primary-subtle border-primary-subtle';
+                                break;
+                            case 'ongoing':
+                                $statusClass = 'text-warning-emphasis bg-warning-subtle border-warning-subtle';
+                                break;
+                            case 'solved':
+                                $statusClass = 'text-success-emphasis bg-success-subtle border-success-subtle';
+                                break;
+                            case 'denied':
+                                $statusClass = 'text-danger-emphasis bg-danger-subtle border-danger-subtle';
+                                break;
                         }
                     @endphp
                     <span class="badge rounded-pill fs-6 {{ $statusClass }} py-2">
                         {{ $statusText }}
                     </span>
                 </div>
-            </div>
+
+                <div class="summary-item">
+                    @if ($report->status == 'denied' && !empty($report->rejection_note))
+                        <div class="alert alert-danger mb-4">
+                            <p class="mb-4">Laporan ini telah ditolak dengan alasan berikut:</p>
+                            <p class="mb-0 fst-italic">"{!! nl2br(e($report->rejection_note)) !!}"</p>
+                        </div>
+                    @endif
+                </div>
         </aside>
 
         {{-- KOLOM KANAN: DETAIL LENGKAP LAPORAN --}}
@@ -125,7 +143,8 @@
                         <div class="col-md-6">
                             <div class="detail-group">
                                 <label class="detail-label">Status terlapor</label>
-                                <p class="detail-data text-capitalize">{{ str_replace('_', ' ', $report->perpetrator_role ?? 'N/A') }}</p>
+                                <p class="detail-data text-capitalize">
+                                    {{ str_replace('_', ' ', $report->perpetrator_role ?? 'N/A') }}</p>
                             </div>
                         </div>
                     </div>
@@ -138,14 +157,15 @@
                 @if ($report->evidence_path)
                     <div class="detail-group">
                         <label class="detail-label">Bukti Pendukung</label>
-                        <a href="{{ route('reports.downloadEvidence', $report->id) }}" class="btn btn-outline-primary btn-sm">
+                        <a href="{{ route('reports.downloadEvidence', $report->id) }}"
+                            class="btn btn-outline-primary btn-sm">
                             <i class="bi bi-download me-1"></i> Unduh Bukti ({{ basename($report->evidence_path) }})
                         </a>
                     </div>
                 @endif
                 <div class="detail-group">
                     <label class="detail-label">Persetujuan</label>
-                     <div class="form-check">
+                    <div class="form-check">
                         <input class="form-check-input" type="checkbox" {{ $report->agreement ? 'checked' : '' }} disabled>
                         <label class="form-check-label">
                             Pelapor telah menyetujui Pernyataan dan Persetujuan saat membuat laporan.

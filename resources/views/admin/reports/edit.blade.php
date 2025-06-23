@@ -10,6 +10,9 @@
                 id="updateStatusForm">
                 @csrf
                 @method('PUT')
+
+                <input type="hidden" name="rejection_note" id="hiddenRejectionNote">
+
                 <div class="input-group">
                     <label class="input-group-text" for="statusSelect">Status</label>
                     <select class="form-select" id="statusSelect" name="status"
@@ -23,6 +26,16 @@
                 </div>
             </form>
         </div>
+
+        @if ($report->status == 'denied' && !empty($report->rejection_note))
+            <div class="alert alert-danger mb-4">
+                <h5 class="alert-heading fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Laporan Ditolak
+                </h5>
+                <p class="mb-1">Laporan ini telah ditolak dengan alasan berikut:</p>
+                <hr>
+                <p class="mb-0 fst-italic">"{!! nl2br(e($report->rejection_note)) !!}"</p>
+            </div>
+        @endif
 
         <div class="card shadow-sm border-0">
             <div class="card-body">

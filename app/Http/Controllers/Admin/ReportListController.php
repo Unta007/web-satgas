@@ -22,7 +22,7 @@ class ReportListController extends Controller
     public function unread(Request $request)
     {
         $reports = Report::where('status', 'unread')
-            ->where('is_archived', false) 
+            ->where('is_archived', false)
             ->with('user')
             ->latest()
             ->get();
@@ -35,7 +35,7 @@ class ReportListController extends Controller
     public function review()
     {
         $reports = Report::where('status', 'review')
-            ->where('is_archived', false) 
+            ->where('is_archived', false)
             ->with('user')
             ->latest()
             ->get();
@@ -48,7 +48,7 @@ class ReportListController extends Controller
     public function ongoing()
     {
         $reports = Report::where('status', 'ongoing')
-            ->where('is_archived', false) 
+            ->where('is_archived', false)
             ->with('user')
             ->latest()
             ->get();
@@ -61,7 +61,7 @@ class ReportListController extends Controller
     public function solved()
     {
         $reports = Report::where('status', 'solved')
-            ->where('is_archived', false) 
+            ->where('is_archived', false)
             ->with('user')
             ->latest()
             ->get();
@@ -74,7 +74,7 @@ class ReportListController extends Controller
     public function denied()
     {
         $reports = Report::where('status', 'denied')
-            ->where('is_archived', false) 
+            ->where('is_archived', false)
             ->with('user')
             ->latest()
             ->get();
@@ -178,8 +178,10 @@ class ReportListController extends Controller
     {
         $availableStatusesForLogic = ['unread', 'review', 'ongoing', 'solved', 'denied', 'archived'];
 
+        // 1. TAMBAHKAN VALIDASI UNTUK REJECTION NOTE
         $request->validate([
             'status' => ['required', Rule::in($availableStatusesForLogic)],
+            'rejection_note' => ['nullable', 'string', 'max:2000'], // Boleh kosong, tapi jika ada harus string
         ]);
 
         $selectedAction = $request->status;
@@ -211,6 +213,7 @@ class ReportListController extends Controller
             if ($statusChangedForUserNotification) {
                 $successMessage = 'Status laporan #' . $report->id . ' berhasil diperbarui menjadi "' . ucfirst($selectedAction) . '".';
             } else {
+                // Kita akan tambahkan logika pesan sukses untuk update note di bawah
                 $successMessage = 'Status laporan #' . $report->id . ' tidak berubah.';
             }
 
@@ -235,13 +238,34 @@ class ReportListController extends Controller
             }
         }
 
+        // 2. BLOK TAMBAHAN UNTUK MENANGANI DATA REJECTION NOTE
+        // Diletakkan tepat sebelum $report->save()
+        // --------------------------------------------------------------------
+        if ($selectedAction === 'denied') {
+            $rejectionNote = $request->input('rejection_note');
+            // Validasi server-side untuk memastikan catatan diisi jika status ditolak
+            if (empty($rejectionNote)) {
+                return back()->withErrors(['rejection_note' => 'Catatan penolakan wajib diisi jika status adalah Ditolak.'])->withInput();
+            }
+            // Jika status adalah 'denied' dan catatan berubah, perbarui pesan sukses
+            if ($report->rejection_note != $rejectionNote) {
+                $successMessage = 'Status dan catatan penolakan berhasil diperbarui.';
+            }
+            $report->rejection_note = $rejectionNote;
+        } else {
+            // Jika status BUKAN 'denied', selalu pastikan catatan penolakan kosong
+            $report->rejection_note = null;
+        }
+        // --------------------------------------------------------------------
+
         $report->save();
 
+        // Blok activity log Anda (tidak ada perubahan)
         if ($statusChangedForUserNotification) {
             activity()
                 ->causedBy(Auth::user())
                 ->performedOn($report)
-                ->withProperties(['old_status' => $oldStatus, 'new_status' => $selectedAction, 'was_archived' => $wasArchived]) // Data tambahan
+                ->withProperties(['old_status' => $oldStatus, 'new_status' => $selectedAction, 'was_archived' => $wasArchived])
                 ->log("<strong>mengubah</strong> status laporan <strong>#{$report->id}</strong> dari <strong>'{$oldStatus}'</strong> menjadi <strong>'{$selectedAction}'</strong>" . ($report->is_archived && !$wasArchived ? ' dan mengarsipkan.' : ($wasArchived && !$report->is_archived ? ' dan mengeluarkan dari arsip.' : '.')));
         } elseif ($selectedAction == 'archived' && !$wasArchived) {
             activity()
@@ -250,11 +274,13 @@ class ReportListController extends Controller
                 ->log("<strong>mengarsipkan</strong> laporan <strong>#{$report->id}</strong>.");
         }
 
+        // Blok notifikasi user
         if ($statusChangedForUserNotification && $report->user && $selectedAction !== 'archived') {
             $reportOwner = $report->user;
             if ($reportOwner) {
                 try {
-                    $reportOwner->notify(new ReportStatusUpdated($report, $selectedAction, $oldStatus));
+                    // 3. TAMBAHKAN REJECTION NOTE SAAT MENGIRIM NOTIFIKASI
+                    $reportOwner->notify(new ReportStatusUpdated($report, $selectedAction, $oldStatus, $report->rejection_note));
                 } catch (\Exception $e) {
                     \Log::error("Gagal mengirim notifikasi untuk laporan #{$report->id}: " . $e->getMessage());
                 }

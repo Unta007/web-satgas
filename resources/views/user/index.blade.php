@@ -52,7 +52,7 @@
             <div class="row align-items-center g-5">
                 <div class="col-lg-5 text-center">
                     {{-- TODO: Ganti dengan FOTO PROFESIONAL Ketua Satgas. Ini sangat penting untuk membangun kepercayaan. --}}
-                    <img src="{{ Vite::asset('resources/images/avatar.jpg') }}" alt="Foto Ketua Satgas PPKS"
+                    <img src="{{ Vite::asset('resources/images/ketua_satgas.jpg') }}" alt="Foto Ketua Satgas PPKS"
                         class="img-fluid rounded-circle shadow-lg"
                         style="max-width: 300px; height: 300px; object-fit: cover;" />
                 </div>

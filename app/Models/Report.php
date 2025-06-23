@@ -27,6 +27,7 @@ class Report extends Model
         'evidence_path',
         'agreement',
         'status',
+        'rejection_note',
         'is_archived',
     ];
 
