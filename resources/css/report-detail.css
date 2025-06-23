@@ -53,6 +53,13 @@
     padding: 0.5rem 0.75rem;
 }
 
+.summary-item .status-description {
+    font-size: 0.82rem;
+    font-weight: 450;
+    color: var(--text-muted-color);
+
+}
+
 /* 4. Aksi Tombol (Sama seperti halaman form) */
 .form-actions {
     display: flex;

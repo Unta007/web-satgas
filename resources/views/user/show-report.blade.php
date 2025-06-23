@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="summary-item mb-3">
-                    <span class="detail-label">Status Saat Ini</span>
+                    <span class="detail-label">Status Laporan Saat Ini</span>
                     @php
                         // Logika status yang sama untuk konsistensi
                         $statusClass = 'text-secondary-emphasis bg-secondary-subtle border-secondary-subtle';
@@ -47,13 +47,57 @@
                     </span>
                 </div>
 
-                <div class="summary-item">
+                <div class="summary-item mb-1">
                     @if ($report->status == 'denied' && !empty($report->rejection_note))
                         <div class="alert alert-danger mb-4">
                             <p class="mb-4">Laporan ini telah ditolak dengan alasan berikut:</p>
                             <p class="mb-0 fst-italic">"{!! nl2br(e($report->rejection_note)) !!}"</p>
                         </div>
                     @endif
+                </div>
+
+                <div class="summary-item">
+                    <span class="detail-label">Keterangan Status</span>
+                    <div class="row">
+                        <div class="col mb-1">
+                            <span class="badge text-info-emphasis bg-info-subtle border border-info-subtle rounded-pill">
+                                UNREAD
+                            </span>
+                            <span class="status-description">: Belum dibaca</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-1">
+                            <span class="badge text-primary-emphasis bg-primary-subtle border-primary-subtle rounded-pill">
+                                REVIEW
+                            </span>
+                            <span class="status-description">: Sedang Ditinjau</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-1">
+                            <span class="badge text-warning-emphasis bg-warning-subtle border-warning-subtle rounded-pill">
+                                ONGOING
+                            </span>
+                            <span class="status-description">: Sedang Berlangsung</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-1">
+                            <span class="badge text-success-emphasis bg-success-subtle border-success-subtle rounded-pill">
+                                SOLVED
+                            </span>
+                            <span class="status-description">: Laporan Selesai</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-1">
+                            <span class="badge text-danger-emphasis bg-danger-subtle border-danger-subtle rounded-pill">
+                                DENIED
+                            </span>
+                            <span class="status-description">: Laporan Ditolak</span>
+                        </div>
+                    </div>
                 </div>
         </aside>
 
