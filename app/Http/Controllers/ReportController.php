@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+use App\Events\ReportSubmitted;
 
 class ReportController extends Controller
 {
@@ -115,7 +116,9 @@ class ReportController extends Controller
             $data['evidence_path'] = null;
         }
 
-        Report::create($data);
+        $report = Report::create($data);
+
+        event(new ReportSubmitted($report));
 
         return redirect()->route('reports.index') // Ganti dengan route yang sesuai, misal halaman "Laporan Saya"
             ->with('success', 'Laporan berhasil dikirim. Kami akan segera menindaklanjutinya.')
