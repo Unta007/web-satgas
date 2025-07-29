@@ -2,7 +2,6 @@ import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Cek jika jQuery & DataTables sudah dimuat
     if (typeof $ !== 'undefined' && $.fn.DataTable) {
         $('#emergencyContactsTable').DataTable({
             responsive: true,
@@ -16,17 +15,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 paginate: { first: "<<", last: ">>", next: ">", previous: "<" }
             },
             columnDefs: [
-                // Nonaktifkan pengurutan untuk kolom Aksi (indeks 5)
                 { "orderable": false, "targets": 5 }
             ],
-            // Urutkan berdasarkan kolom Urutan (indeks 0) secara ascending
             order: [[0, "asc"]]
         });
     } else {
         console.warn('jQuery atau DataTables belum dimuat, tabel tidak akan diinisialisasi.');
     }
 
-    // Logika konfirmasi penghapusan menggunakan SweetAlert
     const deleteForms = document.querySelectorAll('.delete-contact-form');
     deleteForms.forEach(form => {
         form.addEventListener('submit', function (event) {

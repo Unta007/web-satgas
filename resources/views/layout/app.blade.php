@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@yield('title', 'Satgas PPKS ITTS')</title>
+    <title>@yield('title', 'Satgas PPKPT Kampus Surabaya')</title>
 
     @vite(['resources/sass/app.scss', 'resources/css/welcome.css', 'resources/css/hero.css', 'resources/css/contact-page.css', 'resources/css/educational.css', 'resources/css/report-form.css', 'resources/css/report-detail.css', 'resources/css/article.css', 'resources/css/user-profile.css', 'resources/css/about-us.css', 'resources/js/app.js', 'resources/js/user-profile.js', 'resources/js/load_more.js', 'resources/js/report.js', 'resources/js/scroll-animate.js'])
 

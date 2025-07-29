@@ -35,7 +35,7 @@ const messagesDiv = document.getElementById('laravelSessionMessages');
                 title: 'Peringatan!',
                 text: warningMessage,
                 icon: 'warning',
-                confirmButtonColor: '#ffc107', // Bootstrap warning color
+                confirmButtonColor: '#ffc107',
                 confirmButtonText: 'OK'
             });
         }
@@ -45,7 +45,7 @@ const messagesDiv = document.getElementById('laravelSessionMessages');
                 title: 'Informasi',
                 text: infoMessage,
                 icon: 'info',
-                confirmButtonColor: '#0dcaf0', // Bootstrap info color
+                confirmButtonColor: '#0dcaf0', 
                 confirmButtonText: 'OK'
             });
         }

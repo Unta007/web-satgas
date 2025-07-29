@@ -1,11 +1,8 @@
-// resources/js/app.js
-
 import './bootstrap';
 import.meta.glob(["../images/**"]);
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    // FUNGSI UNTUK FADE-IN SECTION SAAT DI-SCROLL
     const faders = document.querySelectorAll('.fade-in-section');
     if (faders.length > 0) {
         const appearOptions = {
@@ -29,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // FUNGSI UNTUK TOMBOL KEMBALI KE ATAS (BACK TO TOP)
     const backToTopBtn = document.getElementById('backToTopBtn');
     if (backToTopBtn) {
         window.addEventListener('scroll', () => {

@@ -41,7 +41,6 @@ p.lead {
 /* 4. BUTTONS */
 .btn {
     border-radius: 50px;
-    /* padding: .75rem 1.5rem; */
     font-weight: 600;
     transition: all .3s ease;
     border: 2px solid transparent;
@@ -202,12 +201,6 @@ section {
     transform: none;
 }
 
-/*
-|--------------------------------------------------------------------------
-| === MULAI KODE PERBAIKAN UNTUK NAVBAR & FOOTER ===
-|--------------------------------------------------------------------------
-*/
-
 /* 10. NAVBAR STYLING (Disempurnakan dengan style notifikasi) */
 #navbar-home {
     background-color: var(--navbar-background) !important;
@@ -243,7 +236,6 @@ section {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* Dropdown Umum di Navbar */
 #navbar-home .dropdown-menu {
     margin-top: 0.85rem !important;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
@@ -259,10 +251,8 @@ section {
     display: none;
 }
 
-/* === [PENAMBAHAN] STYLE KHUSUS DROPDOWN NOTIFIKASI === */
 #navbar-home .notification-dropdown-menu {
     width: 320px;
-    /* Lebar khusus untuk dropdown notif */
     padding: 0;
 }
 
@@ -276,7 +266,6 @@ section {
     color: var(--color-text);
     border-bottom: 1px solid #f1f1f1;
     white-space: normal;
-    /* Agar teks bisa wrap */
 }
 
 #navbar-home .notification-item:last-of-type {
@@ -286,12 +275,10 @@ section {
 #navbar-home .notification-item:hover {
     background-color: #e9ecef;
     color: var(--color-text);
-    /* Pastikan warna teks tetap saat hover */
 }
 
 #navbar-home .notification-item.unread {
     background-color: #f5f7fa;
-    /* Sedikit beda background untuk yg belum dibaca */
     font-weight: 600;
 }
 
@@ -304,9 +291,6 @@ section {
     font-size: 0.8rem;
     color: var(--bs-primary);
 }
-
-/* === AKHIR PENAMBAHAN === */
-
 
 /* 11. FOOTER STYLING (Perbaikan) */
 footer.bg-dark {
@@ -364,4 +348,9 @@ footer.bg-dark small {
 #backToTopBtn:hover {
     background-color: var(--color-primary-dark);
     transform: scale(1.1);
+}
+
+.jabatan {
+    margin-top: -13px;
+    font-size: 14.5px;
 }

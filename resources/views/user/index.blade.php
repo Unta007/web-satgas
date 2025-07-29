@@ -7,14 +7,13 @@
     <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             {{-- Slide 1 --}}
-            {{-- TODO: Ganti gambar dengan yang lebih humanis dan suportif --}}
             <div class="carousel-item active"
                 style="background-image: url('{{ Vite::asset('resources/images/telkom.jpg') }}');">
                 <div class="carousel-caption d-none d-md-block text-start">
                     <div class="caption-text container">
                         <h1 class="display-4 fw-bold">Kami Hadir Untuk Anda</h1>
-                        <p class="lead col-lg-11">Satgas PPKS hadir untuk menciptakan lingkungan kampus yang aman dan
-                            bebas dari kekerasan seksual. Kami siap membantu Anda.</p>
+                        <p class="lead col-lg-11">Satgas PPKPT hadir untuk menciptakan lingkungan kampus yang aman dan
+                            bebas dari segala bentuk kekerasan. Kami siap membantu Anda.</p>
                         <div class="d-flex gap-2 mt-4">
                             <a class="btn btn-hero btn-danger" href="{{ route('reports.index') }}">Lapor Sekarang</a>
                         </div>
@@ -52,18 +51,19 @@
             <div class="row align-items-center g-5">
                 <div class="col-lg-5 text-center">
                     {{-- TODO: Ganti dengan FOTO PROFESIONAL Ketua Satgas. Ini sangat penting untuk membangun kepercayaan. --}}
-                    <img src="{{ Vite::asset('resources/images/ketua_satgas.jpg') }}" alt="Foto Ketua Satgas PPKS"
+                    <img src="{{ Vite::asset('resources/images/ketua_satgas.jpg') }}" alt="Foto Ketua Satgas PPKPT"
                         class="img-fluid rounded-circle shadow-lg"
                         style="max-width: 300px; height: 300px; object-fit: cover;" />
                 </div>
                 <div class="col-lg-7">
-                    <h2 class="display-5 fw-bold mb-3">Sambutan Ketua Satgas PPKS</h2>
+                    <h2 class="display-5 fw-bold mb-3">Sambutan Satgas PPKPT</h2>
                     <p class="lead text-muted">"Kami berkomitmen penuh untuk menciptakan lingkungan belajar yang aman,
-                        nyaman, dan suportif bagi seluruh sivitas akademika. Satgas PPKS hadir sebagai sahabat Anda, siap
+                        nyaman, dan suportif bagi seluruh sivitas akademika. Satgas PPKPT hadir sebagai sahabat Anda, siap
                         mendengarkan, mendampingi, dan melindungi."</p>
                     <p>Jangan pernah ragu untuk menjangkau kami. Bersama, kita wujudkan budaya hormat dan martabat di
                         kampus kita tercinta.</p>
-                    <p class="mt-3 fw-bold">Amalia Nur Alifah, S.Psi., M.Si.</p>
+                    <p class="mt-3 fw-bold">Amalia Nur Alifah, S.Si., M.Si</p>
+                    <p class="jabatan">Anggota Satgas PPKPT Kampus Surabaya</p>
                 </div>
             </div>
         </div>

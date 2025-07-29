@@ -1,15 +1,10 @@
-/*
- * Styling untuk Halaman Profil Modern & Dinamis
- */
-
-/* Menggunakan variabel global dari CSS utama Anda */
 :root {
     --profile-bg: #f8f9fa;
     --profile-header-bg: #ffffff;
     --profile-card-bg: #ffffff;
     --profile-nav-hover-bg: #f1f3f5;
     --profile-border-color: #dee2e6;
-    --primary-color: #A40E0E; /* Warna utama dari tema Anda */
+    --primary-color: #A40E0E;
 }
 
 body {
@@ -93,7 +88,7 @@ body {
 
 @media (min-width: 992px) {
     .profile-body {
-        grid-template-columns: 280px 1fr; /* Kolom navigasi dan kolom konten */
+        grid-template-columns: 280px 1fr;
     }
 }
 
@@ -139,7 +134,7 @@ body {
 
 /* Konten dinamis di kanan */
 .profile-content-section {
-    display: none; /* Sembunyikan semua section secara default */
+    display: none;
     background-color: var(--profile-card-bg);
     padding: 2.5rem;
     border-radius: 12px;
@@ -147,7 +142,7 @@ body {
 }
 
 .profile-content-section.is-active {
-    display: block; /* Tampilkan hanya yang aktif */
+    display: block;
 }
 
 .profile-content-section h3 {
@@ -176,6 +171,6 @@ body {
     border-color: var(--primary-color);
 }
 .btn-primary:hover {
-    background-color: #802323; /* Warna lebih gelap saat hover */
+    background-color: #802323;
     border-color: #802323;
 }

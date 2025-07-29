@@ -6,20 +6,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (changePasswordForm) {
                 changePasswordForm.addEventListener('submit', function(event) {
-                    event.preventDefault(); // Mencegah form submit secara otomatis
+                    event.preventDefault();
 
                     Swal.fire({
                         title: 'Konfirmasi Perubahan Password',
                         text: "Anda yakin ingin mengubah password Anda? Anda akan otomatis logout dan diminta untuk login kembali.",
                         icon: 'warning',
                         showCancelButton: true,
-                        confirmButtonColor: '#A40E0E', // Warna tombol merah
-                        cancelButtonColor: '#6c757d', // Warna tombol batal abu-abu
+                        confirmButtonColor: '#A40E0E',
+                        cancelButtonColor: '#6c757d',
                         confirmButtonText: 'Ya, ubah password!',
                         cancelButtonText: 'Batal'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // Jika dikonfirmasi, submit form secara programatik
                             event.target.submit();
                         }
                     });

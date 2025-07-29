@@ -1,14 +1,13 @@
-/*
- * Styling Modern untuk Halaman Tentang Kami
- */
-
-/* Menggunakan variabel global dari CSS utama Anda */
 :root {
     --primary-color: #A40E0E;
     --primary-color-light: #fdf6f6;
     --text-color-dark: #212529;
     --text-color-light: #f8f9fa;
     --bg-light-gray: #f8f9fa;
+    --border-color: #e9ecef;
+    --shadow-light: 0 8px 25px rgba(0, 0, 0, 0.05);
+    --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 12px 30px rgba(0, 0, 0, 0.08);
 }
 
 /* --- Section Umum --- */
@@ -16,57 +15,23 @@
     padding: 4rem 0;
 }
 
-/* --- Visi & Misi --- */
-.vision-mission-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-}
-
-@media (min-width: 768px) {
-    .vision-mission-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-.vm-card {
-    background-color: #ffffff;
-    padding: 2.5rem;
-    border-radius: 1rem;
-    border: 1px solid #e9ecef;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+/* --- Dasar Hukum Section --- */
+.about-section .bg-light {
+    background-color: var(--bg-light-gray) !important;
+    border: 1px solid var(--border-color);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.vm-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+.about-section .bg-light:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
 }
 
-.vm-card-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+.about-section .display-1 {
+    font-size: 4rem;
 }
 
-.vm-card-icon {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-}
-
-.vm-card-header h2 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--text-color-dark);
-}
-
-.vm-card p {
-    color: #6c757d;
-    line-height: 1.8;
-}
-
-/* --- Tujuan Kami --- */
+/* --- Tujuan Section --- */
 .objectives-section {
     background-color: var(--bg-light-gray);
     border-radius: 1rem;
@@ -90,7 +55,7 @@
 .objectives-image img {
     width: 100%;
     border-radius: 0.75rem;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-medium);
 }
 
 .objectives-list h2 {
@@ -106,9 +71,307 @@
 }
 
 .objective-icon {
-    font-size: 1.5rem;
-    color: var(--primary-color);
+    font-size: 1.5rem;    color: var(--primary-color);
     margin-top: 5px;
+    flex-shrink: 0;
+}
+
+/* --- Prinsip Kerja Cards --- */
+.principle-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.principle-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.principle-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), #c82333);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.principle-card h5 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-color-dark);
+}
+
+/* --- Bentuk Kekerasan Cards --- */
+.violence-type-card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.violence-type-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(164, 14, 14, 0.1);
+}
+
+.violence-type-card i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.violence-type-card h6 {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-color-dark);
+}
+
+.violence-type-card small {
+    line-height: 1.4;
+}
+
+/* --- Tugas Satgas Section --- */
+.task-list {
+    max-width: 500px;
+}
+
+.task-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.task-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.task-number {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary-color), #c82333);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 1rem;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+}
+
+.task-item h6 {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-color-dark);
+}
+
+/* --- Statistics Card --- */
+.statistics-card {
+    background: linear-gradient(135deg, var(--bg-light-gray), var(--border-color));
+    border-radius: 12px;
+    padding: 2rem;
+    height: fit-content;
+    border: 1px solid var(--border-color);
+}
+
+.statistics-card h5 {
+    font-weight: 600;
+    color: var(--text-color-dark);
+}
+
+.stat-item {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+.stat-label {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    font-weight: 500;
+}
+
+.mini-stat {
+    text-align: center;
+}
+
+.mini-stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.mini-stat-number.text-danger {
+    color: var(--primary-color) !important;
+}
+
+.mini-stat-label {
+    font-size: 0.75rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
+
+/* --- Call to Action Section --- */
+.about-section:last-child {
+    background: linear-gradient(135deg, var(--primary-color-light), #ffffff);
+    border-radius: 1rem;
+    margin-top: 2rem;
+}
+
+.about-section:last-child h2 {
+    font-weight: 700;
+    color: var(--text-color-dark);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--primary-color), #c82333);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #8b0d0d, var(--primary-color));
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(164, 14, 14, 0.3);
+}
+
+.btn-outline-secondary {
+    border-color: #6c757d;
+    color: #6c757d;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(108, 117, 125, 0.2);
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .about-section {
+        padding: 2.5rem 0;
+    }
+
+    .objectives-section {
+        padding: 2.5rem 1rem;
+    }
+
+    .principle-card {
+        padding: 1.5rem;
+    }
+
+    .principle-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+
+    .violence-type-card {
+        padding: 1rem;
+    }
+
+    .violence-type-card i {
+        font-size: 1.5rem;
+    }
+
+    .task-number {
+        width: 35px;
+        height: 35px;
+        font-size: 0.8rem;
+    }
+
+    .statistics-card {
+        padding: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+    }
+
+    .mini-stat-number {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .objectives-list h2 {
+        font-size: 1.8rem;
+    }
+
+    .principle-card h5 {
+        font-size: 1rem;
+    }
+
+    .violence-type-card h6 {
+        font-size: 0.9rem;
+    }
+
+    .task-item {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .btn-lg {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    .about-section:last-child {
+        margin-top: 1rem;
+        padding: 2rem 0;
+    }
+}
+
+/* --- Grid System Improvements --- */
+.row.g-4 > .col-md-4,
+.row.g-4 > .col-lg-3 {
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .row.g-4 > .col-md-4 {
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .row.g-4 > .col-lg-3 {
+        margin-bottom: 1.5rem;
+    }
 }
 
 /* --- Animasi Scroll --- */
@@ -121,4 +384,51 @@
 .scroll-animate.is-visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* --- Utility Classes --- */
+.text-center h2 {
+    font-weight: 700;
+    color: var(--text-color-dark);
+}
+
+.lead {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* --- Icon Improvements --- */
+.bi {
+    line-height: 1;
+}
+
+/* --- Hover Effects untuk Interaktivitas --- */
+.objective-item:hover .objective-icon {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
+
+.task-item:hover .task-number {
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+
+/* --- Print Styles --- */
+@media print {
+    .about-section {
+        padding: 2rem 0;
+        break-inside: avoid;
+    }
+
+    .principle-card,
+    .violence-type-card,
+    .statistics-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+
+    .btn {
+        display: none;
+    }
 }

@@ -1,13 +1,13 @@
 @extends('layout.auth')
 
-@section('title', 'Login - Satgas PPKS Kampus Surabaya')
+@section('title', 'Login - Satgas PPKPT Kampus Surabaya')
 
 @section('content')
     <div class="login-container">
         {{-- PANEL KIRI DENGAN GAMBAR DAN TEKS --}}
         <div class="login-image-panel">
             <div class="image-panel-content">
-                <h1>Satgas PPKS Universitas Telkom Surabaya</h1>
+                <h1>Satgas PPKPT Universitas Telkom Surabaya</h1>
                 <p>
                     Mari ciptakan lingkungan yang aman dan nyaman untuk seluruh civitas akademika.
                 </p>

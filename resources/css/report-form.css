@@ -1,6 +1,3 @@
-/* Styling untuk Halaman Pelaporan Modern */
-
-/* Variabel Warna (sesuaikan dengan tema Anda) */
 :root {
     --primary-color: #A40E0E;
     --primary-color-dark: #802323;
@@ -16,7 +13,6 @@
 .report-page-wrapper {
     display: grid;
     grid-template-columns: 1fr;
-    /* Default 1 kolom untuk mobile */
     gap: 3rem;
     max-width: 1400px;
     margin: 2rem auto;
@@ -26,14 +22,12 @@
 @media (min-width: 1024px) {
     .report-page-wrapper {
         grid-template-columns: 350px 1fr;
-        /* 2 kolom di desktop */
     }
 }
 
 /* 2. Kolom Kiri: Panduan */
 .report-guidance {
     display: none;
-    /* Sembunyikan di mobile */
 }
 
 @media (min-width: 1024px) {
@@ -111,7 +105,6 @@
     font-weight: 600;
     padding: 1 0.8rem;
     width: auto;
-    /* Required for legend styling */
 }
 
 /* 5. Styling Elemen Form */

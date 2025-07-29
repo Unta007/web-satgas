@@ -130,7 +130,7 @@ class ReportStatusUpdated extends Notification implements ShouldQueue
         // Menambahkan tombol aksi dan kalimat penutup
         $mailMessage->action('Lihat Detail Laporan', $reportUrl)
             ->line('Terima kasih telah menggunakan platform kami untuk menciptakan lingkungan yang lebih aman.')
-            ->salutation('Hormat kami, Tim Satgas PPKS Kampus Surabaya');
+            ->salutation('Hormat kami, Tim Satgas PPKPT Kampus Surabaya');
 
         return $mailMessage;
     }

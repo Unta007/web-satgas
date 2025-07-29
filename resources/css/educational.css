@@ -62,7 +62,6 @@
 @media (min-width: 992px) {
     .top-section-grid {
         grid-template-columns: 1fr 1fr;
-        /* Kolom featured lebih besar */
     }
 }
 
@@ -126,11 +125,8 @@
 
 .grid-article-item {
     display: flex;
-    /* Membuat item di dalamnya berdampingan */
     gap: 1.25rem;
-    /* Jarak antara gambar dan konten teks */
     align-items: flex-start;
-    /* Ratakan dari atas */
     border-bottom: 1px solid var(--color-border);
     padding-bottom: 1.5rem;
     margin-bottom: 1.5rem;
@@ -142,7 +138,7 @@
     padding-bottom: 0;
 }
 
-/* 2. [BARU] TAMBAHKAN GAYA UNTUK GAMBAR */
+/* 2. TAMBAHKAN GAYA UNTUK GAMBAR */
 .grid-article-image {
     width: 190px;
     height: 191px;
@@ -150,19 +146,15 @@
     flex-shrink: 0;
 }
 
-/* [BARU] Kontainer untuk teks tidak perlu gaya khusus, tapi pastikan ada */
 .grid-article-text-content {
     flex-grow: 1;
     padding-top: 0.3rem;
-    /* Memastikan kontainer teks mengisi sisa ruang */
 }
 
 .grid-article-item a {
     text-decoration: none;
     color: var(--color-text-heading);
 }
-
-/* 3. SESUAIKAN KEMBALI JUDUL KARENA RUANG LEBIH SEMPIT */
 .grid-article-item h3 {
     font-size: 1.5rem;
     line-height: 1.4;
@@ -239,7 +231,6 @@
     }
 }
 
-/* === [PERUBAHAN] Container untuk daftar berita === */
 /* Mengubah .latest-news-section dari grid menjadi flex container vertikal */
 .latest-news-section {
     display: flex;
@@ -248,19 +239,15 @@
     gap: 1.5rem;
 }
 
-/* === [BARU] Tampilan untuk setiap item dalam daftar berita === */
+/* Tampilan untuk setiap item dalam daftar berita === */
 .news-list-item {
     display: flex;
-    /* Membuat layout gambar dan konten berdampingan */
     gap: 1.5rem;
-    /* Jarak antara gambar dan konten */
     align-items: flex-start;
-    /* Posisikan item dari atas */
     text-decoration: none !important;
     color: var(--color-text-body) !important;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid #e0e0e0;
-    /* Garis pemisah antar item */
     transition: background-color 0.2s ease;
 }
 
@@ -272,7 +259,6 @@
 
 .news-list-item:hover {
     background-color: #f9f9f9;
-    /* Efek hover yang halus */
     border-radius: 8px;
 }
 
@@ -281,7 +267,6 @@
     width: 350px;
     height: 180px;
     object-fit: cover;
-    /* Sudut membulat */
     flex-shrink: 0;
 }
 
@@ -300,7 +285,7 @@
     color: var(--color-text-heading);
 }
 
-/* [BENAR] Gaya untuk deskripsi singkat */
+/* Gaya untuk deskripsi singkat */
 .news-list-item-description {
     font-size: 0.9rem;
     color: var(--color-text-body);
@@ -310,12 +295,10 @@
     margin-top: 1.4rem;
     display: -webkit-box;
     -webkit-line-clamp: 3;
-    /* Jumlah baris maksimum */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 
 /* Meta info didorong ke bawah */
 .card-meta {
@@ -339,7 +322,6 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    /* Memberi jarak antar blok */
 }
 
 /* Style untuk setiap blok (pencarian dan konten lainnya) */

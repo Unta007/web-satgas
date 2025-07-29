@@ -1,21 +1,11 @@
-/*
- * Styling Khusus untuk Halaman Detail Laporan
- */
-
-/* Menggunakan variabel global dari CSS utama Anda */
 :root {
     --guidance-bg: #eeeeeeb4;
-    --detail-data-bg: #f8f9fa; /* Latar belakang untuk data */
+    --detail-data-bg: #f8f9fa;
 }
-
-/* 1. Wrapper Utama (Sama seperti halaman form) */
-/* Kita akan menggunakan kembali class dari halaman report */
-/* Pastikan .report-page-wrapper, .report-guidance, .report-form-container, .form-section, legend
-   sudah terdefinisi di CSS global Anda. Jika belum, Anda bisa menyalinnya dari CSS sebelumnya. */
 
 /* 2. Style untuk Detail Item */
 .detail-group {
-    margin-bottom: 1.25rem; /* Jarak antar grup label-data */
+    margin-bottom: 1.25rem;
 }
 
 .detail-label {
@@ -33,7 +23,7 @@
     border: 1px solid var(--border-color);
     font-size: 1rem;
     color: var(--text-color);
-    word-wrap: break-word; /* Memastikan teks panjang tidak merusak layout */
+    word-wrap: break-word; 
 }
 
 /* 3. Style Khusus untuk Aside (Kolom Kiri) di Halaman Detail */

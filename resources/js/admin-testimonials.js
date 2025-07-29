@@ -15,17 +15,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 paginate: { first: "<<", last: ">>", next: ">", previous: "<" }
             },
             columnDefs: [
-                // DIUBAH: Nonaktifkan pengurutan untuk kolom Status & Aksi (indeks 2 & 3)
                 { "orderable": false, "targets": [2, 3] }
             ],
-            // DIUBAH: Urutkan berdasarkan kolom Tanggal Dibuat (sekarang indeks 1) secara descending
             order: [[1, "desc"]]
         });
     } else {
         console.warn('jQuery atau DataTables belum dimuat, tabel tidak akan diinisialisasi.');
     }
 
-    // Logika konfirmasi penghapusan (TIDAK PERLU DIUBAH)
     const deleteForms = document.querySelectorAll('.delete-testimonial-form');
     deleteForms.forEach(form => {
         form.addEventListener('submit', function (event) {

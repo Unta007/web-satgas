@@ -4,7 +4,6 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    /* Menggunakan font yang lebih modern */
 }
 
 .login-container {
@@ -106,7 +105,6 @@ body {
 .form-control-custom:focus {
     background-color: #fff;
     border-color: #A31926;
-    /* Warna merah Telkom */
     box-shadow: 0 0 0 0.25rem rgba(163, 25, 38, 0.25);
 }
 
@@ -125,7 +123,6 @@ body {
 
 .btn-login {
     background-color: #A31926;
-    /* Warna merah Telkom */
     border-color: #A31926;
     color: white;
     padding: 0.6rem;
@@ -194,7 +191,6 @@ body {
 @media (max-width: 992px) {
     .login-image-panel {
         display: none;
-        /* Sembunyikan panel gambar di layar kecil */
     }
 
     .login-form-panel {

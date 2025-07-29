@@ -1,11 +1,8 @@
-// File: resources/js/charts.js
-
-// Variabel global (biarkan seperti yang sudah ada)
 let activeChart = null;
 const canvasElement = document.getElementById('mainReportChart');
 const dataSourceDropdownButton = document.getElementById('dataSourceDropdown');
 const chartTypeDropdownButton = document.getElementById('chartTypeDropdown');
-const chartCanvasWrapper = canvasElement ? canvasElement.parentElement : null; // Parent dari canvas
+const chartCanvasWrapper = canvasElement ? canvasElement.parentElement : null;
 const customLegendContainer = document.getElementById('customChartLegend');
 
 let currentDataSource = 'monthly';
@@ -22,7 +19,6 @@ function getChartData(dataSourceType) {
 }
 
 function generateCustomLegend(labels, dataValues, colors) {
-    // ... (Fungsi generateCustomLegend Anda tetap sama persis, tidak perlu diubah)
     if (!customLegendContainer) return;
     customLegendContainer.innerHTML = '';
 
@@ -79,7 +75,7 @@ function renderActiveChart() {
     ];
 
     let datasetOptions = {
-        label: chartTitle, // Label ini akan digunakan oleh legenda default Chart.js
+        label: chartTitle,
         data: chartDataValues,
         tension: 0.2,
     };
@@ -92,7 +88,7 @@ function renderActiveChart() {
         if (currentDataSource === 'reporterRoles' || currentDataSource === 'perpetratorRoles') {
             datasetOptions.backgroundColor = labels.map((_, i) => categoryColors[i % categoryColors.length]);
             datasetOptions.borderColor = labels.map((_, i) => categoryColors[i % categoryColors.length]);
-        } else { // Monthly bar chart
+        } else {
             datasetOptions.backgroundColor = 'rgba(13, 110, 253, 0.7)';
             datasetOptions.borderColor = '#0d6efd';
         }
@@ -114,9 +110,9 @@ function renderActiveChart() {
                 title: { display: true, text: chartTitle, font: { size: 16 } },
                 legend: {
                     display: (currentChartType === 'doughnut' && currentDataSource === 'monthly'),
-                    position: 'top', // Posisi legenda default di atas chart (di bawah judul)
+                    position: 'top',
                     labels: {
-                        padding: 15 // Beri sedikit padding
+                        padding: 15
                     }
                 }
             },
@@ -136,9 +132,7 @@ function renderActiveChart() {
         }
     });
 
-    // ================== PERUBAHAN LOGIKA LEGENDA KUSTOM & LAYOUT ==================
     if (customLegendContainer && chartCanvasWrapper) {
-        // Kondisi untuk menampilkan legenda kustom (Doughnut & data kategorikal/peran)
         const showCustomLegend = currentChartType === 'doughnut' &&
             (currentDataSource === 'reporterRoles' || currentDataSource === 'perpetratorRoles');
 
@@ -152,8 +146,6 @@ function renderActiveChart() {
             customLegendContainer.style.flexGrow = '1';
             generateCustomLegend(labels, chartDataValues, datasetOptions.backgroundColor);
         } else {
-            // Untuk Line, Bar, atau Doughnut bulanan, buat chart mengambil lebar penuh
-            // dan sembunyikan legenda kustom
             chartCanvasWrapper.style.flexBasis = '100%';
             chartCanvasWrapper.style.maxWidth = '100%';
             chartCanvasWrapper.style.flexGrow = '1';
@@ -163,10 +155,8 @@ function renderActiveChart() {
             customLegendContainer.style.flexBasis = '0';
         }
     }
-    // ================== AKHIR PERUBAHAN LEGENDA KUSTOM & LAYOUT ==================
 }
 
-// Event listener (biarkan seperti yang sudah ada)
 document.addEventListener('DOMContentLoaded', () => {
     if (!canvasElement) return;
     renderActiveChart();

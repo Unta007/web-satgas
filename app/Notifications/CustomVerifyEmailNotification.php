@@ -4,7 +4,7 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Auth\Notifications\VerifyEmail; 
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Lang;
 
@@ -29,9 +29,9 @@ class CustomVerifyEmailNotification extends VerifyEmail
         return (new MailMessage)
             ->subject(Lang::get('Verifikasi Alamat Email Anda'))
             ->greeting('Halo, ' . $notifiable->username . '!')
-            ->line(Lang::get('Terima kasih telah mendaftar di Platform Satgas PPKS Kampus Surabaya. Mohon klik tombol di bawah ini untuk memverifikasi alamat email Anda.'))
+            ->line(Lang::get('Terima kasih telah mendaftar di Platform Satgas PPKPT Kampus Surabaya. Mohon klik tombol di bawah ini untuk memverifikasi alamat email Anda.'))
             ->action(Lang::get('Verifikasi Email'), $verificationUrl)
             ->line(Lang::get('Jika Anda tidak merasa mendaftar, Anda bisa mengabaikan email ini.'))
-            ->salutation('Hormat kami, Tim Satgas PPKS Kampus Surabaya');
+            ->salutation('Hormat kami, Tim Satgas PPKPT Kampus Surabaya');
     }
 }

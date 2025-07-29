@@ -23,7 +23,7 @@ function initializeChart(canvasId, chartType, chartOptions = {}) {
     const chartData = JSON.parse(dataString);
 
     let dataConfig;
-    const chartColors = ['#0d6efd', '#198754', '#ffc107', '#838383', '#dc3545']; // Warna tema Bootstrap
+    const chartColors = ['#0d6efd', '#198754', '#ffc107', '#838383', '#dc3545']; 
 
     // Konfigurasi data berdasarkan tipe grafik
     if (chartType === 'line') {

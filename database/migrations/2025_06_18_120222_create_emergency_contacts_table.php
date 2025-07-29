@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('emergency_contacts', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Nama kontak, cth: "Hotline Satgas PPKS"
+            $table->string('name'); // Nama kontak, cth: "Hotline Satgas PPKPT"
             $table->enum('type', ['Bantuan Internal', 'Lembaga Eksternal']);
             $table->string('contact_info'); // Nomor telepon, link WhatsApp, dll.
             $table->text('description')->nullable(); // Penjelasan singkat
